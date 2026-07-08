@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Surfaces — light lavender-gray canvas with white cards (from Stitch) */
+    --background: 240 33% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary #6366F1 */
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary #A855F7 */
+    --secondary: 271 91% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted / neutral #777680 */
+    --muted: 240 20% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 240 30% 96%;
+    --accent-foreground: 239 84% 60%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 20% 91%;
+    --input: 240 20% 91%;
+    --ring: 239 84% 67%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 240 20% 96%;
+    --card: 222 45% 11%;
+    --card-foreground: 240 20% 96%;
+    --popover: 222 45% 11%;
+    --popover-foreground: 240 20% 96%;
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 271 91% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 222 40% 16%;
+    --muted-foreground: 240 10% 65%;
+    --accent: 222 40% 18%;
+    --accent-foreground: 240 20% 96%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 40% 18%;
+    --input: 222 40% 18%;
+    --ring: 239 84% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  ::selection {
+    background: rgba(99, 102, 241, 0.18);
+  }
+}
+
+@layer utilities {
+  /* Thin, unobtrusive scrollbar used inside the Ask METIS chat + scroll areas */
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  .text-gradient {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+}
