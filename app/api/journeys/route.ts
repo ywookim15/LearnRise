@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getRequestUser } from "@/lib/server/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { generateRoadmap, type PlannerInputs } from "@/lib/server/planner";
+import { GeminiRateLimitError } from "@/lib/server/gemini";
 import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
 import { canCreateJourney } from "@/lib/entitlements";
@@ -78,6 +79,16 @@ export async function POST(req: NextRequest) {
     roadmap = await generateRoadmap(inputs);
   } catch (err) {
     console.error("[planner] roadmap generation failed:", err);
+    if (err instanceof GeminiRateLimitError) {
+      return NextResponse.json(
+        {
+          error:
+            "METIS is at capacity right now (high demand on the AI). Please wait about a minute and try again.",
+          code: "rate_limited",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { error: "METIS couldn't generate your roadmap right now. Please try again in a moment." },
       { status: 502 }

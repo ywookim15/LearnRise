@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, MessageSquare, CheckCircle2 } from "lucide-react";
+import { Mail, Instagram, Youtube, CheckCircle2 } from "lucide-react";
 import { MarketingShell } from "@/components/layout/marketing-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,9 +33,24 @@ export default function ContactPage() {
           </p>
 
           <div className="mt-10 space-y-5">
-            <ContactRow icon={<Mail className="h-5 w-5" />} label="Email" value="hello@metis.app" />
-            <ContactRow icon={<MessageSquare className="h-5 w-5" />} label="Support" value="support@metis.app" />
-            <ContactRow icon={<MapPin className="h-5 w-5" />} label="Studio" value="Remote · Everywhere" />
+            <ContactRow
+              icon={<Mail className="h-5 w-5" />}
+              label="Email"
+              value="metis.s1x.general@gmail.com"
+              href="mailto:metis.s1x.general@gmail.com"
+            />
+            <ContactRow
+              icon={<Instagram className="h-5 w-5" />}
+              label="Instagram"
+              value="@metis.s1x"
+              href="https://www.instagram.com/metis.s1x/"
+            />
+            <ContactRow
+              icon={<Youtube className="h-5 w-5" />}
+              label="YouTube"
+              value="@METIS.s1x"
+              href="https://www.youtube.com/@METIS.s1x"
+            />
           </div>
         </div>
 
@@ -87,11 +102,14 @@ function ContactRow({
   icon,
   label,
   value,
+  href,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
+  href?: string;
 }) {
+  const external = href?.startsWith("http");
   return (
     <div className="flex items-center gap-4">
       <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
@@ -99,7 +117,18 @@ function ContactRow({
       </span>
       <div>
         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-        <p className="text-sm font-medium text-foreground">{value}</p>
+        {href ? (
+          <a
+            href={href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            className="text-sm font-medium text-foreground hover:text-primary hover:underline"
+          >
+            {value}
+          </a>
+        ) : (
+          <p className="text-sm font-medium text-foreground">{value}</p>
+        )}
       </div>
     </div>
   );

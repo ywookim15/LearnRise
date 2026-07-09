@@ -28,6 +28,8 @@ function getGemini(): GoogleGenAI {
 export const DEFAULT_GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
 
 export class GeminiFunctionError extends Error {}
+/** Thrown when a call ultimately fails because of Gemini rate limits / quota. */
+export class GeminiRateLimitError extends GeminiFunctionError {}
 
 // --- Global pacing to respect free-tier RPM limits (default ~15/min) ---
 // Every Gemini call passes through this gate so concurrent/looped callers
@@ -69,6 +71,12 @@ export async function callGeminiFunction<T>(opts: {
   model?: string;
   temperature?: number;
   maxAttempts?: number;
+  /**
+   * Cap on how long to honor a 429 "retry in Ns" delay. Interactive callers
+   * (e.g. the journey-creation Planner) pass a small value so the whole request
+   * finishes well under the serverless timeout instead of hanging for minutes.
+   */
+  maxRetryWaitMs?: number;
 }): Promise<T> {
   const {
     prompt,
@@ -76,10 +84,12 @@ export async function callGeminiFunction<T>(opts: {
     model = DEFAULT_GEMINI_MODEL,
     temperature = 0.3,
     maxAttempts = 4,
+    maxRetryWaitMs = 60_000,
   } = opts;
   const ai = getGemini();
 
   let lastError: unknown;
+  let lastWasRateLimit = false;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       await paceGate(); // respect the per-minute quota before every call
@@ -108,11 +118,15 @@ export async function callGeminiFunction<T>(opts: {
       );
     } catch (err) {
       lastError = err;
+      const retryAfter = retryDelaySeconds(err);
+      lastWasRateLimit = retryAfter != null;
       if (attempt < maxAttempts) {
-        // 429s carry a server-advised delay (often 30-50s) — honor it, capped
-        // at 60s. Other transient errors use short exponential backoff.
-        const retryAfter = retryDelaySeconds(err);
-        const waitMs = retryAfter != null ? Math.min(retryAfter, 60) * 1000 : 1500 * attempt;
+        // 429s carry a server-advised delay — honor it, capped by maxRetryWaitMs
+        // so interactive callers don't hang. Other transient errors: short backoff.
+        const waitMs =
+          retryAfter != null
+            ? Math.min(retryAfter * 1000, maxRetryWaitMs)
+            : Math.min(1500 * attempt, maxRetryWaitMs);
         console.warn(
           `[gemini] ${fn.name} attempt ${attempt} failed (${
             retryAfter != null ? `rate-limited, retry in ${retryAfter}s` : "transient"
@@ -121,6 +135,10 @@ export async function callGeminiFunction<T>(opts: {
         await sleep(waitMs);
       }
     }
+  }
+  // Surface rate-limit failures distinctly so callers can show a clear message.
+  if (lastWasRateLimit) {
+    throw new GeminiRateLimitError("Gemini rate limit / quota exceeded");
   }
   throw lastError instanceof Error
     ? lastError

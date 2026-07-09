@@ -131,11 +131,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const lastName = profileOverride.lastName ?? base.lastName;
     const email = profileOverride.email ?? base.email;
     const initials = `${firstName[0] ?? ""}${lastName[0] ?? ""}` || firstName.slice(0, 2);
+    // Uploaded avatar (Supabase Storage) if present, else generated initials.
+    const meta = (authUser?.user_metadata ?? {}) as Record<string, unknown>;
+    const uploaded = typeof meta.avatar_url === "string" ? meta.avatar_url : "";
     return {
       firstName,
       lastName,
       email,
-      avatarUrl: makeInitialsAvatar(initials),
+      avatarUrl: uploaded || makeInitialsAvatar(initials),
       // Real plan: 'pro' badge iff an active Stripe subscription entitles them.
       plan: subscription?.isPremium ? "pro" : "free",
     };

@@ -18,6 +18,7 @@ export async function tavilySearch(
     maxResults?: number;
     searchDepth?: "basic" | "advanced";
     includeRawContent?: boolean;
+    timeoutMs?: number;
   } = {}
 ): Promise<TavilyResult[] | null> {
   const apiKey = process.env.TAVILY_API_KEY;
@@ -26,7 +27,7 @@ export async function tavilySearch(
     return null;
   }
 
-  const { maxResults = 8, searchDepth = "basic", includeRawContent = false } = opts;
+  const { maxResults = 8, searchDepth = "basic", includeRawContent = false, timeoutMs = 30_000 } = opts;
 
   try {
     const res = await fetch("https://api.tavily.com/search", {
@@ -41,7 +42,7 @@ export async function tavilySearch(
         search_depth: searchDepth,
         include_raw_content: includeRawContent,
       }),
-      signal: AbortSignal.timeout(30_000),
+      signal: AbortSignal.timeout(timeoutMs),
     });
 
     if (!res.ok) {

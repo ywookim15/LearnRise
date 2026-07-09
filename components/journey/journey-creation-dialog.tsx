@@ -87,7 +87,8 @@ export function JourneyCreationDialog({
               <p className="text-lg font-semibold">Generating your roadmap…</p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">
                 METIS is researching a syllabus and mapping your units and
-                chapters. This takes a few seconds — resources fill in afterward.
+                chapters. This usually takes 15–30 seconds — hang tight and keep
+                this open. Resources fill in afterward.
               </p>
             </div>
           </div>

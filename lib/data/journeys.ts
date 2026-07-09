@@ -307,9 +307,14 @@ export async function createJourney(input: CreateJourneyInput): Promise<string> 
       hoursPerWeek: input.hoursPerWeek ? Number(input.hoursPerWeek) : undefined,
     }),
   });
-  const json = await res.json().catch(() => ({}));
+  // A serverless timeout returns a non-JSON body, so .json() can throw.
+  const json = await res.json().catch(() => ({} as { error?: string; journeyId?: string }));
   if (!res.ok) {
-    throw new Error(json.error || "Failed to create journey");
+    const fallback =
+      res.status === 504 || res.status === 408 || res.status === 502
+        ? "This is taking longer than expected — METIS may be busy. Please wait a minute and try again."
+        : "Couldn't create your journey. Please try again.";
+    throw new Error(json.error || fallback);
   }
   return json.journeyId as string;
 }

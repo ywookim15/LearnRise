@@ -45,6 +45,7 @@ export async function findReferenceSyllabus(goal: string): Promise<string | null
   const results = await tavilySearch(`${goal} syllabus course outline curriculum`, {
     maxResults: 3,
     searchDepth: "basic",
+    timeoutMs: 12_000, // interactive path — don't let search eat the budget
   });
   if (!results || results.length === 0) return null;
   return results
@@ -243,6 +244,11 @@ export async function generateRoadmap(inputs: PlannerInputs): Promise<RoadmapOut
     prompt: buildPlannerPrompt(inputs, syllabusRef),
     fn: SAVE_ROADMAP,
     temperature: 0.4,
+    // Interactive path: fail fast under rate limits so the request finishes
+    // well under the serverless timeout (the user gets a clear "try again"
+    // instead of a hang/timeout).
+    maxAttempts: 2,
+    maxRetryWaitMs: 10_000,
   });
 
   return validateRoadmap(raw, inputs.goal);
