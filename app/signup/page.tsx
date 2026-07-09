@@ -50,7 +50,13 @@ export default function SignUpPage() {
     setPending(false);
 
     if (signUpError) {
-      setError(signUpError.message);
+      console.error("Signup error:", signUpError);
+      // `gotrue-js` stringifies empty error bodies as "{}" when the server
+      // returns a non-2xx with no message field — show a friendly fallback
+      // instead of the literal "{}".
+      const fallback = "Something went wrong creating your account. Please try again in a moment.";
+      const raw = typeof signUpError.message === "string" ? signUpError.message.trim() : "";
+      setError(raw === "" || raw === "{}" ? fallback : raw);
       return;
     }
 
