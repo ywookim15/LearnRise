@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Loader2, AlertCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { ResourceRow } from "@/components/journey/resource-row";
-import {
-  unitProgress,
-  unitResourceCount,
-  type Journey,
-} from "@/lib/mock-data/journeys";
-import { useApp } from "@/lib/context/app-context";
+import { unitProgress, unitResourceCount, type UiJourneyDetail, type UiUnit } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
-export function Roadmap({ journey }: { journey: Journey }) {
-  const { toggleResource } = useApp();
-  // First unit expanded by default, matching the Stitch journey view.
-  const [expanded, setExpanded] = useState<Set<string>>(new Set([journey.units[0]?.id]));
+export function Roadmap({
+  journey,
+  onToggleResource,
+}: {
+  journey: UiJourneyDetail;
+  onToggleResource: (resourceId: string) => void;
+}) {
+  const [expanded, setExpanded] = useState<Set<string>>(
+    new Set(journey.units[0] ? [journey.units[0].id] : [])
+  );
 
   function toggle(unitId: string) {
     setExpanded((prev) => {
@@ -38,20 +39,19 @@ export function Roadmap({ journey }: { journey: Journey }) {
             key={unit.id}
             className="overflow-hidden rounded-2xl border border-border bg-card shadow-card"
           >
-            {/* Unit header */}
             <div className="flex items-center gap-4 p-4">
-              {/* Clicking the unit (not the toggle) drills into the unit page */}
               <Link
                 href={`/journey/${journey.id}/unit/${unit.id}`}
                 className="group flex min-w-0 flex-1 items-center gap-4"
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-primary/20 text-sm font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  {unit.index}
+                  {unit.number}
                 </span>
                 <div className="min-w-0">
                   <p className="truncate font-semibold group-hover:text-primary">{unit.title}</p>
                   <p className="truncate text-xs text-muted-foreground">
-                    {count} resources · {unit.estimate}
+                    {count} {count === 1 ? "resource" : "resources"}
+                    {unit.estimatedWeeks ? ` · ~${unit.estimatedWeeks} weeks` : ""}
                   </p>
                 </div>
               </Link>
@@ -73,23 +73,14 @@ export function Roadmap({ journey }: { journey: Journey }) {
               </button>
             </div>
 
-            {/* Expanded chapters + resources */}
             {isOpen && (
               <div className="border-t border-border bg-muted/20 px-2 py-2">
                 {unit.chapters.map((chapter, ci) => (
                   <div key={chapter.id} className={cn(ci > 0 && "mt-2 border-t border-border/60 pt-2")}>
-                    {unit.chapters.length > 1 && (
-                      <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                        {chapter.title}
-                      </p>
-                    )}
-                    {chapter.resources.map((resource) => (
-                      <ResourceRow
-                        key={resource.id}
-                        resource={resource}
-                        onToggle={() => toggleResource(journey.id, resource.id)}
-                      />
-                    ))}
+                    <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      {chapter.number} · {chapter.title}
+                    </p>
+                    <ChapterResources chapter={chapter} onToggleResource={onToggleResource} />
                   </div>
                 ))}
               </div>
@@ -98,5 +89,41 @@ export function Roadmap({ journey }: { journey: Journey }) {
         );
       })}
     </div>
+  );
+}
+
+function ChapterResources({
+  chapter,
+  onToggleResource,
+}: {
+  chapter: UiUnit["chapters"][number];
+  onToggleResource: (resourceId: string) => void;
+}) {
+  if (chapter.resources.length > 0) {
+    return (
+      <>
+        {chapter.resources.map((resource) => (
+          <ResourceRow
+            key={resource.id}
+            resource={resource}
+            onToggle={() => onToggleResource(resource.id)}
+          />
+        ))}
+      </>
+    );
+  }
+  if (chapter.resourceStatus === "pending") {
+    return (
+      <p className="flex items-center gap-2 px-3 py-2.5 text-xs text-muted-foreground">
+        <Loader2 className="h-3.5 w-3.5 animate-spin text-secondary" />
+        METIS is curating resources for this chapter…
+      </p>
+    );
+  }
+  return (
+    <p className="flex items-center gap-2 px-3 py-2.5 text-xs text-muted-foreground">
+      <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
+      No resources found yet — this chapter is flagged as a gap.
+    </p>
   );
 }

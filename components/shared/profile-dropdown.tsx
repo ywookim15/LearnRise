@@ -19,9 +19,10 @@ export function ProfileDropdown({ showChevron = true }: { showChevron?: boolean 
 
   const initials = `${user.firstName[0] ?? ""}${user.lastName[0] ?? ""}`;
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    await logout(); // clears the Supabase session + cookies
     router.push("/");
+    router.refresh();
   }
 
   return (

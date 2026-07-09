@@ -52,7 +52,7 @@ export function AuthShell({
               })}
             </ul>
           </div>
-          <p className="text-xs text-white/60">Prototype · mock data only</p>
+          <p className="text-xs text-white/60">METIS · early access</p>
         </div>
       </div>
 

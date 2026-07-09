@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronRight, Flag, Trophy, Check, CircleDashed } from "lucide-react";
-import type { Unit } from "@/lib/mock-data/journeys";
+import type { UiUnit } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
 type NodeState = "unset" | "familiar" | "known";
@@ -18,7 +18,7 @@ const STATE_STYLE: Record<NodeState, string> = {
  * "Start" to "Mastery". Hovering a node reveals non-functional
  * "Know it" / "Familiar" controls that toggle a local visual state.
  */
-export function UnitFlowchart({ unit }: { unit: Unit }) {
+export function UnitFlowchart({ unit }: { unit: UiUnit }) {
   const [states, setStates] = useState<Record<string, NodeState>>({});
 
   function setState(id: string, s: NodeState) {

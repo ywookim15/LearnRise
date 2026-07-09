@@ -9,15 +9,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import type { Journey } from "@/lib/mock-data/journeys";
+import type { UiJourneySummary } from "@/lib/data/journeys";
 
-/** Placeholder "AI video summary" popup for a journey card. Static mock only. */
+/** Placeholder "AI video summary" popup for a journey card. Static mock UI. */
 export function SummarizeDialog({
   journey,
   open,
   onOpenChange,
 }: {
-  journey: Journey;
+  journey: UiJourneySummary;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -58,10 +58,10 @@ export function SummarizeDialog({
         <div className="rounded-2xl border border-border bg-muted/40 p-4 text-sm leading-relaxed text-muted-foreground">
           <p className="font-medium text-foreground">Placeholder transcript</p>
           <p className="mt-1">
-            &ldquo;You&apos;re making strong progress on {journey.name}. You&apos;ve
-            wrapped the foundational units — next, focus on the deeper material
-            where the concepts really connect. Keep your {journey.streak}-day
-            streak alive.&rdquo; (No real video or AI in this prototype.)
+            &ldquo;You&apos;re making strong progress on {journey.name} — about{" "}
+            {journey.progress}% of the way through. Next, focus on the deeper
+            material where the concepts really connect.&rdquo; (Static placeholder —
+            no real video or AI yet.)
           </p>
         </div>
       </DialogContent>

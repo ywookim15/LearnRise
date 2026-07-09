@@ -1,35 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AlertCircle } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useApp } from "@/lib/context/app-context";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
-  const { login } = useApp();
   const router = useRouter();
-  const [email, setEmail] = useState("maya.chen@example.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
-  // Mock auth: flip the boolean and go to the dashboard. No real request.
-  function handleSubmit(e: React.FormEvent) {
+  // Surface auth-callback failures (e.g. expired email link) without needing
+  // useSearchParams/Suspense.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("error") === "auth_callback_failed") {
+      setError("That sign-in link was invalid or expired. Please try again.");
+    }
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    login();
+    setError(null);
+    setPending(true);
+    const supabase = getSupabaseBrowserClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (signInError) {
+      setPending(false);
+      setError(
+        signInError.message === "Invalid login credentials"
+          ? "Incorrect email or password."
+          : signInError.message
+      );
+      return;
+    }
     router.push("/dashboard");
+    router.refresh();
   }
 
   return (
     <AuthShell title="Welcome back" subtitle="Sign in to pick up where you left off.">
       <form onSubmit={handleSubmit} className="space-y-5">
+        {error && (
+          <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+            {error}
+          </div>
+        )}
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -45,13 +79,15 @@ export default function LoginPage() {
           <Input
             id="password"
             type="password"
+            autoComplete="current-password"
+            placeholder="Your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <Button type="submit" className="w-full">
-          Sign in
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending ? "Signing in…" : "Sign in"}
         </Button>
       </form>
 
@@ -60,10 +96,6 @@ export default function LoginPage() {
         <Link href="/signup" className="font-medium text-primary hover:underline">
           Create an account
         </Link>
-      </p>
-      <p className="mt-4 rounded-xl bg-muted px-4 py-3 text-center text-xs text-muted-foreground">
-        Prototype: any credentials work — submitting just flips a mock
-        &ldquo;logged in&rdquo; flag.
       </p>
     </AuthShell>
   );

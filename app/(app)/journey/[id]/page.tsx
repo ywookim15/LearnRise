@@ -3,29 +3,43 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Sparkles, ChevronRight } from "lucide-react";
+import { Sparkles, ChevronRight, Loader2, AlertCircle } from "lucide-react";
 import { Topbar } from "@/components/layout/topbar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { HelpDialog } from "@/components/dashboard/help-dialog";
 import { Roadmap } from "@/components/journey/roadmap";
 import { AskMetisPanel } from "@/components/journey/ask-metis-panel";
-import { useApp } from "@/lib/context/app-context";
-import { journeyProgress } from "@/lib/mock-data/journeys";
+import { useJourneyDetail } from "@/lib/data/use-journey-detail";
+import { detailProgress } from "@/lib/data/journeys";
 
 export default function JourneyPage() {
   const params = useParams<{ id: string }>();
-  const { getJourney } = useApp();
-  const journey = getJourney(params.id);
+  const { journey, loading, error, toggleResource, reload } = useJourneyDetail(params.id);
   const [askOpen, setAskOpen] = useState(false);
 
-  if (!journey) {
+  if (loading) {
+    return (
+      <div className="flex h-full flex-1 flex-col overflow-hidden">
+        <Topbar left={<span className="text-sm text-muted-foreground">Loading…</span>} />
+        <div className="flex flex-1 items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !journey) {
     return (
       <div className="flex h-full flex-1 flex-col items-center justify-center gap-4 p-10 text-center">
-        <p className="text-lg font-semibold">Journey not found</p>
+        <AlertCircle className="h-10 w-10 text-muted-foreground" />
+        <p className="text-lg font-semibold">
+          {error === "not_found" || !journey ? "Journey not found" : "Couldn't load this journey"}
+        </p>
         <p className="max-w-sm text-sm text-muted-foreground">
-          This journey doesn&apos;t exist in the mock data (it may have been created
-          in a previous session and reset on reload).
+          {error && error !== "not_found"
+            ? error
+            : "This journey doesn't exist or you don't have access to it."}
         </p>
         <Button asChild>
           <Link href="/dashboard">Back to Dashboard</Link>
@@ -34,7 +48,7 @@ export default function JourneyPage() {
     );
   }
 
-  const progress = journeyProgress(journey);
+  const { progress } = detailProgress(journey);
 
   const breadcrumb = (
     <div className="flex items-center gap-1.5 text-sm">
@@ -50,7 +64,6 @@ export default function JourneyPage() {
     <div className="flex h-full flex-1 flex-col overflow-hidden">
       <Topbar left={breadcrumb} />
       <div className="flex min-h-0 flex-1 overflow-hidden">
-        {/* Roadmap column */}
         <div className="flex-1 overflow-y-auto scrollbar-slim">
           <div className="mx-auto max-w-4xl px-6 py-8 lg:px-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -68,7 +81,6 @@ export default function JourneyPage() {
               )}
             </div>
 
-            {/* Overall progress */}
             <div className="mt-6 rounded-2xl border border-border bg-card p-4 shadow-card">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold uppercase tracking-wide text-muted-foreground">
@@ -79,18 +91,25 @@ export default function JourneyPage() {
               <Progress value={progress} className="mt-2" />
             </div>
 
-            {/* Roadmap */}
             <div className="mt-6">
-              <Roadmap journey={journey} />
+              <Roadmap journey={journey} onToggleResource={toggleResource} />
             </div>
           </div>
         </div>
 
-        {/* Ask METIS dock */}
-        {askOpen && <AskMetisPanel onCollapse={() => setAskOpen(false)} />}
+        {askOpen && (
+          <AskMetisPanel
+            journeyId={journey.id}
+            onCollapse={() => setAskOpen(false)}
+            onRoadmapChanged={() => {
+              // Give the async replan/refresh a moment to reset chapters to
+              // 'pending', then reload; the hook keeps polling while pending.
+              setTimeout(() => void reload({ silent: true }), 2500);
+            }}
+          />
+        )}
       </div>
 
-      {/* Help FAB (hidden while the chat dock is open) */}
       {!askOpen && (
         <div className="fixed bottom-6 right-6 z-20">
           <HelpDialog />

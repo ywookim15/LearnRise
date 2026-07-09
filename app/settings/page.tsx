@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Upload, Trash2, Sparkles, Check } from "lucide-react";
 import { StandaloneShell } from "@/components/layout/standalone-shell";
@@ -25,9 +25,17 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+  // The Supabase session loads asynchronously — re-seed the form when the
+  // real profile arrives (or after a save round-trips through the context).
+  useEffect(() => {
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEmail(user.email);
+  }, [user.firstName, user.lastName, user.email]);
+
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    // Mock save — updates the in-memory user so the topbar avatar reflects it.
+    // Persists name (user_metadata) and email to Supabase Auth via the context.
     updateUser({ firstName, lastName, email });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -39,7 +47,8 @@ export default function SettingsPage() {
     <StandaloneShell>
       <h1 className="font-serif text-3xl tracking-tight">Profile &amp; Settings</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Manage your account. (All fields are mock UI — nothing is persisted.)
+        Manage your account. Name and email changes are saved to your METIS
+        account (email changes require confirmation via inbox link).
       </p>
 
       {/* Profile picture */}
@@ -87,8 +96,14 @@ export default function SettingsPage() {
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="space-y-2 sm:col-span-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" defaultValue="password123" />
+            <Label>Password</Label>
+            <p className="text-sm text-muted-foreground">
+              To change your password, use the{" "}
+              <Link href="/forgot-password" className="font-medium text-primary hover:underline">
+                password reset flow
+              </Link>
+              {" "}— we&apos;ll email you a secure link.
+            </p>
           </div>
         </div>
         <div className="mt-6 flex items-center gap-3">
@@ -96,7 +111,7 @@ export default function SettingsPage() {
           {saved && (
             <span className="flex items-center gap-1 text-sm font-medium text-emerald-600">
               <Check className="h-4 w-4" />
-              Saved (mock)
+              Saved
             </span>
           )}
         </div>

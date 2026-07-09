@@ -6,18 +6,19 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { useApp } from "@/lib/context/app-context";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { isLoggedIn } = useApp();
+  const { isLoggedIn, authReady } = useApp();
   const router = useRouter();
 
-  // Mock auth guard: bounce to the login shell when the mock session is off.
+  // Middleware already blocks these routes server-side; this client guard is
+  // the UX layer that reacts to in-tab auth changes (e.g. sign-out).
   useEffect(() => {
-    if (!isLoggedIn) router.replace("/login");
-  }, [isLoggedIn, router]);
+    if (authReady && !isLoggedIn) router.replace("/login");
+  }, [authReady, isLoggedIn, router]);
 
-  if (!isLoggedIn) {
+  if (!authReady || !isLoggedIn) {
     return (
       <div className="flex h-screen items-center justify-center bg-background text-sm text-muted-foreground">
-        Redirecting to sign in…
+        Loading your session…
       </div>
     );
   }
