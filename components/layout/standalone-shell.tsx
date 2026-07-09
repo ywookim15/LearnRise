@@ -21,17 +21,18 @@ export function StandaloneShell({
   backHref?: string;
   backLabel?: string;
 }) {
-  const { isLoggedIn } = useApp();
+  const { isLoggedIn, authReady } = useApp();
   const router = useRouter();
 
+  // Middleware enforces auth server-side; this reacts to in-tab sign-out.
   useEffect(() => {
-    if (!isLoggedIn) router.replace("/login");
-  }, [isLoggedIn, router]);
+    if (authReady && !isLoggedIn) router.replace("/login");
+  }, [authReady, isLoggedIn, router]);
 
-  if (!isLoggedIn) {
+  if (!authReady || !isLoggedIn) {
     return (
       <div className="flex h-screen items-center justify-center bg-background text-sm text-muted-foreground">
-        Redirecting to sign in…
+        Loading your session…
       </div>
     );
   }

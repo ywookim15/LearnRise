@@ -1,12 +1,14 @@
 // MOCK DATA — the "My Resources" saved/favorited hub.
+// (Still mock in Phase 2 — out of the Step 5 scope. Uses the real 3 resource
+// types so it stays compatible with the shared icon component.)
 
-import type { ResourceType } from "./journeys";
+import type { DbResourceType } from "@/lib/data/journeys";
 
 export interface SavedResource {
   id: string;
   title: string;
   source: string;
-  type: ResourceType;
+  type: DbResourceType;
   duration: string;
   savedFrom: string; // which journey it came from
   folder: string | null;
@@ -38,7 +40,7 @@ export const mockSavedResources: SavedResource[] = [
     id: "sr2",
     title: "The Raft Paper, Annotated",
     source: "Papers We Love",
-    type: "reading",
+    type: "article",
     duration: "40 min",
     savedFrom: "Systems Architecture",
     folder: "f-references",
@@ -47,7 +49,7 @@ export const mockSavedResources: SavedResource[] = [
     id: "sr3",
     title: "Thinking, Fast and Slow — Overview",
     source: "Book Notes",
-    type: "reading",
+    type: "article",
     duration: "30 min",
     savedFrom: "Cognitive Psychology",
     folder: "f-favorites",

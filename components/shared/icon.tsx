@@ -8,29 +8,25 @@ import {
   PiggyBank,
   Languages,
   Palette,
+  Atom,
+  Calculator,
+  Globe,
+  Code,
+  Microscope,
   BookOpen,
+  Music,
   FileText,
-  FlaskConical,
-  Play,
   ListChecks,
+  Play,
   Folder,
   type LucideIcon,
 } from "lucide-react";
-import type { ResourceType } from "@/lib/mock-data/journeys";
+import type { DbResourceType } from "@/lib/data/journeys";
 
-// Maps the string icon names used in mock data to real Lucide components,
-// so mock data stays plain/serializable and easy to swap in Phase 2.
+// Maps the string icon names (derived from journey id) to Lucide components.
 const ICONS: Record<string, LucideIcon> = {
-  Boxes,
-  Brain,
-  PenTool,
-  Sparkles,
-  Terminal,
-  Dna,
-  PiggyBank,
-  Languages,
-  Palette,
-  Folder,
+  Boxes, Brain, PenTool, Sparkles, Terminal, Dna, PiggyBank, Languages,
+  Palette, Atom, Calculator, Globe, Code, Microscope, BookOpen, Music, Folder,
 };
 
 export function JourneyIcon({
@@ -44,29 +40,26 @@ export function JourneyIcon({
   return <Cmp className={className} />;
 }
 
-const RESOURCE_ICONS: Record<ResourceType, LucideIcon> = {
+// The three real DB resource types (Phase 2).
+const RESOURCE_ICONS: Record<DbResourceType, LucideIcon> = {
   video: Play,
   article: FileText,
-  reading: BookOpen,
-  lab: FlaskConical,
-  quiz: ListChecks,
+  practice_set: ListChecks,
 };
 
 export function ResourceTypeIcon({
   type,
   className,
 }: {
-  type: ResourceType;
+  type: DbResourceType;
   className?: string;
 }) {
-  const Cmp = RESOURCE_ICONS[type];
+  const Cmp = RESOURCE_ICONS[type] ?? FileText;
   return <Cmp className={className} />;
 }
 
-export const resourceTypeLabel: Record<ResourceType, string> = {
+export const resourceTypeLabel: Record<DbResourceType, string> = {
   video: "Video",
   article: "Article",
-  reading: "Reading",
-  lab: "Interactive Lab",
-  quiz: "Quiz",
+  practice_set: "Practice",
 };

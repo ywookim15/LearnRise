@@ -2,29 +2,41 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ChevronRight, Sparkles } from "lucide-react";
+import { ChevronRight, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { AppPage } from "@/components/layout/app-page";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { HelpDialog } from "@/components/dashboard/help-dialog";
 import { UnitFlowchart } from "@/components/journey/unit-flowchart";
 import { ResourceRow } from "@/components/journey/resource-row";
-import { useApp } from "@/lib/context/app-context";
-import { unitProgress, unitResourceCount } from "@/lib/mock-data/journeys";
+import { useJourneyDetail } from "@/lib/data/use-journey-detail";
+import { unitProgress, unitResourceCount } from "@/lib/data/journeys";
 
 export default function UnitPage() {
   const params = useParams<{ id: string; unitId: string }>();
-  const { getJourney, toggleResource } = useApp();
-  const journey = getJourney(params.id);
+  const { journey, loading, error, toggleResource } = useJourneyDetail(params.id);
   const unit = journey?.units.find((u) => u.id === params.unitId);
 
-  if (!journey || !unit) {
+  if (loading) {
+    return (
+      <AppPage>
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+      </AppPage>
+    );
+  }
+
+  if (error || !journey || !unit) {
     return (
       <AppPage>
         <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
+          <AlertCircle className="h-10 w-10 text-muted-foreground" />
           <p className="text-lg font-semibold">Unit not found</p>
           <Button asChild>
-            <Link href="/dashboard">Back to Dashboard</Link>
+            <Link href={journey ? `/journey/${journey.id}` : "/dashboard"}>
+              {journey ? "Back to journey" : "Back to Dashboard"}
+            </Link>
           </Button>
         </div>
       </AppPage>
@@ -43,20 +55,18 @@ export default function UnitPage() {
         {journey.name}
       </Link>
       <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
-      <span className="truncate font-medium text-primary">Unit {unit.index}</span>
+      <span className="truncate font-medium text-primary">Unit {unit.number}</span>
     </div>
   );
 
   return (
     <AppPage topbarLeft={breadcrumb}>
-      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-            Unit {unit.index}
+            Unit {unit.number}
           </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">{unit.title}</h1>
-          <p className="mt-1.5 max-w-xl text-sm text-muted-foreground">{unit.summary}</p>
         </div>
         <div className="w-full sm:w-56">
           <div className="flex items-center justify-between text-xs">
@@ -73,12 +83,10 @@ export default function UnitPage() {
         </div>
       </div>
 
-      {/* Flowchart */}
       <div className="mt-6">
         <UnitFlowchart unit={unit} />
       </div>
 
-      {/* Chapters */}
       <div className="mt-8 space-y-6">
         {unit.chapters.map((chapter) => (
           <section
@@ -86,24 +94,41 @@ export default function UnitPage() {
             className="overflow-hidden rounded-2xl border border-border bg-card shadow-card"
           >
             <div className="border-b border-border p-5">
-              <h2 className="text-lg font-semibold">{chapter.title}</h2>
-              {/* AI overview box */}
-              <div className="mt-3 rounded-2xl border border-primary/15 bg-brand-gradient-soft p-4">
-                <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-primary">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  AI overview
+              <h2 className="text-lg font-semibold">
+                {chapter.number} · {chapter.title}
+              </h2>
+              {chapter.learningObjective && (
+                <div className="mt-3 rounded-2xl border border-primary/15 bg-brand-gradient-soft p-4">
+                  <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-primary">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Learning objective
+                  </div>
+                  <p className="text-sm leading-relaxed text-foreground/80">
+                    {chapter.learningObjective}
+                  </p>
                 </div>
-                <p className="text-sm leading-relaxed text-foreground/80">{chapter.aiOverview}</p>
-              </div>
+              )}
             </div>
             <div className="p-2">
-              {chapter.resources.map((resource) => (
-                <ResourceRow
-                  key={resource.id}
-                  resource={resource}
-                  onToggle={() => toggleResource(journey.id, resource.id)}
-                />
-              ))}
+              {chapter.resources.length > 0 ? (
+                chapter.resources.map((resource) => (
+                  <ResourceRow
+                    key={resource.id}
+                    resource={resource}
+                    onToggle={() => toggleResource(resource.id)}
+                  />
+                ))
+              ) : chapter.resourceStatus === "pending" ? (
+                <p className="flex items-center gap-2 px-3 py-3 text-xs text-muted-foreground">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-secondary" />
+                  METIS is curating resources for this chapter…
+                </p>
+              ) : (
+                <p className="flex items-center gap-2 px-3 py-3 text-xs text-muted-foreground">
+                  <AlertCircle className="h-3.5 w-3.5" />
+                  No resources found yet — this chapter is flagged as a gap.
+                </p>
+              )}
             </div>
           </section>
         ))}
