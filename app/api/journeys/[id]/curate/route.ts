@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getRequestUser } from "@/lib/server/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { curateJourneyResources } from "@/lib/server/curator";
+import { runInBackground } from "@/lib/server/background";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -54,8 +55,9 @@ export async function POST(
     return NextResponse.json({ queued: false, message: "No chapters need curation" });
   }
 
-  void curateJourneyResources(params.id, { statuses }).catch((err) =>
-    console.error(`[curator] background run failed for ${params.id}:`, err)
+  runInBackground(
+    curateJourneyResources(params.id, { statuses }),
+    `curate ${params.id}`
   );
 
   return NextResponse.json({ queued: true, chapters: count }, { status: 202 });

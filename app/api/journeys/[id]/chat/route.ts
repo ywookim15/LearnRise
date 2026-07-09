@@ -8,6 +8,7 @@ import {
   type ChatMode,
 } from "@/lib/server/chief";
 import { compressMemory, loadMemory } from "@/lib/server/memory";
+import { runInBackground } from "@/lib/server/background";
 import type { PlannerInputs } from "@/lib/server/planner";
 
 export const runtime = "nodejs";
@@ -101,35 +102,45 @@ export async function POST(
   let roadmapUpdating = false;
   let actionNote = "none";
 
-  // --- fire-and-forget the roadmap-changing work (reply returns immediately) ---
+  // --- background the roadmap-changing work (reply returns immediately;
+  //     runInBackground keeps it alive past the response on serverless) ---
   if (result.intent === "replan" && chapters.some((c) => !c.isComplete)) {
     roadmapUpdating = true;
     actionNote = `re-planned incomplete chapters: ${result.replanGuidance}`;
-    void runReplan({
-      journeyId: params.id,
-      inputs,
-      chapters,
-      guidance: result.replanGuidance || message,
-    }).catch((e) => console.error(`[chat] replan failed for ${params.id}:`, e));
+    runInBackground(
+      runReplan({
+        journeyId: params.id,
+        inputs,
+        chapters,
+        guidance: result.replanGuidance || message,
+      }),
+      `replan ${params.id}`
+    );
   } else if (result.intent === "resource_refresh") {
     roadmapUpdating = true;
     actionNote = `refreshed resources${result.newPreference ? ` (new preference: ${result.newPreference})` : ""}`;
-    void runResourceRefresh({
-      journeyId: params.id,
-      chapters,
-      targetChapterNumbers: result.targetChapterNumbers,
-      newPreference: result.newPreference,
-    }).catch((e) => console.error(`[chat] resource refresh failed for ${params.id}:`, e));
+    runInBackground(
+      runResourceRefresh({
+        journeyId: params.id,
+        chapters,
+        targetChapterNumbers: result.targetChapterNumbers,
+        newPreference: result.newPreference,
+      }),
+      `resource-refresh ${params.id}`
+    );
   }
 
-  // --- Stage 5 memory compression (fire-and-forget) ---
-  void compressMemory({
-    journeyId: params.id,
-    priorNotes: memory,
-    userMessage: message,
-    assistantReply: result.reply,
-    actionNote,
-  }).catch((e) => console.error(`[chat] memory compression failed for ${params.id}:`, e));
+  // --- Stage 5 memory compression (background) ---
+  runInBackground(
+    compressMemory({
+      journeyId: params.id,
+      priorNotes: memory,
+      userMessage: message,
+      assistantReply: result.reply,
+      actionNote,
+    }),
+    `memory ${params.id}`
+  );
 
   return NextResponse.json({
     reply: result.reply,

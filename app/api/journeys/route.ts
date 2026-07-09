@@ -3,6 +3,7 @@ import { getRequestUser } from "@/lib/server/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { generateRoadmap, type PlannerInputs } from "@/lib/server/planner";
 import { curateJourneyResources } from "@/lib/server/curator";
+import { runInBackground } from "@/lib/server/background";
 
 export const runtime = "nodejs";
 // Roadmap generation = 1 Tavily search + 1 Gemini call; usually well under this.
@@ -137,10 +138,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to save roadmap" }, { status: 500 });
   }
 
-  // ---- Stage 3 kick-off: async, fire-and-forget (student doesn't wait) ----
-  void curateJourneyResources(journeyId).catch((err) =>
-    console.error(`[curator] background run failed for ${journeyId}:`, err)
-  );
+  // ---- Stage 3 kick-off: background (survives past the response on Vercel) ----
+  runInBackground(curateJourneyResources(journeyId), `curate ${journeyId}`);
 
   return NextResponse.json(
     {
