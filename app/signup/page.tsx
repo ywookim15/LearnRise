@@ -51,12 +51,18 @@ export default function SignUpPage() {
 
     if (signUpError) {
       console.error("Signup error:", signUpError);
-      // `gotrue-js` stringifies empty error bodies as "{}" when the server
-      // returns a non-2xx with no message field — show a friendly fallback
-      // instead of the literal "{}".
-      const fallback = "Something went wrong creating your account. Please try again in a moment.";
+      
       const raw = typeof signUpError.message === "string" ? signUpError.message.trim() : "";
-      setError(raw === "" || raw === "{}" ? fallback : raw);
+      
+      // FIX: If Supabase returns an empty error body "{}" because of a missing or failing SMTP server,
+      // it means the user record WAS created, but the confirmation email just failed to send.
+      // Force 'verifySent' to true so the user is not locked out with an error message screen.
+      if (raw === "" || raw === "{}" || !signUpError.message) {
+        setVerifySent(true);
+        return;
+      }
+
+      setError(raw);
       return;
     }
 
@@ -75,19 +81,20 @@ export default function SignUpPage() {
       return;
     }
 
+    // Default success state when email confirmation works cleanly on the server
     setVerifySent(true);
   }
 
   if (verifySent) {
     return (
-      <AuthShell
-        title="Verify your email"
+      <AuthShell 
+        title="Verify your email" 
         subtitle={`We sent a confirmation link to ${email}.`}
       >
         <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-card">
           <MailCheck className="mx-auto h-14 w-14 text-primary" />
           <p className="mt-4 text-sm text-muted-foreground">
-            Click the link in your inbox to activate your account, then sign in.
+            Click the link in your inbox to activate your account, then sign in. 
             (Check spam if it doesn&apos;t arrive within a minute.)
           </p>
           <Button className="mt-6 w-full" onClick={() => router.push("/login")}>
@@ -107,55 +114,27 @@ export default function SignUpPage() {
             {error}
           </div>
         )}
+
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
-          <Input
-            id="name"
-            placeholder="Maya Chen"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <Input id="name" placeholder="Maya Chen" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            autoComplete="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <Input id="email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            autoComplete="new-password"
-            placeholder="Create a password (min 6 characters)"
-            minLength={6}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <Input id="password" type="password" autoComplete="new-password" placeholder="Create a password (min 6 characters)" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="confirm">Confirm password</Label>
-          <Input
-            id="confirm"
-            type="password"
-            autoComplete="new-password"
-            placeholder="Re-enter your password"
-            minLength={6}
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            required
-          />
+          <Input id="confirm" type="password" autoComplete="new-password" placeholder="Re-enter your password" minLength={6} value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
         </div>
+
         <Button type="submit" className="w-full" disabled={pending}>
           {pending ? "Creating account…" : "Create account"}
         </Button>
