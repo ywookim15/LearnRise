@@ -65,6 +65,15 @@ export default function ResourcesPage() {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Saved resources
         </h2>
+        {mockSavedResources.length === 0 && (
+          <div className="mt-4 flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
+            <Bookmark className="h-8 w-8 text-muted-foreground" />
+            <p className="text-sm font-medium">No saved resources yet</p>
+            <p className="max-w-sm text-xs text-muted-foreground">
+              Bookmark resources from your journeys and they&apos;ll collect here.
+            </p>
+          </div>
+        )}
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {mockSavedResources.map((res) => (
             <div

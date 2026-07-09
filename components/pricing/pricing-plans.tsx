@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Check, X, Sparkles, Zap, ShieldCheck, DownloadCloud, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { useApp } from "@/lib/context/app-context";
 import { startCheckout, openBillingPortal } from "@/lib/data/subscription";
 import { cn } from "@/lib/utils";
@@ -77,8 +78,9 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       </div>
 
       {/* Billing toggle */}
-      <div className="mt-8 flex items-center justify-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
         <button
+          type="button"
           onClick={() => setBilling("monthly")}
           className={cn(
             "text-sm font-medium transition-colors",
@@ -87,21 +89,13 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         >
           Monthly
         </button>
+        <Switch
+          checked={billing === "yearly"}
+          onCheckedChange={(checked) => setBilling(checked ? "yearly" : "monthly")}
+          aria-label="Toggle yearly billing"
+        />
         <button
-          role="switch"
-          aria-checked={billing === "yearly"}
-          onClick={() => setBilling((b) => (b === "yearly" ? "monthly" : "yearly"))}
-          className="relative h-6 w-11 rounded-full bg-muted transition-colors data-[on=true]:bg-primary"
-          data-on={billing === "yearly"}
-        >
-          <span
-            className={cn(
-              "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform",
-              billing === "yearly" ? "translate-x-[22px]" : "translate-x-0.5"
-            )}
-          />
-        </button>
-        <button
+          type="button"
           onClick={() => setBilling("yearly")}
           className={cn(
             "text-sm font-medium transition-colors",
@@ -110,7 +104,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         >
           Yearly
         </button>
-        <Badge variant="secondary" className="ml-1">Save over 20%</Badge>
+        <Badge variant="secondary">Save over 20%</Badge>
       </div>
 
       {/* Plans */}

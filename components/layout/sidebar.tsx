@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, LineChart, Archive, FolderClosed, Settings } from "lucide-react";
+import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
@@ -16,12 +16,12 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { user } = useApp();
+  const { isPremium } = useApp();
 
   return (
     <aside className="flex h-full w-64 shrink-0 flex-col border-r border-border bg-card">
       <div className="px-5 py-6">
-        <Link href="/" aria-label="Go to METIS landing page">
+        <Link href="/dashboard" aria-label="Go to dashboard">
           <Logo tagline />
         </Link>
       </div>
@@ -62,22 +62,30 @@ export function Sidebar() {
           Settings
         </Link>
 
-        <Link
-          href="/upgrade"
-          className="block overflow-hidden rounded-2xl bg-brand-gradient p-4 shadow-brand transition-transform hover:scale-[1.01]"
-        >
-          <p className="text-sm font-semibold text-white">
-            {user.plan === "pro" ? "Pro Plan" : "Upgrade Plan"}
-          </p>
-          <p className="mt-1 text-xs leading-snug text-white/80">
-            {user.plan === "pro"
-              ? "Manage your subscription and billing."
-              : "Unlock adaptive tutor & multi-journey memory sync."}
-          </p>
-          <span className="mt-3 flex items-center justify-center rounded-lg bg-white/95 px-3 py-2 text-sm font-semibold text-primary">
-            {user.plan === "pro" ? "Manage Plan" : "Upgrade"}
-          </span>
-        </Link>
+        {isPremium ? (
+          <div className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-brand-gradient-soft p-4">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white shadow-brand">
+              <Crown className="h-4 w-4" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground">Pro Plan</p>
+              <p className="text-xs text-muted-foreground">You&apos;re a Pro member</p>
+            </div>
+          </div>
+        ) : (
+          <Link
+            href="/upgrade"
+            className="block overflow-hidden rounded-2xl bg-brand-gradient p-4 shadow-brand transition-transform hover:scale-[1.01]"
+          >
+            <p className="text-sm font-semibold text-white">Upgrade Plan</p>
+            <p className="mt-1 text-xs leading-snug text-white/80">
+              Unlock adaptive tutor &amp; multi-journey memory sync.
+            </p>
+            <span className="mt-3 flex items-center justify-center rounded-lg bg-white/95 px-3 py-2 text-sm font-semibold text-primary">
+              Upgrade
+            </span>
+          </Link>
+        )}
       </div>
     </aside>
   );

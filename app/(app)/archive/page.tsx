@@ -45,6 +45,11 @@ export default function ArchivePage() {
           <CheckCircle2 className="h-5 w-5 text-emerald-600" />
           <h2 className="text-lg font-semibold">Completed Learning Journeys</h2>
         </div>
+        {mockCompletedJourneys.length === 0 && (
+          <p className="mt-4 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
+            No completed journeys yet. Finish a journey and it&apos;ll be archived here.
+          </p>
+        )}
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {mockCompletedJourneys.map((j) => (
             <div

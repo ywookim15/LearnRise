@@ -5,7 +5,6 @@ import { Folder as FolderIcon, FolderPlus, AlertCircle, RefreshCw } from "lucide
 import { AppPage } from "@/components/layout/app-page";
 import { JourneyCard } from "@/components/dashboard/journey-card";
 import { AddJourneyCard } from "@/components/dashboard/add-journey-card";
-import { StreakWidget } from "@/components/dashboard/streak-widget";
 import { HelpDialog } from "@/components/dashboard/help-dialog";
 import { AddFolderDialog } from "@/components/dashboard/add-folder-dialog";
 import {
@@ -38,15 +37,12 @@ export default function DashboardPage() {
 
   return (
     <AppPage showMemoryAgent={false}>
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-        <div>
-          <h1 className="text-4xl font-bold tracking-tight">My Learning Journeys</h1>
-          <p className="mt-2 max-w-md text-muted-foreground">
-            Precision-mapped pathways across your professional and intellectual
-            landscape.
-          </p>
-        </div>
-        <StreakWidget />
+      <div>
+        <h1 className="text-4xl font-bold tracking-tight">My Learning Journeys</h1>
+        <p className="mt-2 max-w-md text-muted-foreground">
+          Precision-mapped pathways across your professional and intellectual
+          landscape.
+        </p>
       </div>
 
       {journeysError ? (

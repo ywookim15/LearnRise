@@ -35,6 +35,15 @@ export default function NotificationsPage() {
       </div>
 
       <div className="mt-6 space-y-3">
+        {notifications.length === 0 && (
+          <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
+            <Bell className="h-8 w-8 text-muted-foreground" />
+            <p className="text-sm font-medium">No notifications yet</p>
+            <p className="text-xs text-muted-foreground">
+              Streak reminders and journey nudges will show up here.
+            </p>
+          </div>
+        )}
         {notifications.map((n) => {
           const Icon = ICON[n.type];
           return (

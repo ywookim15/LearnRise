@@ -34,6 +34,11 @@ export function NotificationsDropdown() {
           </button>
         </div>
         <div className="max-h-[20rem] divide-y divide-border overflow-y-auto scrollbar-slim">
+          {recent.length === 0 && (
+            <p className="px-4 py-8 text-center text-sm text-muted-foreground">
+              No notifications yet.
+            </p>
+          )}
           {recent.map((n) => (
             <div key={n.id} className="flex gap-3 px-4 py-3 transition-colors hover:bg-muted/50">
               <span
