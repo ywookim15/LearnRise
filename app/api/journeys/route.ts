@@ -4,6 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { generateRoadmap, type PlannerInputs } from "@/lib/server/planner";
 import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
+import { canCreateJourney } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 // Roadmap generation = 1 Tavily search + 1 Gemini call; usually well under this.
@@ -41,6 +42,21 @@ export async function POST(req: NextRequest) {
   const goal = (body.goal ?? "").trim();
   if (!goal) {
     return NextResponse.json({ error: "A goal is required" }, { status: 400 });
+  }
+
+  // ---- Free-tier cap: enforce BEFORE spending a Gemini call ----
+  const [{ data: subRow }, { count: journeyCount }] = await Promise.all([
+    getSupabaseAdmin().from("subscriptions").select("plan, status").eq("user_id", user.id).maybeSingle(),
+    getSupabaseAdmin().from("journeys").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+  ]);
+  if (!canCreateJourney(subRow?.plan, subRow?.status, journeyCount ?? 0)) {
+    return NextResponse.json(
+      {
+        error: "The free plan is limited to 1 active journey. Upgrade to Premium for unlimited journeys.",
+        code: "free_limit",
+      },
+      { status: 402 }
+    );
   }
 
   const hoursRaw = Number(body.hoursPerWeek);

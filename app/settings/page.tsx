@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Upload, Trash2, Sparkles, Check } from "lucide-react";
+import { Upload, Trash2, Sparkles, Check, CreditCard, Loader2, AlertCircle } from "lucide-react";
 import { StandaloneShell } from "@/components/layout/standalone-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,14 +16,28 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useApp } from "@/lib/context/app-context";
+import { openBillingPortal } from "@/lib/data/subscription";
 
 export default function SettingsPage() {
-  const { user, updateUser } = useApp();
+  const { user, updateUser, isPremium, subscription } = useApp();
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
   const [saved, setSaved] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [billingPending, setBillingPending] = useState(false);
+  const [billingError, setBillingError] = useState<string | null>(null);
+
+  async function handleManageBilling() {
+    setBillingError(null);
+    setBillingPending(true);
+    try {
+      await openBillingPortal(); // redirects to Stripe on success
+    } catch (e) {
+      setBillingPending(false);
+      setBillingError(e instanceof Error ? e.message : "Couldn't open billing portal.");
+    }
+  }
 
   // The Supabase session loads asynchronously — re-seed the form when the
   // real profile arrives (or after a save round-trips through the context).
@@ -122,15 +136,28 @@ export default function SettingsPage() {
         <div>
           <h2 className="text-base font-semibold">Your plan</h2>
           <p className="text-sm text-muted-foreground">
-            You&apos;re currently on the {user.plan === "pro" ? "Premium" : "Free"} plan.
+            You&apos;re currently on the {isPremium ? "Premium" : "Free"} plan.
           </p>
+          {billingError && (
+            <p className="mt-1 flex items-center gap-1.5 text-xs text-destructive">
+              <AlertCircle className="h-3.5 w-3.5" />
+              {billingError}
+            </p>
+          )}
         </div>
-        <Button asChild variant="gradient">
-          <Link href="/upgrade">
-            <Sparkles className="h-4 w-4" />
-            Upgrade my plan
-          </Link>
-        </Button>
+        {isPremium || subscription?.hasCustomer ? (
+          <Button variant="outline" onClick={handleManageBilling} disabled={billingPending}>
+            {billingPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
+            Manage billing
+          </Button>
+        ) : (
+          <Button asChild variant="gradient">
+            <Link href="/upgrade">
+              <Sparkles className="h-4 w-4" />
+              Upgrade my plan
+            </Link>
+          </Button>
+        )}
       </section>
 
       {/* Danger zone */}

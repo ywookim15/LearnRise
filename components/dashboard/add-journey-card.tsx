@@ -13,14 +13,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { JourneyCreationDialog } from "@/components/journey/journey-creation-dialog";
 import { useApp } from "@/lib/context/app-context";
+import { FREE_JOURNEY_LIMIT } from "@/lib/entitlements";
 
 export function AddJourneyCard() {
-  const { user, journeys } = useApp();
+  const { isPremium, journeys } = useApp();
   const [createOpen, setCreateOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
   // Free tier is capped at 1 active journey — surface the upgrade prompt instead.
-  const atFreeLimit = user.plan === "free" && journeys.length >= 1;
+  // (The server also enforces this in POST /api/journeys as the real backstop.)
+  const atFreeLimit = !isPremium && journeys.length >= FREE_JOURNEY_LIMIT;
 
   function handleClick() {
     if (atFreeLimit) setUpgradeOpen(true);

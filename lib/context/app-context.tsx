@@ -26,6 +26,7 @@ import {
   type UiJourneySummary,
   type CreateJourneyInput,
 } from "@/lib/data/journeys";
+import { getMySubscription, type UiSubscription } from "@/lib/data/subscription";
 import { mockNotifications, type AppNotification } from "@/lib/mock-data/notifications";
 import type { MockUser } from "@/lib/mock-data/user";
 
@@ -44,6 +45,11 @@ interface AppContextValue {
   // User profile
   user: MockUser;
   updateUser: (patch: Partial<MockUser>) => void;
+
+  // Billing (real, from Supabase subscriptions synced by the Stripe webhook)
+  subscription: UiSubscription | null;
+  isPremium: boolean;
+  refreshSubscription: () => Promise<void>;
 
   // Journeys (real, from Supabase)
   journeys: UiJourneySummary[];
@@ -89,6 +95,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [authUser, setAuthUser] = useState<SupabaseUser | null>(null);
   const [authReady, setAuthReady] = useState(false);
   const [profileOverride, setProfileOverride] = useState<Partial<MockUser>>({});
+  const [subscription, setSubscription] = useState<UiSubscription | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -102,7 +109,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setAuthUser(session?.user ?? null);
       setAuthReady(true);
-      if (!session) setProfileOverride({});
+      if (!session) {
+        setProfileOverride({});
+        setSubscription(null);
+      }
     });
     return () => {
       mounted = false;
@@ -126,9 +136,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       lastName,
       email,
       avatarUrl: makeInitialsAvatar(initials),
-      plan: "pro",
+      // Real plan: 'pro' badge iff an active Stripe subscription entitles them.
+      plan: subscription?.isPremium ? "pro" : "free",
     };
-  }, [authUser, profileOverride]);
+  }, [authUser, profileOverride, subscription]);
 
   const updateUser = useCallback(
     (patch: Partial<MockUser>) => {
@@ -166,14 +177,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Load journeys once authenticated; clear them on sign-out.
+  const refreshSubscription = useCallback(async () => {
+    try {
+      setSubscription(await getMySubscription());
+    } catch {
+      setSubscription(null);
+    }
+  }, []);
+
+  // Load journeys + subscription once authenticated; clear on sign-out.
   useEffect(() => {
-    if (authReady && authUser) void refreshJourneys();
+    if (authReady && authUser) {
+      void refreshJourneys();
+      void refreshSubscription();
+    }
     if (authReady && !authUser) {
       setJourneys([]);
       setJourneysError(null);
+      setSubscription(null);
     }
-  }, [authReady, authUser, refreshJourneys]);
+  }, [authReady, authUser, refreshJourneys, refreshSubscription]);
 
   const createJourney = useCallback(
     async (input: CreateJourneyInput) => {
@@ -205,6 +228,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       logout,
       user,
       updateUser,
+      subscription,
+      isPremium: !!subscription?.isPremium,
+      refreshSubscription,
       journeys,
       journeysLoading,
       journeysError,
@@ -222,6 +248,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       logout,
       user,
       updateUser,
+      subscription,
+      refreshSubscription,
       journeys,
       journeysLoading,
       journeysError,

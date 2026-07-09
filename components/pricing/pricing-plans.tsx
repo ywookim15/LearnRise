@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, X, Sparkles, Zap, ShieldCheck, DownloadCloud, BadgeCheck } from "lucide-react";
+import { Check, X, Sparkles, Zap, ShieldCheck, DownloadCloud, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useApp } from "@/lib/context/app-context";
+import { startCheckout, openBillingPortal } from "@/lib/data/subscription";
 import { cn } from "@/lib/utils";
 
 type Billing = "monthly" | "yearly";
 
-// NOTE: prices follow the blueprint ($9.99/mo, $89/yr) rather than the Stitch
-// mock's $37.99 — see the judgment-call notes in the build summary.
+// Prices match the Business Plan and the live Stripe test prices.
 const PRICE: Record<Billing, { amount: string; suffix: string }> = {
-  monthly: { amount: "$9.99", suffix: "/month" },
-  yearly: { amount: "$89", suffix: "/year" },
+  monthly: { amount: "$5.99", suffix: "/month" },
+  yearly: { amount: "$56.99", suffix: "/year" },
 };
 
 const FREE_FEATURES = [
@@ -33,7 +34,31 @@ const PREMIUM_FEATURES = [
 
 export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
   const [billing, setBilling] = useState<Billing>("yearly");
-  const [mockUpgraded, setMockUpgraded] = useState(false);
+  const { isPremium } = useApp();
+  const [pending, setPending] = useState<null | "checkout" | "portal">(null);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleUpgrade() {
+    setError(null);
+    setPending("checkout");
+    try {
+      await startCheckout(billing); // redirects to Stripe on success
+    } catch (e) {
+      setPending(null);
+      setError(e instanceof Error ? e.message : "Couldn't start checkout.");
+    }
+  }
+
+  async function handleManage() {
+    setError(null);
+    setPending("portal");
+    try {
+      await openBillingPortal();
+    } catch (e) {
+      setPending(null);
+      setError(e instanceof Error ? e.message : "Couldn't open billing portal.");
+    }
+  }
 
   return (
     <div className="w-full">
@@ -122,7 +147,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
               </Button>
             ) : (
               <Button variant="outline" className="w-full" disabled>
-                Current Plan
+                {isPremium ? "Included with Premium" : "Current Plan"}
               </Button>
             )}
           </div>
@@ -157,18 +182,45 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
               <Button asChild variant="gradient" className="w-full">
                 <Link href="/signup">Upgrade Now</Link>
               </Button>
-            ) : mockUpgraded ? (
-              <Button variant="gradient" className="w-full" disabled>
-                <BadgeCheck className="h-4 w-4" />
-                Premium trial active (mock)
+            ) : isPremium ? (
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleManage}
+                disabled={pending !== null}
+              >
+                {pending === "portal" ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <BadgeCheck className="h-4 w-4" />
+                )}
+                Current plan · Manage billing
               </Button>
             ) : (
-              <Button variant="gradient" className="w-full" onClick={() => setMockUpgraded(true)}>
-                Upgrade Now
+              <Button
+                variant="gradient"
+                className="w-full"
+                onClick={handleUpgrade}
+                disabled={pending !== null}
+              >
+                {pending === "checkout" ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Redirecting to checkout…
+                  </>
+                ) : (
+                  "Upgrade Now"
+                )}
               </Button>
             )}
+            {error && (
+              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-destructive">
+                <AlertCircle className="h-3.5 w-3.5" />
+                {error}
+              </p>
+            )}
             <p className="text-center text-xs text-muted-foreground">
-              No commitment. Cancel anytime.
+              No commitment. Cancel anytime. Test mode — use card 4242 4242 4242 4242.
             </p>
           </div>
         </div>
