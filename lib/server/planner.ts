@@ -9,7 +9,7 @@
 //   4. Do NOT attach resources (Stage 3's job)
 // -----------------------------------------------------------------------------
 
-import { callGeminiFunction, Type, type FunctionDeclaration } from "@/lib/server/gemini";
+import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch } from "@/lib/server/tavily";
 
 export interface PlannerInputs {
@@ -54,45 +54,45 @@ export async function findReferenceSyllabus(goal: string): Promise<string | null
     .slice(0, 6000);
 }
 
-// --- Gemini function declaration: the ONLY way the Planner returns output ---
-const SAVE_ROADMAP: FunctionDeclaration = {
+// --- Structured tool: the ONLY way the Planner returns output (JSON Schema) ---
+const SAVE_ROADMAP: StructuredTool = {
   name: "save_roadmap",
   description:
     "Persist the generated learning roadmap for the student's journey. Must be called exactly once with the complete roadmap.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
       journey_name: {
-        type: Type.STRING,
+        type: "string",
         description: "Concise, motivating name for the journey (max ~6 words)",
       },
       estimated_total_weeks: {
-        type: Type.NUMBER,
+        type: "number",
         description: "Total estimated weeks for the whole journey",
       },
       units: {
-        type: Type.ARRAY,
+        type: "array",
         items: {
-          type: Type.OBJECT,
+          type: "object",
           properties: {
-            unit_number: { type: Type.INTEGER, description: "1-based unit index" },
-            unit_title: { type: Type.STRING },
+            unit_number: { type: "integer", description: "1-based unit index" },
+            unit_title: { type: "string" },
             estimated_weeks: {
-              type: Type.NUMBER,
+              type: "number",
               description: "Estimated weeks for this unit given the student's pace",
             },
             chapters: {
-              type: Type.ARRAY,
+              type: "array",
               items: {
-                type: Type.OBJECT,
+                type: "object",
                 properties: {
                   chapter_number: {
-                    type: Type.STRING,
+                    type: "string",
                     description: 'Format "<unit>-<chapter>", e.g. "1-1"',
                   },
-                  chapter_title: { type: Type.STRING },
+                  chapter_title: { type: "string" },
                   learning_objective: {
-                    type: Type.STRING,
+                    type: "string",
                     description: "One specific, concrete objective for this chapter",
                   },
                 },
@@ -226,9 +226,11 @@ RULES
 
 Call save_roadmap once with the revised remaining roadmap.`;
 
-  const raw = await callGeminiFunction<unknown>({
+  const raw = await callStructured<unknown>({
+    provider: LLM.planner.provider,
+    model: LLM.planner.model,
     prompt,
-    fn: SAVE_ROADMAP,
+    tool: SAVE_ROADMAP,
     temperature: 0.4,
   });
   return validateRoadmap(raw, inputs.goal);
@@ -240,9 +242,11 @@ export async function generateRoadmap(inputs: PlannerInputs): Promise<RoadmapOut
   // gracefully (the Planner falls back to curriculum conventions).
   const syllabusRef = await findReferenceSyllabus(inputs.goal);
 
-  const raw = await callGeminiFunction<unknown>({
+  const raw = await callStructured<unknown>({
+    provider: LLM.planner.provider,
+    model: LLM.planner.model,
     prompt: buildPlannerPrompt(inputs, syllabusRef),
-    fn: SAVE_ROADMAP,
+    tool: SAVE_ROADMAP,
     temperature: 0.4,
     // Interactive path: fail fast under rate limits so the request finishes
     // well under the serverless timeout (the user gets a clear "try again"

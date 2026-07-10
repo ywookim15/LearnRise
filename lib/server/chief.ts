@@ -12,7 +12,7 @@
 // Adaptation is CHAT-TRIGGERED ONLY — nothing here runs on a schedule.
 // -----------------------------------------------------------------------------
 
-import { callGeminiFunction, Type, type FunctionDeclaration } from "@/lib/server/gemini";
+import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { replanRemaining, type PlannerInputs } from "@/lib/server/planner";
 import { curateJourneyResources } from "@/lib/server/curator";
@@ -36,36 +36,36 @@ interface RoadmapSnapshotChapter {
   isComplete: boolean;
 }
 
-const CLASSIFY_FN: FunctionDeclaration = {
+const CLASSIFY_FN: StructuredTool = {
   name: "respond_to_student",
   description:
     "Respond to the student and declare whether their message requires changing the roadmap.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
       intent: {
-        type: Type.STRING,
+        type: "string",
         description:
           "conversational (answer only), replan (re-plan future/incomplete chapters), or resource_refresh (re-curate specific chapters' resources)",
       },
       reply: {
-        type: Type.STRING,
+        type: "string",
         description:
           "The message to show the student. If replanning or refreshing resources, tell them it's happening and they'll see updates shortly.",
       },
       target_chapter_numbers: {
-        type: Type.ARRAY,
+        type: "array",
         description:
           'For resource_refresh: the chapter numbers to re-curate, e.g. ["2-1","2-3"]. Empty for other intents.',
-        items: { type: Type.STRING },
+        items: { type: "string" },
       },
       new_preference: {
-        type: Type.STRING,
+        type: "string",
         description:
           "For resource_refresh when the student asked to change resource style (e.g. 'more videos'): the new preference text. Empty otherwise.",
       },
       replan_guidance: {
-        type: Type.STRING,
+        type: "string",
         description:
           "For replan: a concise instruction capturing what to change (re-pace, restructure, skip ahead, change depth). Empty otherwise.",
       },
@@ -106,13 +106,15 @@ export async function classifyAndRespond(opts: {
     .map((c) => `  ${c.number} ${c.title} [${c.isComplete ? "DONE" : "todo"}]`)
     .join("\n");
 
-  const out = await callGeminiFunction<{
+  const out = await callStructured<{
     intent?: string;
     reply?: string;
     target_chapter_numbers?: unknown[];
     new_preference?: string;
     replan_guidance?: string;
   }>({
+    provider: LLM.chief.provider,
+    model: LLM.chief.model,
     prompt: `You are METIS, an adaptive learning tutor embedded in a student's journey "${journeyName}" (goal: ${goal}).
 
 ${modeGuidance(mode)}
@@ -132,7 +134,7 @@ Decide the intent and write a helpful, concise reply (2-4 sentences, warm but no
 - resource_refresh: only when the student wants different/better resources for specific chapters, or a resource-style change. List chapter numbers in target_chapter_numbers; if it's a style change put it in new_preference.
 
 Call respond_to_student.`,
-    fn: CLASSIFY_FN,
+    tool: CLASSIFY_FN,
     temperature: 0.5,
   });
 

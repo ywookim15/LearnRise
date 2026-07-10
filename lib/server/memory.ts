@@ -9,16 +9,16 @@
 // -----------------------------------------------------------------------------
 
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { callGeminiFunction, Type, type FunctionDeclaration } from "@/lib/server/gemini";
+import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 
-const SAVE_NOTES: FunctionDeclaration = {
+const SAVE_NOTES: StructuredTool = {
   name: "save_memory_notes",
   description: "Persist the updated compressed memory notes for this journey.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
       compressed_notes: {
-        type: Type.STRING,
+        type: "string",
         description:
           "The full updated notes (<= ~1200 chars): the student's misconceptions, stated preferences, pacing signals, and what's been covered. Terse bullet-style prose, not a transcript.",
       },
@@ -43,7 +43,9 @@ export async function compressMemory(opts: {
 
   let compressed_notes: string;
   try {
-    const out = await callGeminiFunction<{ compressed_notes?: string }>({
+    const out = await callStructured<{ compressed_notes?: string }>({
+      provider: LLM.memory.provider,
+      model: LLM.memory.model,
       prompt: `You maintain a compact memory of a student's learning journey. Update the notes below to fold in the latest exchange. Keep only durable, useful signals: misconceptions revealed, stated preferences, pacing signals, and what's been covered or requested. Drop chit-chat. Stay under ~1200 characters, terse bullet-style prose.
 
 EXISTING NOTES:
@@ -55,7 +57,7 @@ METIS: ${assistantReply}
 ${actionNote ? `Action taken: ${actionNote}` : ""}
 
 Call save_memory_notes with the full updated notes.`,
-      fn: SAVE_NOTES,
+      tool: SAVE_NOTES,
       temperature: 0.2,
     });
     compressed_notes = (out.compressed_notes ?? "").slice(0, 4000);

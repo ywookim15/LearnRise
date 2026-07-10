@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getRequestUser } from "@/lib/server/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { generateRoadmap, type PlannerInputs } from "@/lib/server/planner";
-import { GeminiRateLimitError } from "@/lib/server/gemini";
+import { LLMRateLimitError } from "@/lib/server/llm";
 import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
 import { canCreateJourney } from "@/lib/entitlements";
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     roadmap = await generateRoadmap(inputs);
   } catch (err) {
     console.error("[planner] roadmap generation failed:", err);
-    if (err instanceof GeminiRateLimitError) {
+    if (err instanceof LLMRateLimitError) {
       return NextResponse.json(
         {
           error:

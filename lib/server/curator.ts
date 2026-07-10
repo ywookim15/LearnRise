@@ -23,7 +23,7 @@
 // -----------------------------------------------------------------------------
 
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { callGeminiFunction, Type, type FunctionDeclaration } from "@/lib/server/gemini";
+import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch, type TavilyResult } from "@/lib/server/tavily";
 import { getYoutubeTimestamps } from "@/lib/server/youtube";
 
@@ -130,51 +130,36 @@ async function fetchPageText(url: string): Promise<string | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Gemini function declarations (structured output only — never text parsing)
+// Structured tool (function calling only — never free-text parsing).
+// One merged "read + judge + select" call per chapter (was shortlist + select).
 // ---------------------------------------------------------------------------
 
-const SHORTLIST_FN: FunctionDeclaration = {
-  name: "shortlist_candidates",
-  description: "Shortlist the most promising search candidates for this chapter.",
-  parameters: {
-    type: Type.OBJECT,
-    properties: {
-      indices: {
-        type: Type.ARRAY,
-        description: "0-based indices of the ~4 most promising candidates, best first",
-        items: { type: Type.INTEGER },
-      },
-    },
-    required: ["indices"],
-  },
-};
-
-const SELECT_FN: FunctionDeclaration = {
+const SELECT_TOOL: StructuredTool = {
   name: "select_resources",
   description:
     "Select the best 1-3 learning resources for this chapter from the read candidates. Use an empty list if none are genuinely usable.",
   parameters: {
-    type: Type.OBJECT,
+    type: "object",
     properties: {
       none_usable: {
-        type: Type.BOOLEAN,
+        type: "boolean",
         description: "true when no candidate is a real, appropriate, working resource",
       },
       resources: {
-        type: Type.ARRAY,
+        type: "array",
         items: {
-          type: Type.OBJECT,
+          type: "object",
           properties: {
             candidate_index: {
-              type: Type.INTEGER,
+              type: "integer",
               description: "0-based index into the provided candidate list",
             },
             resource_type: {
-              type: Type.STRING,
+              type: "string",
               description: "One of: video, article, practice_set",
             },
             why_this_fits: {
-              type: Type.STRING,
+              type: "string",
               description: "ONE sentence justifying this pick for this student",
             },
           },
@@ -190,64 +175,32 @@ const SELECT_FN: FunctionDeclaration = {
 // per-chapter pipeline
 // ---------------------------------------------------------------------------
 
-async function shortlistAndJudge(
+async function selectResources(
   ctx: JourneyContext,
   chapter: ChapterRow,
   candidates: TavilyResult[],
   biasType: CurationResourceType | null
 ): Promise<SelectedResource[]> {
-  // ---- Step 3: shortlist from snippets ----
-  let indices: number[];
-  try {
-    const out = await callGeminiFunction<{ indices?: unknown[] }>({
-      prompt: `You are the METIS Resource Curator, picking study resources for a student.
+  // ---- Rank by Tavily score, keep the top few (bounds content + reputation) ----
+  const pool = [...candidates]
+    .map((c, i) => ({ c, s: c.score, i }))
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 6)
+    .map((x) => x.c);
+  if (pool.length === 0) return [];
 
-Journey goal: ${ctx.goal}
-Student's self-reported level: ${ctx.currentLevel || "not specified"}
-Stated preferences: ${ctx.preferences || "none"}
-Chapter ${chapter.chapter_number} (${chapter.unit_title}): ${chapter.chapter_title}
-Learning objective: ${chapter.learning_objective}
-
-Scan these web-search snippets and shortlist the ~4 most promising candidates for THIS chapter's objective. Favor the student's preferred media types when quality looks comparable. Exclude obvious junk (storefronts, forums, paywalled previews, generic homepages).
-
-${candidates
-  .map((c, i) => `[${i}] ${c.title}\n    ${c.url}\n    ${c.content.slice(0, 300)}`)
-  .join("\n\n")}
-
-Call shortlist_candidates with up to 4 indices, best first.`,
-      fn: SHORTLIST_FN,
-      temperature: 0.2,
-    });
-    indices = (out.indices ?? [])
-      .map((n) => Number(n))
-      .filter((n) => Number.isInteger(n) && n >= 0 && n < candidates.length)
-      .slice(0, 4);
-  } catch (err) {
-    console.error(`[curator] shortlist failed for ${chapter.chapter_number}, using top by score:`, err);
-    indices = [];
-  }
-  if (indices.length === 0) {
-    // Deterministic fallback: Tavily's own relevance ranking.
-    indices = candidates
-      .map((c, i) => ({ i, s: c.score }))
-      .sort((a, b) => b.s - a.s)
-      .slice(0, 4)
-      .map((x) => x.i);
-  }
-  const shortlisted = indices.map((i) => candidates[i]);
-
-  // ---- Step 4: full text — Tavily raw content first, fetch-parse fallback ----
+  // ---- Full text: Tavily raw content first, simple fetch-parse fallback ----
   const contents: string[] = [];
-  for (const c of shortlisted) {
+  for (const c of pool) {
     let text = c.rawContent && c.rawContent.length > 600 ? c.rawContent : null;
     if (!text) text = await fetchPageText(c.url);
     if (!text) text = c.content; // last resort: judge from the snippet
-    contents.push(text.slice(0, 3500));
+    contents.push(text.slice(0, 3000));
   }
 
-  // ---- Step 5: trusted-domain shortcut + lateral reading for the rest ----
+  // ---- Trusted-domain shortcut + cached lateral reading for the rest ----
   const repNotes: (string | null)[] = [];
-  for (const c of shortlisted) {
+  for (const c of pool) {
     const domain = domainOf(c.url);
     if (isTrustedDomain(domain)) {
       repNotes.push(null); // pre-verified, no lateral reading spent
@@ -268,21 +221,24 @@ Call shortlist_candidates with up to 4 indices, best first.`,
     repNotes.push(ctx.repCache.get(domain)!);
   }
 
-  // ---- Steps 6/7/9: read, judge, dedupe, select 1-3 with justification ----
-  const judgeOut = await callGeminiFunction<{
+  // ---- ONE merged call: read the candidates' content, judge, dedupe, and
+  //      select the best 1-3 with justifications (was two Gemini calls). ----
+  const judgeOut = await callStructured<{
     none_usable?: boolean;
     resources?: Array<{ candidate_index?: unknown; resource_type?: unknown; why_this_fits?: unknown }>;
   }>({
-    prompt: `You are the METIS Resource Curator making the FINAL resource selection for one chapter.
+    provider: LLM.curator.provider,
+    model: LLM.curator.model,
+    prompt: `You are the METIS Resource Curator selecting study resources for one chapter.
 
 Journey goal: ${ctx.goal}
 Student's self-reported level: ${ctx.currentLevel || "not specified"}
 Stated preferences: ${ctx.preferences || "none"}
-Chapter ${chapter.chapter_number}: ${chapter.chapter_title}
+Chapter ${chapter.chapter_number} (${chapter.unit_title}): ${chapter.chapter_title}
 Learning objective: ${chapter.learning_objective}
 ${biasType ? `IMPORTANT: the journey is currently under-serving the student's preferred media type (${biasType}) — bias this selection toward ${biasType} resources when quality permits.` : ""}
 
-You have read the actual content of each candidate below. Judge each one:
+The actual page content of each candidate is below. Judge each one:
 - Does it genuinely teach this chapter's learning objective (not just mention the topic)?
 - Is the difficulty appropriate for the student's stated level?
 - Is it a real, working, appropriately-scoped resource (not a landing page, index, forum stub, or paywall)?
@@ -290,10 +246,10 @@ You have read the actual content of each candidate below. Judge each one:
 - Trusted domains (Khan Academy, Coursera, MIT OCW, .edu) are pre-verified as reputable. For others, weigh the reputation notes provided.
 
 Select the best 1 to 3. resource_type must be exactly one of: video, article, practice_set (map "reading"→article, "course/lesson with exercises"→practice_set).
-If NOTHING is genuinely usable, call select_resources with resources: [] and none_usable: true.
+If NOTHING is genuinely usable, return resources: [] with none_usable: true.
 
 CANDIDATES:
-${shortlisted
+${pool
   .map((c, i) => {
     const domain = domainOf(c.url);
     return `[${i}] ${c.title}
@@ -303,7 +259,7 @@ ${shortlisted
     CONTENT: ${contents[i]}`;
   })
   .join("\n\n")}`,
-    fn: SELECT_FN,
+    tool: SELECT_TOOL,
     temperature: 0.2,
   });
 
@@ -313,8 +269,8 @@ ${shortlisted
   const selected: SelectedResource[] = [];
   for (const r of judgeOut.resources) {
     const idx = Number(r.candidate_index);
-    if (!Number.isInteger(idx) || idx < 0 || idx >= shortlisted.length) continue;
-    const cand = shortlisted[idx]; // URL comes from the real candidate — never from the model
+    if (!Number.isInteger(idx) || idx < 0 || idx >= pool.length) continue;
+    const cand = pool[idx]; // URL comes from the real candidate — never from the model
     if (seen.has(cand.url)) continue;
     seen.add(cand.url);
     const domain = domainOf(cand.url);
@@ -366,7 +322,7 @@ async function curateChapter(
   }
   if (!candidates?.length) return { resources: [], status: "no_resources_found" };
 
-  let resources = await shortlistAndJudge(ctx, chapter, candidates, biasType);
+  let resources = await selectResources(ctx, chapter, candidates, biasType);
 
   // ---- Fallback: judge found nothing usable -> broaden once, then give up ----
   if (resources.length === 0 && !alreadyBroadened) {
@@ -375,7 +331,7 @@ async function curateChapter(
       { maxResults: 8, includeRawContent: true }
     );
     if (broadened?.length) {
-      resources = await shortlistAndJudge(ctx, chapter, broadened, null);
+      resources = await selectResources(ctx, chapter, broadened, null);
     }
   }
   if (resources.length === 0) return { resources: [], status: "no_resources_found" };
