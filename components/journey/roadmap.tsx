@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 export function Roadmap({
   journey,
   onToggleResource,
+  onToggleSave,
 }: {
   journey: UiJourneyDetail;
   onToggleResource: (resourceId: string) => void;
+  onToggleSave: (resourceId: string) => void;
 }) {
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(journey.units[0] ? [journey.units[0].id] : [])
@@ -80,7 +82,11 @@ export function Roadmap({
                     <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                       {chapter.number} · {chapter.title}
                     </p>
-                    <ChapterResources chapter={chapter} onToggleResource={onToggleResource} />
+                    <ChapterResources
+                      chapter={chapter}
+                      onToggleResource={onToggleResource}
+                      onToggleSave={onToggleSave}
+                    />
                   </div>
                 ))}
               </div>
@@ -95,9 +101,11 @@ export function Roadmap({
 function ChapterResources({
   chapter,
   onToggleResource,
+  onToggleSave,
 }: {
   chapter: UiUnit["chapters"][number];
   onToggleResource: (resourceId: string) => void;
+  onToggleSave: (resourceId: string) => void;
 }) {
   if (chapter.resources.length > 0) {
     return (
@@ -107,6 +115,7 @@ function ChapterResources({
             key={resource.id}
             resource={resource}
             onToggle={() => onToggleResource(resource.id)}
+            onToggleSave={() => onToggleSave(resource.id)}
           />
         ))}
       </>

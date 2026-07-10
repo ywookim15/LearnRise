@@ -24,6 +24,7 @@ export interface UiResource {
   videoTimestamp: string | null;
   isTrusted: boolean;
   completed: boolean;
+  saved: boolean;
 }
 
 export interface UiChapter {
@@ -91,7 +92,7 @@ export function deriveAccent(seed: string): Accent {
 }
 
 const RESOURCE_SELECT =
-  "id, title, url, source_name, resource_type, video_timestamp, why_this_fits, is_trusted_domain, is_complete";
+  "id, title, url, source_name, resource_type, video_timestamp, why_this_fits, is_trusted_domain, is_complete, saved_at";
 const DETAIL_SELECT = `id, journey_name, goal, preferences, created_at, estimated_total_weeks,
   units ( id, unit_number, unit_title, estimated_weeks,
     chapters ( id, chapter_number, chapter_title, learning_objective, is_complete, resource_status,
@@ -110,6 +111,7 @@ function mapResource(r: any, chapterNumber: string): UiResource {
     videoTimestamp: r.video_timestamp ?? null,
     isTrusted: !!r.is_trusted_domain,
     completed: !!r.is_complete,
+    saved: !!r.saved_at,
   };
 }
 
@@ -191,7 +193,11 @@ export function unitResourceCount(unit: UiUnit): number {
 
 // --- reads ---
 
-/** Dashboard list: journeys + computed progress + curation status. */
+/**
+ * Dashboard list: journeys + computed progress + curation status. Excludes
+ * journeys that have been completed (moved to Archive) or deleted (moved to
+ * Archive's trash) — see listCompletedJourneys / listDeletedJourneys.
+ */
 export async function listJourneySummaries(): Promise<UiJourneySummary[]> {
   const supabase = getSupabaseBrowserClient();
   const { data, error } = await supabase
@@ -200,6 +206,8 @@ export async function listJourneySummaries(): Promise<UiJourneySummary[]> {
       `id, journey_name, goal, preferences, created_at, estimated_total_weeks,
        units ( id, chapters ( id, resource_status, resources ( is_complete ) ) )`
     )
+    .is("completed_at", null)
+    .is("deleted_at", null)
     .order("created_at", { ascending: true });
   if (error) throw error;
 
@@ -277,11 +285,174 @@ export async function setResourceComplete(
   if (sibErr) throw sibErr;
 
   const allDone = siblings.length > 0 && siblings.every((r) => r.is_complete);
-  const { error: chapErr } = await supabase
+  const { data: chapterRow, error: chapErr } = await supabase
     .from("chapters")
     .update({ is_complete: allDone })
-    .eq("id", chapterId);
+    .eq("id", chapterId)
+    .select("unit_id")
+    .single();
   if (chapErr) throw chapErr;
+
+  await syncJourneyCompletion(chapterRow.unit_id as string);
+}
+
+/**
+ * Roll a chapter-level completion change up to the journey: mark the whole
+ * journey completed once every resource across every chapter is checked off
+ * (moving it to the Archive page), and un-mark it if the student unchecks one
+ * later so Archive never shows a journey that isn't actually finished.
+ */
+async function syncJourneyCompletion(unitId: string): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const { data: unit } = await supabase.from("units").select("journey_id").eq("id", unitId).single();
+  if (!unit) return;
+  const journeyId = unit.journey_id as string;
+
+  const { data: journeyRow } = await supabase
+    .from("journeys")
+    .select("completed_at, units ( chapters ( resources ( is_complete ) ) )")
+    .eq("id", journeyId)
+    .single();
+  if (!journeyRow) return;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allResources = ((journeyRow as any).units ?? []).flatMap((u: any) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (u.chapters ?? []).flatMap((c: any) => c.resources ?? [])
+  );
+  const allComplete =
+    allResources.length > 0 && allResources.every((r: { is_complete: boolean }) => r.is_complete);
+  const wasCompleted = !!(journeyRow as { completed_at: string | null }).completed_at;
+
+  if (allComplete && !wasCompleted) {
+    await supabase.from("journeys").update({ completed_at: new Date().toISOString() }).eq("id", journeyId);
+  } else if (!allComplete && wasCompleted) {
+    await supabase.from("journeys").update({ completed_at: null }).eq("id", journeyId);
+  }
+}
+
+/** Bookmark a resource into (or out of) the "My Resources" saved hub. */
+export async function setResourceSaved(resourceId: string, next: boolean): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const { error } = await supabase
+    .from("resources")
+    .update({ saved_at: next ? new Date().toISOString() : null })
+    .eq("id", resourceId);
+  if (error) throw error;
+  if (!next) {
+    // A folder only ever holds saved resources — drop stale membership too.
+    await supabase.from("resource_folder_items").delete().eq("resource_id", resourceId);
+  }
+}
+
+// --- archive (completed / deleted journeys) ---
+
+export interface UiCompletedJourney {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  completedOn: string;
+  resourceCount: number;
+}
+
+export interface UiDeletedJourney {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  deletedOn: string;
+  daysUntilPurge: number;
+}
+
+// Note: this is a display countdown only — there is no scheduled job that
+// actually purges deleted journeys yet, so "Delete Permanently" is currently
+// the only way old trash is removed.
+const PURGE_AFTER_DAYS = 30;
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export async function listCompletedJourneys(): Promise<UiCompletedJourney[]> {
+  const supabase = getSupabaseBrowserClient();
+  const { data, error } = await supabase
+    .from("journeys")
+    .select(
+      `id, journey_name, goal, completed_at,
+       units ( chapters ( resources ( id ) ) )`
+    )
+    .not("completed_at", "is", null)
+    .is("deleted_at", null)
+    .order("completed_at", { ascending: false });
+  if (error) throw error;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data ?? []).map((row: any): UiCompletedJourney => {
+    const resourceCount = (row.units ?? []).flatMap(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (u: any) => (u.chapters ?? []).flatMap((c: any) => c.resources ?? [])
+    ).length;
+    return {
+      id: row.id,
+      name: row.journey_name ?? "Untitled journey",
+      description: row.goal || "",
+      icon: deriveIcon(row.id),
+      completedOn: formatDate(row.completed_at),
+      resourceCount,
+    };
+  });
+}
+
+export async function listDeletedJourneys(): Promise<UiDeletedJourney[]> {
+  const supabase = getSupabaseBrowserClient();
+  const { data, error } = await supabase
+    .from("journeys")
+    .select("id, journey_name, goal, deleted_at")
+    .not("deleted_at", "is", null)
+    .order("deleted_at", { ascending: false });
+  if (error) throw error;
+
+  const now = Date.now();
+  return (data ?? []).map((row): UiDeletedJourney => {
+    const deletedMs = new Date(row.deleted_at as string).getTime();
+    const daysSince = Math.floor((now - deletedMs) / 86_400_000);
+    return {
+      id: row.id,
+      name: row.journey_name ?? "Untitled journey",
+      description: row.goal || "",
+      icon: deriveIcon(row.id),
+      deletedOn: formatDate(row.deleted_at as string),
+      daysUntilPurge: Math.max(0, PURGE_AFTER_DAYS - daysSince),
+    };
+  });
+}
+
+/** Soft-delete: moves the journey to Archive's Deleted section, recoverable. */
+export async function deleteJourney(id: string): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const { error } = await supabase
+    .from("journeys")
+    .update({ deleted_at: new Date().toISOString() })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+export async function restoreJourney(id: string): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const { error } = await supabase.from("journeys").update({ deleted_at: null }).eq("id", id);
+  if (error) throw error;
+}
+
+/** Hard delete — permanent, cascades to units/chapters/resources/chat memory. */
+export async function purgeJourney(id: string): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  const { error } = await supabase.from("journeys").delete().eq("id", id);
+  if (error) throw error;
 }
 
 export interface CreateJourneyInput {

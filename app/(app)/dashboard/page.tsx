@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Folder as FolderIcon,
@@ -58,6 +58,11 @@ export default function DashboardPage() {
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);
   const [renameTarget, setRenameTarget] = useState<DashboardFolder | null>(null);
   const [dragOverFolder, setDragOverFolder] = useState<string | null>(null);
+  // dragenter/dragleave fire on every child element boundary, not just the
+  // drop zone itself — an enter-counter (rather than toggling on each event)
+  // keeps the highlight stable instead of flickering as the pointer crosses
+  // the folder card's icon/text/menu children.
+  const dragCounters = useRef<Record<string, number>>({});
 
   useEffect(() => {
     void refreshJourneys();
@@ -73,8 +78,23 @@ export default function DashboardPage() {
         .filter((j): j is NonNullable<typeof j> => !!j)
     : [];
 
+  function handleDragEnterFolder(folderId: string) {
+    dragCounters.current[folderId] = (dragCounters.current[folderId] ?? 0) + 1;
+    setDragOverFolder(folderId);
+  }
+
+  function handleDragLeaveFolder(folderId: string) {
+    const next = (dragCounters.current[folderId] ?? 0) - 1;
+    dragCounters.current[folderId] = next;
+    if (next <= 0) {
+      dragCounters.current[folderId] = 0;
+      setDragOverFolder((cur) => (cur === folderId ? null : cur));
+    }
+  }
+
   function handleDropOnFolder(e: React.DragEvent, folderId: string) {
     e.preventDefault();
+    dragCounters.current[folderId] = 0;
     const journeyId = e.dataTransfer.getData(DND_KEY);
     if (journeyId) addJourneyToFolder(folderId, journeyId);
     setDragOverFolder(null);
@@ -132,11 +152,12 @@ export default function DashboardPage() {
             {folders.map((folder) => (
               <div
                 key={folder.id}
-                onDragOver={(e) => {
+                onDragEnter={(e) => {
                   e.preventDefault();
-                  setDragOverFolder(folder.id);
+                  handleDragEnterFolder(folder.id);
                 }}
-                onDragLeave={() => setDragOverFolder((cur) => (cur === folder.id ? null : cur))}
+                onDragOver={(e) => e.preventDefault()}
+                onDragLeave={() => handleDragLeaveFolder(folder.id)}
                 onDrop={(e) => handleDropOnFolder(e, folder.id)}
                 className={cn(
                   "group flex items-center gap-3 rounded-2xl border bg-card p-4 shadow-card transition-all",
@@ -161,7 +182,10 @@ export default function DashboardPage() {
                   </div>
                 </button>
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus:opacity-100">
+                  <DropdownMenuTrigger
+                    aria-label="Folder options"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus:opacity-100"
+                  >
                     <MoreVertical className="h-4 w-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">

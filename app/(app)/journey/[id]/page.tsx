@@ -16,7 +16,7 @@ import { detailProgress } from "@/lib/data/journeys";
 
 export default function JourneyPage() {
   const params = useParams<{ id: string }>();
-  const { journey, loading, error, toggleResource, reload } = useJourneyDetail(params.id);
+  const { journey, loading, error, toggleResource, toggleSaved, reload } = useJourneyDetail(params.id);
   const [askOpen, setAskOpen] = useState(false);
 
   if (loading) {
@@ -97,7 +97,7 @@ export default function JourneyPage() {
             </div>
 
             <div className="mt-6">
-              <Roadmap journey={journey} onToggleResource={toggleResource} />
+              <Roadmap journey={journey} onToggleResource={toggleResource} onToggleSave={toggleSaved} />
             </div>
           </div>
         </div>

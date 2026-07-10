@@ -23,6 +23,7 @@ import { makeInitialsAvatar } from "@/lib/avatar";
 import {
   listJourneySummaries,
   createJourney as createJourneyRequest,
+  deleteJourney as deleteJourneyRequest,
   type UiJourneySummary,
   type CreateJourneyInput,
 } from "@/lib/data/journeys";
@@ -57,6 +58,7 @@ interface AppContextValue {
   journeysError: string | null;
   refreshJourneys: () => Promise<void>;
   createJourney: (input: CreateJourneyInput) => Promise<string>;
+  deleteJourney: (id: string) => Promise<void>;
 
   // Dashboard folders (client-side; not yet persisted to the DB)
   folders: DashboardFolder[];
@@ -251,6 +253,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  // Soft delete — moves the journey to Archive's Deleted section, recoverable.
+  const deleteJourney = useCallback(
+    async (id: string) => {
+      await deleteJourneyRequest(id);
+      setFolders((prev) => prev.map((f) => ({ ...f, journeyIds: f.journeyIds.filter((j) => j !== id) })));
+      await refreshJourneys();
+    },
+    [refreshJourneys]
+  );
+
   const markAllRead = useCallback(
     () => setNotifications((prev) => prev.map((n) => ({ ...n, unread: false }))),
     []
@@ -272,6 +284,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       journeysError,
       refreshJourneys,
       createJourney,
+      deleteJourney,
       folders,
       addFolder,
       renameFolder,
@@ -295,6 +308,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       journeysError,
       refreshJourneys,
       createJourney,
+      deleteJourney,
       folders,
       addFolder,
       renameFolder,

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ExternalLink, ShieldCheck } from "lucide-react";
+import { Bookmark, ExternalLink, ShieldCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ResourceTypeIcon, resourceTypeLabel } from "@/components/shared/icon";
 import type { UiResource } from "@/lib/data/journeys";
@@ -17,9 +17,11 @@ interface PreviewPos {
 export function ResourceRow({
   resource,
   onToggle,
+  onToggleSave,
 }: {
   resource: UiResource;
   onToggle: () => void;
+  onToggleSave: () => void;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [preview, setPreview] = useState<PreviewPos | null>(null);
@@ -77,6 +79,23 @@ export function ResourceRow({
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover/row:bg-card group-hover/row:text-primary">
         <ResourceTypeIcon type={resource.type} className="h-4 w-4" />
       </span>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onToggleSave();
+        }}
+        aria-label={resource.saved ? "Remove from saved resources" : "Save resource"}
+        aria-pressed={resource.saved}
+        className={cn(
+          "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-card hover:text-primary",
+          resource.saved
+            ? "text-primary"
+            : "text-muted-foreground opacity-0 group-hover/row:opacity-100"
+        )}
+      >
+        <Bookmark className={cn("h-4 w-4", resource.saved && "fill-current")} />
+      </button>
 
       {preview && typeof document !== "undefined" &&
         createPortal(

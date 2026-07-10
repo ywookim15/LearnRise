@@ -14,7 +14,7 @@ import { unitProgress, unitResourceCount } from "@/lib/data/journeys";
 
 export default function UnitPage() {
   const params = useParams<{ id: string; unitId: string }>();
-  const { journey, loading, error, toggleResource } = useJourneyDetail(params.id);
+  const { journey, loading, error, toggleResource, toggleSaved } = useJourneyDetail(params.id);
   const unit = journey?.units.find((u) => u.id === params.unitId);
 
   if (loading) {
@@ -116,6 +116,7 @@ export default function UnitPage() {
                     key={resource.id}
                     resource={resource}
                     onToggle={() => toggleResource(resource.id)}
+                    onToggleSave={() => toggleSaved(resource.id)}
                   />
                 ))
               ) : chapter.resourceStatus === "pending" ? (

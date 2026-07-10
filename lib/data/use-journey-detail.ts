@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getJourneyDetail,
   setResourceComplete,
+  setResourceSaved,
   type UiJourneyDetail,
 } from "@/lib/data/journeys";
 
@@ -108,7 +109,33 @@ export function useJourneyDetail(journeyId: string | undefined) {
     []
   );
 
-  return { ...state, reload: load, toggleResource };
+  /** Optimistic bookmark toggle, same pattern as toggleResource. */
+  const toggleSaved = useCallback(
+    async (resourceId: string) => {
+      let nextValue = false;
+      setState((s) => {
+        if (!s.journey) return s;
+        return { ...s, journey: mutateResource(s.journey, resourceId, (r) => {
+          nextValue = !r.saved;
+          return { ...r, saved: nextValue };
+        }) };
+      });
+      try {
+        await setResourceSaved(resourceId, nextValue);
+      } catch {
+        setState((s) => {
+          if (!s.journey) return s;
+          return { ...s, journey: mutateResource(s.journey, resourceId, (r) => ({
+            ...r,
+            saved: !nextValue,
+          })) };
+        });
+      }
+    },
+    []
+  );
+
+  return { ...state, reload: load, toggleResource, toggleSaved };
 }
 
 function mutateResource(

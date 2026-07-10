@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { RotateCcw, Trash2, Clock, CheckCircle2, Info } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import { RotateCcw, Trash2, Clock, CheckCircle2, Info, Loader2 } from "lucide-react";
 import { AppPage } from "@/components/layout/app-page";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,22 +15,56 @@ import {
 } from "@/components/ui/dialog";
 import { JourneyIcon } from "@/components/shared/icon";
 import {
-  mockCompletedJourneys,
-  mockDeletedJourneys,
-  type DeletedJourney,
-} from "@/lib/mock-data/archive";
+  listCompletedJourneys,
+  listDeletedJourneys,
+  restoreJourney,
+  purgeJourney,
+  type UiCompletedJourney,
+  type UiDeletedJourney,
+} from "@/lib/data/journeys";
 
 export default function ArchivePage() {
-  const [deleted, setDeleted] = useState<DeletedJourney[]>(mockDeletedJourneys);
-  const [toPurge, setToPurge] = useState<DeletedJourney | null>(null);
+  const [completed, setCompleted] = useState<UiCompletedJourney[]>([]);
+  const [deleted, setDeleted] = useState<UiDeletedJourney[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [toPurge, setToPurge] = useState<UiDeletedJourney | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
 
-  function restore(id: string) {
-    setDeleted((prev) => prev.filter((d) => d.id !== id));
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [c, d] = await Promise.all([listCompletedJourneys(), listDeletedJourneys()]);
+      setCompleted(c);
+      setDeleted(d);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  async function restore(id: string) {
+    setBusyId(id);
+    try {
+      await restoreJourney(id);
+      setDeleted((prev) => prev.filter((d) => d.id !== id));
+    } finally {
+      setBusyId(null);
+    }
   }
-  function purge() {
+
+  async function purge() {
     if (!toPurge) return;
-    setDeleted((prev) => prev.filter((d) => d.id !== toPurge.id));
-    setToPurge(null);
+    setBusyId(toPurge.id);
+    try {
+      await purgeJourney(toPurge.id);
+      setDeleted((prev) => prev.filter((d) => d.id !== toPurge.id));
+      setToPurge(null);
+    } finally {
+      setBusyId(null);
+    }
   }
 
   return (
@@ -39,97 +74,111 @@ export default function ArchivePage() {
         Journeys you&apos;ve completed or removed.
       </p>
 
-      {/* Completed */}
-      <section className="mt-8">
-        <div className="flex items-center gap-2">
-          <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-          <h2 className="text-lg font-semibold">Completed Learning Journeys</h2>
+      {loading ? (
+        <div className="mt-12 flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </div>
-        {mockCompletedJourneys.length === 0 && (
-          <p className="mt-4 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
-            No completed journeys yet. Finish a journey and it&apos;ll be archived here.
-          </p>
-        )}
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {mockCompletedJourneys.map((j) => (
-            <div
-              key={j.id}
-              className="flex flex-col rounded-2xl border border-border bg-card p-5 shadow-card"
-            >
-              <div className="flex items-start justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
-                  <JourneyIcon name={j.icon} className="h-5 w-5" />
-                </span>
-                <Badge variant="success">Completed</Badge>
-              </div>
-              <h3 className="mt-4 text-base font-semibold leading-snug">{j.name}</h3>
-              <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{j.description}</p>
-              <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                <Clock className="h-3.5 w-3.5" />
-                {j.completedOn} · {j.resourceCount} resources
-              </div>
-              <Button variant="outline" size="sm" className="mt-4">
-                View (read-only)
-              </Button>
+      ) : (
+        <>
+          {/* Completed */}
+          <section className="mt-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+              <h2 className="text-lg font-semibold">Completed Learning Journeys</h2>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Deleted */}
-      <section className="mt-12">
-        <div className="flex items-center gap-2">
-          <Trash2 className="h-5 w-5 text-muted-foreground" />
-          <h2 className="text-lg font-semibold">Deleted Learning Journeys</h2>
-        </div>
-        <div className="mt-2 flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
-          <Info className="h-4 w-4 shrink-0" />
-          Deleted journeys are automatically permanently deleted after 30 days.
-        </div>
-
-        {deleted.length === 0 ? (
-          <p className="mt-6 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
-            Nothing in the trash.
-          </p>
-        ) : (
-          <div className="mt-4 space-y-3">
-            {deleted.map((j) => (
-              <div
-                key={j.id}
-                className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 shadow-card sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-                    <JourneyIcon name={j.icon} className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="truncate text-sm font-semibold">{j.name}</h3>
-                    <p className="truncate text-xs text-muted-foreground">{j.description}</p>
-                    <p className="mt-0.5 text-xs text-destructive">
-                      {j.deletedOn} · purged in {j.daysUntilPurge} days
-                    </p>
+            {completed.length === 0 && (
+              <p className="mt-4 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
+                No completed journeys yet. Finish a journey and it&apos;ll be archived here.
+              </p>
+            )}
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {completed.map((j) => (
+                <div
+                  key={j.id}
+                  className="flex flex-col rounded-2xl border border-border bg-card p-5 shadow-card"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
+                      <JourneyIcon name={j.icon} className="h-5 w-5" />
+                    </span>
+                    <Badge variant="success">Completed</Badge>
                   </div>
-                </div>
-                <div className="flex shrink-0 gap-2">
-                  <Button variant="outline" size="sm" onClick={() => restore(j.id)}>
-                    <RotateCcw className="h-4 w-4" />
-                    Restore
+                  <h3 className="mt-4 text-base font-semibold leading-snug">{j.name}</h3>
+                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{j.description}</p>
+                  <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Clock className="h-3.5 w-3.5" />
+                    {j.completedOn} · {j.resourceCount} resources
+                  </div>
+                  <Button asChild variant="outline" size="sm" className="mt-4">
+                    <Link href={`/journey/${j.id}`}>View journey</Link>
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-destructive hover:bg-destructive/10"
-                    onClick={() => setToPurge(j)}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Deleted */}
+          <section className="mt-12">
+            <div className="flex items-center gap-2">
+              <Trash2 className="h-5 w-5 text-muted-foreground" />
+              <h2 className="text-lg font-semibold">Deleted Learning Journeys</h2>
+            </div>
+            <div className="mt-2 flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
+              <Info className="h-4 w-4 shrink-0" />
+              Deleted journeys can be restored any time before they&apos;re permanently deleted.
+            </div>
+
+            {deleted.length === 0 ? (
+              <p className="mt-6 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
+                Nothing in the trash.
+              </p>
+            ) : (
+              <div className="mt-4 space-y-3">
+                {deleted.map((j) => (
+                  <div
+                    key={j.id}
+                    className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 shadow-card sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <Trash2 className="h-4 w-4" />
-                    Delete Permanently
-                  </Button>
-                </div>
+                    <div className="flex items-center gap-4">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+                        <JourneyIcon name={j.icon} className="h-5 w-5" />
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="truncate text-sm font-semibold">{j.name}</h3>
+                        <p className="truncate text-xs text-muted-foreground">{j.description}</p>
+                        <p className="mt-0.5 text-xs text-destructive">
+                          {j.deletedOn} · purged in {j.daysUntilPurge} days
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex shrink-0 gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => restore(j.id)}
+                        disabled={busyId === j.id}
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                        Restore
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-destructive hover:bg-destructive/10"
+                        onClick={() => setToPurge(j)}
+                        disabled={busyId === j.id}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Delete Permanently
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
+            )}
+          </section>
+        </>
+      )}
 
       {/* Permanent-delete confirmation */}
       <Dialog open={!!toPurge} onOpenChange={(o) => !o && setToPurge(null)}>
@@ -140,15 +189,15 @@ export default function ArchivePage() {
             </div>
             <DialogTitle>Delete permanently?</DialogTitle>
             <DialogDescription>
-              &ldquo;{toPurge?.name}&rdquo; will be permanently deleted. This can&apos;t
-              be undone. (Mock action — nothing is stored.)
+              &ldquo;{toPurge?.name}&rdquo; will be permanently deleted, along with all of its
+              units, chapters, and resources. This can&apos;t be undone.
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
-            <Button variant="ghost" onClick={() => setToPurge(null)}>
+            <Button variant="ghost" onClick={() => setToPurge(null)} disabled={!!busyId}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={purge}>
+            <Button variant="destructive" onClick={purge} disabled={!!busyId}>
               Delete Permanently
             </Button>
           </div>
