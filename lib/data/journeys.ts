@@ -155,7 +155,7 @@ function mapDetail(row: any): UiJourneyDetail {
   return {
     id: row.id,
     name: row.journey_name ?? "Untitled journey",
-    description: row.preferences?.trim() || row.goal || "",
+    description: row.goal || "",
     icon: deriveIcon(row.id),
     accent: deriveAccent(row.id),
     createdAt: row.created_at,
@@ -221,7 +221,7 @@ export async function listJourneySummaries(): Promise<UiJourneySummary[]> {
     return {
       id: row.id,
       name: row.journey_name ?? "Untitled journey",
-      description: row.preferences?.trim() || row.goal || "",
+      description: row.goal || "",
       icon: deriveIcon(row.id),
       accent: deriveAccent(row.id),
       createdAt: row.created_at,

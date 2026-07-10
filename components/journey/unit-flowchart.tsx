@@ -1,25 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Flag, Trophy, Check, CircleDashed } from "lucide-react";
-import type { UiUnit } from "@/lib/data/journeys";
+import { Check, CircleDashed, Loader2, GitBranch } from "lucide-react";
+import { ResourceTypeIcon } from "@/components/shared/icon";
+import type { UiUnit, DbResourceType } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
 type NodeState = "unset" | "familiar" | "known";
 
-const STATE_STYLE: Record<NodeState, string> = {
-  unset: "border-border bg-card text-foreground",
-  familiar: "border-secondary bg-secondary/10 text-secondary",
-  known: "border-emerald-500 bg-emerald-500/10 text-emerald-600",
+const NODE_STYLE: Record<NodeState, string> = {
+  unset: "border-border bg-card",
+  familiar: "border-secondary/50 bg-secondary/5",
+  known: "border-emerald-500/50 bg-emerald-500/5",
+};
+
+const LEAF_STYLE: Record<DbResourceType, string> = {
+  video: "bg-primary/10 text-primary",
+  article: "bg-secondary/10 text-secondary",
+  practice_set: "bg-emerald-500/10 text-emerald-600",
 };
 
 /**
- * Mock static flowchart for a unit: each chapter is a node in the path from
- * "Start" to "Mastery". Hovering a node reveals non-functional
- * "Know it" / "Familiar" controls that toggle a local visual state.
+ * Knowledge-tree view of a unit: the unit is the root, each chapter is a branch,
+ * and each chapter's curated resources hang off it as leaf "subtopics". Hovering
+ * a chapter node reveals non-functional "Know it" / "Familiar" controls that
+ * toggle a local visual state (prototype only).
  */
 export function UnitFlowchart({ unit }: { unit: UiUnit }) {
   const [states, setStates] = useState<Record<string, NodeState>>({});
+  const [hovered, setHovered] = useState<string | null>(null);
 
   function setState(id: string, s: NodeState) {
     setStates((prev) => ({ ...prev, [id]: prev[id] === s ? "unset" : s }));
@@ -27,97 +36,129 @@ export function UnitFlowchart({ unit }: { unit: UiUnit }) {
 
   return (
     <div className="rounded-2xl border border-border bg-brand-gradient-soft p-6">
-      <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        What you&apos;ll learn in this unit
-      </p>
-      <div className="flex items-stretch gap-2 overflow-x-auto scrollbar-slim pb-2">
-        {/* Start node */}
-        <FixedNode icon={<Flag className="h-4 w-4" />} label="Start" tone="start" />
-        <Connector />
+      <div className="mb-5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <GitBranch className="h-3.5 w-3.5" />
+        Knowledge map — what you&apos;ll learn in this unit
+      </div>
 
-        {unit.chapters.map((chapter, i) => {
-          const state = states[chapter.id] ?? "unset";
+      {/* Root */}
+      <div className="flex items-center gap-3">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient text-lg font-bold text-white shadow-brand">
+          {unit.number}
+        </span>
+        <div>
+          <p className="font-semibold leading-tight">{unit.title}</p>
+          <p className="text-xs text-muted-foreground">
+            {unit.chapters.length} {unit.chapters.length === 1 ? "topic" : "topics"} · hover a node to mark your mastery
+          </p>
+        </div>
+      </div>
+
+      {/* Branches (chapters), hanging off a vertical spine */}
+      <div className="ml-6 mt-1 space-y-3 border-l-2 border-dashed border-primary/25 pl-7 pt-3">
+        {unit.chapters.map((chapter) => {
+          const st = states[chapter.id] ?? "unset";
+          const isHovered = hovered === chapter.id;
           return (
-            <div key={chapter.id} className="flex items-stretch gap-2">
-              <div className="group/node relative flex items-center">
-                <div
-                  className={cn(
-                    "flex h-full w-44 flex-col justify-center rounded-2xl border-2 px-4 py-3 shadow-card transition-colors",
-                    STATE_STYLE[state]
-                  )}
-                >
-                  <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide opacity-70">
-                    {state === "known" ? (
-                      <Check className="h-3 w-3" />
-                    ) : state === "familiar" ? (
-                      <CircleDashed className="h-3 w-3" />
-                    ) : null}
-                    Node {i + 1}
-                  </span>
-                  <span className="mt-1 text-sm font-semibold leading-snug">{chapter.title}</span>
+            <div
+              key={chapter.id}
+              className="relative"
+              onMouseEnter={() => setHovered(chapter.id)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              {/* connector node on the spine */}
+              <span
+                className={cn(
+                  "absolute -left-[35px] top-4 flex h-4 w-4 items-center justify-center rounded-full border-2 bg-background",
+                  st === "known"
+                    ? "border-emerald-500 text-emerald-500"
+                    : st === "familiar"
+                    ? "border-secondary text-secondary"
+                    : "border-primary/40"
+                )}
+              >
+                {st === "known" ? (
+                  <Check className="h-2.5 w-2.5" strokeWidth={3} />
+                ) : st === "familiar" ? (
+                  <CircleDashed className="h-2.5 w-2.5" />
+                ) : null}
+              </span>
+
+              {/* chapter node card */}
+              <div
+                className={cn(
+                  "rounded-2xl border-2 p-3 shadow-card transition-colors",
+                  NODE_STYLE[st]
+                )}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      Topic {chapter.number}
+                    </p>
+                    <p className="text-sm font-semibold leading-snug">{chapter.title}</p>
+                  </div>
+
+                  {/* hover-to-mark controls (React-state driven, never clipped) */}
+                  {isHovered ? (
+                    <div className="flex shrink-0 gap-1.5">
+                      <button
+                        onClick={() => setState(chapter.id, "known")}
+                        className="whitespace-nowrap rounded-lg bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 hover:bg-emerald-500/20"
+                      >
+                        Know it
+                      </button>
+                      <button
+                        onClick={() => setState(chapter.id, "familiar")}
+                        className="whitespace-nowrap rounded-lg bg-secondary/10 px-2.5 py-1 text-xs font-medium text-secondary hover:bg-secondary/20"
+                      >
+                        Familiar
+                      </button>
+                    </div>
+                  ) : st !== "unset" ? (
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium",
+                        st === "known"
+                          ? "bg-emerald-500/10 text-emerald-600"
+                          : "bg-secondary/10 text-secondary"
+                      )}
+                    >
+                      {st === "known" ? "Know it" : "Familiar"}
+                    </span>
+                  ) : null}
                 </div>
 
-                {/* Hover controls */}
-                <div className="pointer-events-none absolute -top-11 left-1/2 z-20 flex -translate-x-1/2 gap-1.5 rounded-xl border border-border bg-popover p-1.5 opacity-0 shadow-popover transition-opacity group-hover/node:pointer-events-auto group-hover/node:opacity-100">
-                  <button
-                    onClick={() => setState(chapter.id, "known")}
-                    className="whitespace-nowrap rounded-lg bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 hover:bg-emerald-500/20"
-                  >
-                    Know it
-                  </button>
-                  <button
-                    onClick={() => setState(chapter.id, "familiar")}
-                    className="whitespace-nowrap rounded-lg bg-secondary/10 px-2.5 py-1 text-xs font-medium text-secondary hover:bg-secondary/20"
-                  >
-                    Familiar
-                  </button>
+                {/* resource leaves (subtopics) */}
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {chapter.resources.length > 0 ? (
+                    chapter.resources.map((r) => (
+                      <span
+                        key={r.id}
+                        className={cn(
+                          "inline-flex max-w-[220px] items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-medium",
+                          LEAF_STYLE[r.type]
+                        )}
+                        title={r.title}
+                      >
+                        <ResourceTypeIcon type={r.type} className="h-3 w-3 shrink-0" />
+                        <span className="truncate">{r.title}</span>
+                      </span>
+                    ))
+                  ) : chapter.resourceStatus === "pending" ? (
+                    <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                      <Loader2 className="h-3 w-3 animate-spin text-secondary" />
+                      curating subtopics…
+                    </span>
+                  ) : (
+                    <span className="text-[11px] text-muted-foreground">no resources yet</span>
+                  )}
                 </div>
               </div>
-              <Connector />
             </div>
           );
         })}
-
-        {/* Mastery node */}
-        <FixedNode icon={<Trophy className="h-4 w-4" />} label="Mastery" tone="end" />
       </div>
-      <p className="mt-3 text-[11px] text-muted-foreground">
-        Hover a node to mark how well you know it (visual only in this prototype).
-      </p>
-    </div>
-  );
-}
-
-function Connector() {
-  return (
-    <div className="flex items-center px-0.5 text-muted-foreground">
-      <ChevronRight className="h-5 w-5" />
-    </div>
-  );
-}
-
-function FixedNode({
-  icon,
-  label,
-  tone,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  tone: "start" | "end";
-}) {
-  return (
-    <div
-      className={cn(
-        "flex w-24 flex-col items-center justify-center gap-1.5 rounded-2xl px-3 py-3 text-center shadow-card",
-        tone === "start"
-          ? "bg-brand-tertiary text-white"
-          : "bg-brand-gradient text-white"
-      )}
-    >
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
-        {icon}
-      </span>
-      <span className="text-xs font-semibold">{label}</span>
     </div>
   );
 }

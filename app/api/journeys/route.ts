@@ -9,7 +9,7 @@ import { canCreateJourney } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 // Roadmap generation = 1 Tavily search + 1 Gemini call; usually well under this.
-export const maxDuration = 60;
+export const maxDuration = 300; // Pro plan; capped to plan max on Hobby
 
 interface CreateJourneyBody {
   goal?: string;

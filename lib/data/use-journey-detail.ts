@@ -21,6 +21,22 @@ interface State {
 export function useJourneyDetail(journeyId: string | undefined) {
   const [state, setState] = useState<State>({ journey: null, loading: true, error: null });
   const pollRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastResumeRef = useRef<number>(0);
+
+  // Resume curation for stalled/pending chapters. Serverless caps each curation
+  // run at the function's maxDuration, so a big journey needs several runs; the
+  // client re-triggers /curate (throttled) until nothing is pending.
+  const resumeCuration = useCallback(async () => {
+    if (!journeyId) return;
+    const now = Date.now();
+    if (now - lastResumeRef.current < 45_000) return; // throttle
+    lastResumeRef.current = now;
+    try {
+      await fetch(`/api/journeys/${journeyId}/curate`, { method: "POST" });
+    } catch {
+      /* best-effort */
+    }
+  }, [journeyId]);
 
   const load = useCallback(
     async (opts: { silent?: boolean } = {}) => {
@@ -47,19 +63,23 @@ export function useJourneyDetail(journeyId: string | undefined) {
     };
   }, [load]);
 
-  // Poll while any chapter is still curating.
+  // Poll while any chapter is still curating; also resume curation (throttled)
+  // so a run that got cut off at the serverless time limit continues.
   useEffect(() => {
     const anyPending = state.journey?.units.some((u) =>
       u.chapters.some((c) => c.resourceStatus === "pending")
     );
     if (pollRef.current) clearTimeout(pollRef.current);
     if (anyPending) {
-      pollRef.current = setTimeout(() => void load({ silent: true }), 8000);
+      pollRef.current = setTimeout(() => {
+        void resumeCuration();
+        void load({ silent: true });
+      }, 8000);
     }
     return () => {
       if (pollRef.current) clearTimeout(pollRef.current);
     };
-  }, [state.journey, load]);
+  }, [state.journey, load, resumeCuration]);
 
   /** Optimistic toggle: flip local state immediately, persist, roll back on error. */
   const toggleResource = useCallback(

@@ -346,6 +346,20 @@ async function curateChapter(
   return { resources, status: "complete" };
 }
 
+/** How many chapters in a journey are still awaiting curation. */
+async function countPending(journeyId: string): Promise<number> {
+  const admin = getSupabaseAdmin();
+  const { data: units } = await admin.from("units").select("id").eq("journey_id", journeyId);
+  const unitIds = (units ?? []).map((u) => u.id);
+  if (unitIds.length === 0) return 0;
+  const { count } = await admin
+    .from("chapters")
+    .select("id", { count: "exact", head: true })
+    .in("unit_id", unitIds)
+    .eq("resource_status", "pending");
+  return count ?? 0;
+}
+
 async function writeChapterResources(
   chapterId: string,
   resources: SelectedResource[],
@@ -494,12 +508,28 @@ export async function curateJourneyResources(
     `[curator] starting: ${todo.length} chapters for "${journey.goal.slice(0, 60)}" (preferred type: ${ctx.preferredType ?? "none"})`
   );
 
-  // Sequential on purpose: friendly to Tavily/Gemini rate limits, and each
-  // chapter commits independently so partial progress is never lost.
+  // Time budget: stop launching new chapters before the serverless function is
+  // killed at its maxDuration, so we exit cleanly and leave the rest 'pending'.
+  // The client auto-resumes /curate, giving each run a fresh budget — so a
+  // 20-chapter journey finishes across a few resumptions instead of getting
+  // cut off. Override with CURATOR_BUDGET_MS.
+  const budgetMs = Number(process.env.CURATOR_BUDGET_MS ?? 45_000);
+  const startedAt = Date.now();
+
+  // Sequential on purpose: friendly to provider rate limits, and each chapter
+  // commits independently so partial progress is never lost.
+  let processed = 0;
   for (const chapter of todo) {
+    if (Date.now() - startedAt > budgetMs) {
+      console.log(
+        `[curator] time budget reached after ${processed}/${todo.length} chapters — ${todo.length - processed} left pending (client will resume)`
+      );
+      break;
+    }
     try {
       const { resources, status } = await curateChapter(ctx, chapter);
       await writeChapterResources(chapter.id, resources, status);
+      processed++;
       console.log(
         `[curator] ${chapter.chapter_number} ${status}: ${resources.length} resources (${resources.map((r) => r.resource_type).join(", ") || "none"})`
       );
@@ -509,8 +539,11 @@ export async function curateJourneyResources(
     }
   }
 
-  // Skip the journey-wide ratio rebalance for targeted (chat) refreshes.
-  if (!chapterIdFilter) {
+  // Ratio rebalance only when the whole journey is done curating (no pending
+  // left) and it wasn't a targeted (chat) refresh.
+  const stillPending =
+    !chapterIdFilter && (await countPending(journeyId)) > 0;
+  if (!chapterIdFilter && !stillPending) {
     try {
       await mediaRatioPass(ctx, allChapters);
     } catch (err) {

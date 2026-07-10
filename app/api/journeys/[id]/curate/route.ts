@@ -5,7 +5,7 @@ import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 300; // Pro plan; capped to plan max on Hobby
 
 /**
  * POST /api/journeys/[id]/curate — (re)start resource curation for chapters

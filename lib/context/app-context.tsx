@@ -58,9 +58,13 @@ interface AppContextValue {
   refreshJourneys: () => Promise<void>;
   createJourney: (input: CreateJourneyInput) => Promise<string>;
 
-  // Dashboard folders — MOCK
+  // Dashboard folders (client-side; not yet persisted to the DB)
   folders: DashboardFolder[];
   addFolder: (name: string) => void;
+  renameFolder: (id: string, name: string) => void;
+  deleteFolder: (id: string) => void;
+  addJourneyToFolder: (folderId: string, journeyId: string) => void;
+  removeJourneyFromFolder: (folderId: string, journeyId: string) => void;
 
   // Notifications — MOCK
   notifications: AppNotification[];
@@ -218,6 +222,35 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setFolders((prev) => [...prev, { id: `folder-${Date.now()}`, name, journeyIds: [] }]);
   }, []);
 
+  const renameFolder = useCallback((id: string, name: string) => {
+    setFolders((prev) => prev.map((f) => (f.id === id ? { ...f, name } : f)));
+  }, []);
+
+  const deleteFolder = useCallback((id: string) => {
+    setFolders((prev) => prev.filter((f) => f.id !== id));
+  }, []);
+
+  const addJourneyToFolder = useCallback((folderId: string, journeyId: string) => {
+    // A journey lives in at most one folder: remove it from any other first.
+    setFolders((prev) =>
+      prev.map((f) => {
+        const without = f.journeyIds.filter((id) => id !== journeyId);
+        if (f.id === folderId) return { ...f, journeyIds: [...without, journeyId] };
+        return { ...f, journeyIds: without };
+      })
+    );
+  }, []);
+
+  const removeJourneyFromFolder = useCallback((folderId: string, journeyId: string) => {
+    setFolders((prev) =>
+      prev.map((f) =>
+        f.id === folderId
+          ? { ...f, journeyIds: f.journeyIds.filter((id) => id !== journeyId) }
+          : f
+      )
+    );
+  }, []);
+
   const markAllRead = useCallback(
     () => setNotifications((prev) => prev.map((n) => ({ ...n, unread: false }))),
     []
@@ -241,6 +274,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       createJourney,
       folders,
       addFolder,
+      renameFolder,
+      deleteFolder,
+      addJourneyToFolder,
+      removeJourneyFromFolder,
       notifications,
       unreadCount,
       markAllRead,
@@ -260,6 +297,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       createJourney,
       folders,
       addFolder,
+      renameFolder,
+      deleteFolder,
+      addJourneyToFolder,
+      removeJourneyFromFolder,
       notifications,
       unreadCount,
       markAllRead,
