@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Loader2, CalendarRange, MoreVertical, Trash2 } from "lucide-react";
+import { Loader2, CalendarRange, MoreVertical, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -19,7 +19,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { JourneyIcon } from "@/components/shared/icon";
-import { SummarizeDialog } from "@/components/dashboard/summarize-dialog";
 import { useApp } from "@/lib/context/app-context";
 import type { UiJourneySummary, Accent } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
@@ -32,7 +31,6 @@ const ACCENT: Record<Accent, string> = {
 
 export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
   const { deleteJourney } = useApp();
-  const [summaryOpen, setSummaryOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
@@ -104,13 +102,7 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
         <Button asChild className="flex-1">
           <Link href={`/journey/${journey.id}`}>Resume</Link>
         </Button>
-        <Button variant="outline" className="flex-1" onClick={() => setSummaryOpen(true)}>
-          <Sparkles className="h-4 w-4" />
-          Summarize
-        </Button>
       </div>
-
-      <SummarizeDialog journey={journey} open={summaryOpen} onOpenChange={setSummaryOpen} />
 
       <Dialog open={confirmDelete} onOpenChange={(o) => !deleting && setConfirmDelete(o)}>
         <DialogContent className="max-w-md">
