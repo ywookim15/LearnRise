@@ -6,6 +6,7 @@ import { Check, X, Sparkles, Zap, ShieldCheck, DownloadCloud, BadgeCheck, Loader
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { useApp } from "@/lib/context/app-context";
 import { startCheckout, openBillingPortal } from "@/lib/data/subscription";
 import { cn } from "@/lib/utils";
@@ -219,6 +220,8 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
           </div>
         </div>
       </div>
+
+      {mode === "public" && <PricingComparisonTable />}
     </div>
   );
 }
