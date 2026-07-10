@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronsRight, Send, Sparkles, RefreshCw } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ProGate } from "@/components/shared/pro-gate";
 import { chatTabs, type ChatTab } from "@/lib/mock-data/chat";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +40,7 @@ export function AskMetisPanel({
   });
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -73,7 +75,17 @@ export function AskMetisPanel({
         body: JSON.stringify({ message: text, mode: activeTab }),
       });
       const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.error || "METIS couldn't respond. Please try again.");
+      if (!res.ok) {
+        if (json.code === "chat_limit") {
+          setThreads((prev) => ({
+            ...prev,
+            [activeTab]: prev[activeTab].filter((m) => m.id !== placeholderId),
+          }));
+          setLimitReached(true);
+          return;
+        }
+        throw new Error(json.error || "METIS couldn't respond. Please try again.");
+      }
 
       replace(activeTab, placeholderId, { text: json.reply, pending: false });
       if (json.roadmapUpdating) {
@@ -117,63 +129,71 @@ export function AskMetisPanel({
         </button>
       </div>
 
-      <Tabs value={tab} onValueChange={(v) => setTab(v as ChatTab)} className="flex min-h-0 flex-1 flex-col">
-        <div className="px-4 pt-3">
-          <TabsList className="w-full">
-            {chatTabs.map((t) => (
-              <TabsTrigger key={t.id} value={t.id} className="flex-1">
-                {t.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
+      <ProGate
+        active={limitReached}
+        title="Usage ran out"
+        subtitle="You've used all of today's free messages. Upgrade to Pro for unlimited chat with METIS."
+        className="flex min-h-0 flex-1 flex-col"
+        contentClassName="flex min-h-0 flex-1 flex-col"
+      >
+        <Tabs value={tab} onValueChange={(v) => setTab(v as ChatTab)} className="flex min-h-0 flex-1 flex-col">
+          <div className="px-4 pt-3">
+            <TabsList className="w-full">
+              {chatTabs.map((t) => (
+                <TabsTrigger key={t.id} value={t.id} className="flex-1">
+                  {t.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
-        {chatTabs.map((t) => (
-          <TabsContent
-            key={t.id}
-            value={t.id}
-            ref={t.id === tab ? scrollRef : undefined}
-            className="min-h-0 flex-1 space-y-4 overflow-y-auto scrollbar-slim px-4 py-4"
-          >
-            {threads[t.id].map((m) =>
-              m.role === "system" ? (
-                <div key={m.id} className="flex items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
-                  <RefreshCw className="h-3 w-3 animate-spin" />
-                  {m.text}
-                </div>
-              ) : (
-                <MessageBubble key={m.id} role={m.role} text={m.text} pending={m.pending} />
-              )
-            )}
-          </TabsContent>
-        ))}
-      </Tabs>
+          {chatTabs.map((t) => (
+            <TabsContent
+              key={t.id}
+              value={t.id}
+              ref={t.id === tab ? scrollRef : undefined}
+              className="min-h-0 flex-1 space-y-4 overflow-y-auto scrollbar-slim px-4 py-4"
+            >
+              {threads[t.id].map((m) =>
+                m.role === "system" ? (
+                  <div key={m.id} className="flex items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
+                    <RefreshCw className="h-3 w-3 animate-spin" />
+                    {m.text}
+                  </div>
+                ) : (
+                  <MessageBubble key={m.id} role={m.role} text={m.text} pending={m.pending} />
+                )
+              )}
+            </TabsContent>
+          ))}
+        </Tabs>
 
-      <div className="border-t border-border p-3">
-        <div className="flex items-center gap-2 rounded-2xl border border-border bg-background px-3 py-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void send();
-              }
-            }}
-            disabled={sending}
-            placeholder={`Message METIS (${chatTabs.find((t) => t.id === tab)?.label})…`}
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:opacity-60"
-          />
-          <button
-            onClick={() => void send()}
-            disabled={sending || !input.trim()}
-            className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-gradient text-white transition-opacity disabled:opacity-40"
-            aria-label="Send"
-          >
-            <Send className="h-4 w-4" />
-          </button>
+        <div className="border-t border-border p-3">
+          <div className="flex items-center gap-2 rounded-2xl border border-border bg-background px-3 py-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  void send();
+                }
+              }}
+              disabled={sending}
+              placeholder={`Message METIS (${chatTabs.find((t) => t.id === tab)?.label})…`}
+              className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:opacity-60"
+            />
+            <button
+              onClick={() => void send()}
+              disabled={sending || !input.trim()}
+              className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-gradient text-white transition-opacity disabled:opacity-40"
+              aria-label="Send"
+            >
+              <Send className="h-4 w-4" />
+            </button>
+          </div>
         </div>
-      </div>
+      </ProGate>
     </aside>
   );
 }

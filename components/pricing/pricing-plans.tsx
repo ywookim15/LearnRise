@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, X, Sparkles, Zap, ShieldCheck, DownloadCloud, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
+import { Check, X, Sparkles, Zap, ShieldCheck, BarChart3, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -21,17 +21,17 @@ const PRICE: Record<Billing, { amount: string; suffix: string }> = {
 
 const FREE_FEATURES = [
   { label: "1 active learning journey", included: true },
-  { label: "Basic curated resources", included: true },
-  { label: "Streak tracking", included: true },
-  { label: "AI summarizing & synthesis", included: false },
-  { label: "Adaptive tutor & planner", included: false },
+  { label: "AI-generated roadmap & resources", included: true },
+  { label: "10 messages/day with METIS chat", included: true },
+  { label: "3 adaptive re-routes/month", included: true },
+  { label: "Analytics & progress insights", included: false },
 ];
 
 const PREMIUM_FEATURES = [
-  { icon: Sparkles, label: "Access to EVERYTHING" },
-  { icon: Zap, label: "AI summarizing & synthesis" },
+  { icon: Sparkles, label: "Unlimited active learning journeys" },
+  { icon: Zap, label: "Unlimited chat & adaptive re-routing" },
+  { icon: BarChart3, label: "Analytics & progress insights" },
   { icon: ShieldCheck, label: "Priority support" },
-  { icon: DownloadCloud, label: "Offline learning modes" },
 ];
 
 export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {

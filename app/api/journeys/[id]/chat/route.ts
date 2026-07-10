@@ -10,6 +10,14 @@ import {
 import { compressMemory, loadMemory } from "@/lib/server/memory";
 import { runInBackground } from "@/lib/server/background";
 import type { PlannerInputs } from "@/lib/server/planner";
+import {
+  getPlanState,
+  checkChatMessageLimit,
+  recordChatMessage,
+  checkReplanLimit,
+  recordReplan,
+} from "@/lib/server/usage-limits";
+import { FREE_CHAT_DAILY_LIMIT, FREE_REPLAN_MONTHLY_LIMIT } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -48,6 +56,20 @@ export async function POST(
   if (!journey) return NextResponse.json({ error: "Journey not found" }, { status: 404 });
   if (journey.user_id !== user.id)
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
+  // ---- Free-tier cap: enforce BEFORE spending an LLM call ----
+  const { plan, status } = await getPlanState(user.id);
+  const chatCheck = await checkChatMessageLimit(user.id, plan, status);
+  if (!chatCheck.allowed) {
+    return NextResponse.json(
+      {
+        error: `You've used all ${FREE_CHAT_DAILY_LIMIT} of today's free messages. Upgrade to Pro for unlimited chat.`,
+        code: "chat_limit",
+      },
+      { status: 402 }
+    );
+  }
+  if (!chatCheck.premium) await recordChatMessage(user.id);
 
   // Roadmap snapshot (chapters + completion) via units
   const { data: units } = await admin
@@ -105,17 +127,26 @@ export async function POST(
   // --- background the roadmap-changing work (reply returns immediately;
   //     runInBackground keeps it alive past the response on serverless) ---
   if (result.intent === "replan" && chapters.some((c) => !c.isComplete)) {
-    roadmapUpdating = true;
-    actionNote = `re-planned incomplete chapters: ${result.replanGuidance}`;
-    runInBackground(
-      runReplan({
-        journeyId: params.id,
-        inputs,
-        chapters,
-        guidance: result.replanGuidance || message,
-      }),
-      `replan ${params.id}`
-    );
+    const replanCheck = await checkReplanLimit(user.id, plan, status);
+    if (!replanCheck.allowed) {
+      // Free tier hit its monthly re-route cap: answer, but don't touch the
+      // roadmap — the model's reply assumed a replan, so override it.
+      result.reply = `You've used all ${FREE_REPLAN_MONTHLY_LIMIT} of your free adaptive re-routes this month. Upgrade to Pro for unlimited re-routing, or try again next month.`;
+      actionNote = "blocked: monthly replan limit reached";
+    } else {
+      if (!replanCheck.premium) await recordReplan(user.id);
+      roadmapUpdating = true;
+      actionNote = `re-planned incomplete chapters: ${result.replanGuidance}`;
+      runInBackground(
+        runReplan({
+          journeyId: params.id,
+          inputs,
+          chapters,
+          guidance: result.replanGuidance || message,
+        }),
+        `replan ${params.id}`
+      );
+    }
   } else if (result.intent === "resource_refresh") {
     roadmapUpdating = true;
     actionNote = `refreshed resources${result.newPreference ? ` (new preference: ${result.newPreference})` : ""}`;

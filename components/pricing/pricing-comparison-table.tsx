@@ -9,20 +9,32 @@ interface ComparisonRow {
   pro: string;
   /** "Included"/"Not included" rows get a check/x icon instead of plain text. */
   boolean?: boolean;
+  /** Center-align the cell text (for rows whose value wraps to multiple lines). */
+  center?: boolean;
 }
 
 const ROWS: ComparisonRow[] = [
   { feature: "Active learning journeys", free: "1", pro: "Unlimited" },
   { feature: "AI-generated roadmap & resources", free: "Included", pro: "Included", boolean: true },
-  { feature: "Chat with METIS", free: "Limited messages/day", pro: "Unlimited" },
+  { feature: "Chat with METIS", free: "10 messages/day", pro: "Unlimited" },
   { feature: "Adaptive re-routing when you struggle", free: "Limited (3/month)", pro: "Unlimited" },
-  { feature: "Reasoning quality & roadmap depth", free: "Standard", pro: "Enhanced — richer, more detailed roadmaps" },
+  { feature: "Reasoning quality & roadmap depth", free: "Standard", pro: "Enhanced — richer, more detailed roadmaps", center: true },
   { feature: "Analytics & progress insights", free: "Not included", pro: "Included", boolean: true },
   { feature: "Priority support", free: "Not included", pro: "Included", boolean: true },
   { feature: "Free trial", free: "—", pro: "7 days free" },
 ];
 
-function Cell({ value, boolean, pro }: { value: string; boolean?: boolean; pro?: boolean }) {
+function Cell({
+  value,
+  boolean,
+  pro,
+  center,
+}: {
+  value: string;
+  boolean?: boolean;
+  pro?: boolean;
+  center?: boolean;
+}) {
   if (boolean) {
     const included = value === "Included";
     return (
@@ -40,7 +52,13 @@ function Cell({ value, boolean, pro }: { value: string; boolean?: boolean; pro?:
     );
   }
   return (
-    <span className={cn("text-sm", pro ? "font-semibold text-foreground" : "text-muted-foreground")}>
+    <span
+      className={cn(
+        "text-sm",
+        center && "block text-center",
+        pro ? "font-semibold text-foreground" : "text-muted-foreground"
+      )}
+    >
       {value}
     </span>
   );
@@ -91,7 +109,7 @@ export function PricingComparisonTable() {
                   i < ROWS.length - 1 && "border-b border-border"
                 )}
               >
-                <Cell value={row.free} boolean={row.boolean} />
+                <Cell value={row.free} boolean={row.boolean} center={row.center} />
               </div>
               <div
                 className={cn(
@@ -99,7 +117,7 @@ export function PricingComparisonTable() {
                   i < ROWS.length - 1 && "border-b border-primary/30"
                 )}
               >
-                <Cell value={row.pro} boolean={row.boolean} pro />
+                <Cell value={row.pro} boolean={row.boolean} pro center={row.center} />
               </div>
             </Fragment>
           ))}
@@ -120,7 +138,7 @@ export function PricingComparisonTable() {
                   Free
                 </p>
                 <div className="mt-1.5">
-                  <Cell value={row.free} boolean={row.boolean} />
+                  <Cell value={row.free} boolean={row.boolean} center={row.center} />
                 </div>
               </div>
               <div className="rounded-xl border border-primary/30 bg-primary/5 p-3">
@@ -128,7 +146,7 @@ export function PricingComparisonTable() {
                   Pro
                 </p>
                 <div className="mt-1.5">
-                  <Cell value={row.pro} boolean={row.boolean} pro />
+                  <Cell value={row.pro} boolean={row.boolean} pro center={row.center} />
                 </div>
               </div>
             </div>
