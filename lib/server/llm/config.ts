@@ -3,6 +3,8 @@ import type { Provider } from "./types";
 export interface AgentModel {
   provider: Provider;
   model: string;
+  /** Optional: retry this call on a different provider if the primary rate-limits. */
+  fallback?: { provider: Provider; model: string };
 }
 
 // Per-call-site provider/model. Each is independently overridable via env, so
@@ -16,6 +18,12 @@ export const LLM: Record<"planner" | "curator" | "chief" | "memory", AgentModel>
   planner: {
     provider: (process.env.LLM_PLANNER_PROVIDER as Provider) ?? "gemini",
     model: process.env.LLM_PLANNER_MODEL ?? "gemini-2.5-flash",
+    // If Gemini rate-limits the one Planner call, fall back so journey creation
+    // still succeeds instead of showing "at capacity".
+    fallback: {
+      provider: (process.env.LLM_PLANNER_FALLBACK_PROVIDER as Provider) ?? "cerebras",
+      model: process.env.LLM_PLANNER_FALLBACK_MODEL ?? "gpt-oss-120b",
+    },
   },
   curator: {
     provider: (process.env.LLM_CURATOR_PROVIDER as Provider) ?? "cerebras",

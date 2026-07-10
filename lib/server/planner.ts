@@ -9,7 +9,7 @@
 //   4. Do NOT attach resources (Stage 3's job)
 // -----------------------------------------------------------------------------
 
-import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
+import { callStructuredWithFallback, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch } from "@/lib/server/tavily";
 
 export interface PlannerInputs {
@@ -226,13 +226,16 @@ RULES
 
 Call save_roadmap once with the revised remaining roadmap.`;
 
-  const raw = await callStructured<unknown>({
-    provider: LLM.planner.provider,
-    model: LLM.planner.model,
-    prompt,
-    tool: SAVE_ROADMAP,
-    temperature: 0.4,
-  });
+  const raw = await callStructuredWithFallback<unknown>(
+    {
+      provider: LLM.planner.provider,
+      model: LLM.planner.model,
+      prompt,
+      tool: SAVE_ROADMAP,
+      temperature: 0.4,
+    },
+    LLM.planner.fallback
+  );
   return validateRoadmap(raw, inputs.goal);
 }
 
@@ -242,18 +245,20 @@ export async function generateRoadmap(inputs: PlannerInputs): Promise<RoadmapOut
   // gracefully (the Planner falls back to curriculum conventions).
   const syllabusRef = await findReferenceSyllabus(inputs.goal);
 
-  const raw = await callStructured<unknown>({
-    provider: LLM.planner.provider,
-    model: LLM.planner.model,
-    prompt: buildPlannerPrompt(inputs, syllabusRef),
-    tool: SAVE_ROADMAP,
-    temperature: 0.4,
-    // Interactive path: fail fast under rate limits so the request finishes
-    // well under the serverless timeout (the user gets a clear "try again"
-    // instead of a hang/timeout).
-    maxAttempts: 2,
-    maxRetryWaitMs: 10_000,
-  });
+  const raw = await callStructuredWithFallback<unknown>(
+    {
+      provider: LLM.planner.provider,
+      model: LLM.planner.model,
+      prompt: buildPlannerPrompt(inputs, syllabusRef),
+      tool: SAVE_ROADMAP,
+      temperature: 0.4,
+      // Interactive path: fail fast on the primary (Gemini) so we reach the
+      // fallback quickly and the whole request stays well under the timeout.
+      maxAttempts: 2,
+      maxRetryWaitMs: 5_000,
+    },
+    LLM.planner.fallback
+  );
 
   return validateRoadmap(raw, inputs.goal);
 }

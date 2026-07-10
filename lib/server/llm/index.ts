@@ -77,6 +77,14 @@ export async function callStructured<T>(opts: StructuredCallOptions): Promise<T>
     maxRetryWaitMs = 60_000,
   } = opts;
 
+  // Fault injection for resilience testing (OFF by default). Set
+  // LLM_FORCE_RATELIMIT to a comma-list of providers (e.g. "gemini") to make
+  // their calls throw LLMRateLimitError immediately.
+  const forced = process.env.LLM_FORCE_RATELIMIT?.split(",").map((s) => s.trim());
+  if (forced?.includes(provider)) {
+    throw new LLMRateLimitError(provider, `${provider} forced via LLM_FORCE_RATELIMIT`);
+  }
+
   let lastError: unknown;
   let lastWasRateLimit = false;
 
@@ -107,4 +115,32 @@ export async function callStructured<T>(opts: StructuredCallOptions): Promise<T>
 
   if (lastWasRateLimit) throw new LLMRateLimitError(provider);
   throw lastError instanceof Error ? lastError : new LLMError(String(lastError));
+}
+
+/**
+ * Like callStructured, but if the primary provider RATE-LIMITS, retry the same
+ * request once on a fallback provider/model. Used by the Planner so a Gemini
+ * 429 doesn't fail journey creation — Gemini stays primary; the fallback only
+ * kicks in on LLMRateLimitError (not on other errors).
+ */
+export async function callStructuredWithFallback<T>(
+  primary: StructuredCallOptions,
+  fallback?: { provider: Provider; model: string }
+): Promise<T> {
+  try {
+    return await callStructured<T>(primary);
+  } catch (err) {
+    if (fallback && err instanceof LLMRateLimitError) {
+      console.warn(
+        `[llm] ${primary.provider} rate-limited for ${primary.tool.name}; ` +
+          `falling back to ${fallback.provider}/${fallback.model}`
+      );
+      return await callStructured<T>({
+        ...primary,
+        provider: fallback.provider,
+        model: fallback.model,
+      });
+    }
+    throw err;
+  }
 }
