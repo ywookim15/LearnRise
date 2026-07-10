@@ -1,6 +1,7 @@
 import { geminiStructuredCall } from "./gemini-provider";
 import { openAICompatStructuredCall } from "./openai-provider";
 import { paceIntervalMs } from "./config";
+import { recordProviderUsage } from "@/lib/server/usage";
 import {
   LLMError,
   LLMRateLimitError,
@@ -87,18 +88,28 @@ export async function callStructured<T>(opts: StructuredCallOptions): Promise<T>
 
   let lastError: unknown;
   let lastWasRateLimit = false;
+  // Track whether ANY attempt was throttled (so the usage meter can flag it even
+  // if a later retry succeeds) plus the last retry-after we saw.
+  let sawRateLimit = false;
+  let lastRetryAfterSec: number | undefined;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       await paceGate(provider);
-      if (provider === "gemini") {
-        return await geminiStructuredCall<T>(model, prompt, tool, temperature);
-      }
-      return await openAICompatStructuredCall<T>(provider, model, prompt, tool, temperature);
+      const result =
+        provider === "gemini"
+          ? await geminiStructuredCall<T>(model, prompt, tool, temperature)
+          : await openAICompatStructuredCall<T>(provider, model, prompt, tool, temperature);
+      recordProviderUsage(provider, sawRateLimit, lastRetryAfterSec);
+      return result;
     } catch (err) {
       lastError = err;
       const { isRateLimit, retryAfterSec } = parseRateLimit(err);
       lastWasRateLimit = isRateLimit;
+      if (isRateLimit) {
+        sawRateLimit = true;
+        lastRetryAfterSec = retryAfterSec;
+      }
       if (attempt < maxAttempts) {
         const waitMs = isRateLimit
           ? Math.min(retryAfterSec * 1000, maxRetryWaitMs)
@@ -113,6 +124,8 @@ export async function callStructured<T>(opts: StructuredCallOptions): Promise<T>
     }
   }
 
+  // All attempts exhausted — still count the spent quota + the throttling.
+  recordProviderUsage(provider, sawRateLimit || lastWasRateLimit, lastRetryAfterSec);
   if (lastWasRateLimit) throw new LLMRateLimitError(provider);
   throw lastError instanceof Error ? lastError : new LLMError(String(lastError));
 }

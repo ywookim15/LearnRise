@@ -1,3 +1,5 @@
+import { recordProviderUsage } from "@/lib/server/usage";
+
 export interface TavilyResult {
   title: string;
   url: string;
@@ -46,9 +48,14 @@ export async function tavilySearch(
     });
 
     if (!res.ok) {
+      if (res.status === 429) {
+        const retry = Number(res.headers.get("retry-after"));
+        recordProviderUsage("tavily", true, Number.isFinite(retry) ? retry : undefined);
+      }
       console.error(`[tavily] ${res.status}: ${(await res.text()).slice(0, 200)}`);
       return null;
     }
+    recordProviderUsage("tavily");
 
     const json = (await res.json()) as {
       results?: Array<{

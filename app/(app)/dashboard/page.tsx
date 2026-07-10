@@ -18,6 +18,7 @@ import { JourneyCard } from "@/components/dashboard/journey-card";
 import { AddJourneyCard } from "@/components/dashboard/add-journey-card";
 import { HelpDialog } from "@/components/dashboard/help-dialog";
 import { AddFolderDialog } from "@/components/dashboard/add-folder-dialog";
+import { UsageMeter } from "@/components/dashboard/usage-meter";
 import {
   Dialog,
   DialogContent,
@@ -88,6 +89,10 @@ export default function DashboardPage() {
           landscape.
           {folders.length > 0 && " Drag a journey card onto a folder to file it."}
         </p>
+      </div>
+
+      <div className="mt-6">
+        <UsageMeter />
       </div>
 
       {journeysError ? (

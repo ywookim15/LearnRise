@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { HelpDialog } from "@/components/dashboard/help-dialog";
 import { Roadmap } from "@/components/journey/roadmap";
+import { CurationStatus } from "@/components/journey/curation-status";
 import { AskMetisPanel } from "@/components/journey/ask-metis-panel";
 import { useJourneyDetail } from "@/lib/data/use-journey-detail";
 import { detailProgress } from "@/lib/data/journeys";
@@ -89,6 +90,10 @@ export default function JourneyPage() {
                 <span className="font-bold text-primary">{progress}%</span>
               </div>
               <Progress value={progress} className="mt-2" />
+            </div>
+
+            <div className="mt-6">
+              <CurationStatus journey={journey} />
             </div>
 
             <div className="mt-6">
