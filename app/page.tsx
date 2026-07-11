@@ -91,7 +91,7 @@ export default function LandingPage() {
             </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            Free tier available · No credit card · Prototype with mock data
+            Free tier available · No credit card
           </p>
         </div>
       </section>
