@@ -14,10 +14,11 @@ export default function AboutPage() {
           Learning shouldn&apos;t start with getting lost.
         </h1>
 
-        {/* Stat callout — large, visually emphasized */}
-        <div className="my-12 rounded-3xl border border-border bg-brand-gradient-soft px-8 py-12 text-center shadow-card">
-          <p className="font-serif text-4xl font-medium leading-tight tracking-tight text-primary sm:text-5xl md:text-6xl">
-            87% of all learners that pick up online learning never finish.
+        {/* Stat callout — the number is the visual emphasis, not the whole sentence */}
+        <div className="my-12 rounded-3xl border border-border bg-brand-gradient-soft px-8 py-10 text-left shadow-card">
+          <p className="font-serif text-lg leading-snug tracking-tight text-foreground sm:text-xl">
+            <span className="text-gradient text-4xl font-bold sm:text-5xl">87%</span>{" "}
+            of all learners that pick up online learning never finish.
           </p>
         </div>
 

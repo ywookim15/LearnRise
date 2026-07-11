@@ -12,19 +12,17 @@ import { cn } from "@/lib/utils";
 export function AppPage({
   children,
   topbarLeft,
-  showMemoryAgent = true,
   noContainer = false,
   contentClassName,
 }: {
   children: ReactNode;
   topbarLeft?: ReactNode;
-  showMemoryAgent?: boolean;
   noContainer?: boolean;
   contentClassName?: string;
 }) {
   return (
     <div className="flex h-full flex-1 flex-col overflow-hidden">
-      <Topbar left={topbarLeft} showMemoryAgent={showMemoryAgent} />
+      <Topbar left={topbarLeft} />
       <main className="flex-1 overflow-y-auto scrollbar-slim">
         {noContainer ? (
           children

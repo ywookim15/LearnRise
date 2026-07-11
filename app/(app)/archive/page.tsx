@@ -68,7 +68,7 @@ export default function ArchivePage() {
   }
 
   return (
-    <AppPage showMemoryAgent={false}>
+    <AppPage>
       <h1 className="text-4xl font-bold tracking-tight">Archive</h1>
       <p className="mt-2 text-muted-foreground">
         Journeys you&apos;ve completed or removed.

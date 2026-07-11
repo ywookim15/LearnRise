@@ -20,6 +20,12 @@ const INTRO: Record<ChatTab, string> = {
   tutor: "I'm your Tutor. Point me at a concept or resource and I'll walk you through it — questions first, answers second.",
 };
 
+const SUGGESTIONS: Record<ChatTab, string[]> = {
+  main: ["What should I do next?", "Summarize my progress so far", "Can you explain this resource?"],
+  planner: ["Change my pacing", "I have less time this week", "Skip ahead to a different topic"],
+  tutor: ["Explain this concept simply", "Quiz me on this chapter", "I'm stuck — give me a hint"],
+};
+
 let mid = 0;
 const newId = () => `m${mid++}`;
 
@@ -57,8 +63,8 @@ export function AskMetisPanel({
     }));
   }
 
-  async function send() {
-    const text = input.trim();
+  async function send(override?: string) {
+    const text = (override ?? input).trim();
     if (!text || sending) return;
     const activeTab = tab;
     setInput("");
@@ -168,8 +174,20 @@ export function AskMetisPanel({
           ))}
         </Tabs>
 
-        <div className="border-t border-border p-3">
-          <div className="flex items-center gap-2 rounded-2xl border border-border bg-background px-3 py-2">
+        <div className="border-t border-border px-3 pt-3">
+          <div className="flex gap-1.5 overflow-x-auto pb-3 scrollbar-slim">
+            {SUGGESTIONS[tab].map((suggestion) => (
+              <button
+                key={suggestion}
+                onClick={() => void send(suggestion)}
+                disabled={sending}
+                className="shrink-0 whitespace-nowrap rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 rounded-2xl border border-border bg-background px-3 py-2 mb-3">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -212,7 +230,7 @@ function MessageBubble({
     <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+          "max-w-[85%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2.5 text-sm leading-relaxed [overflow-wrap:anywhere]",
           isUser
             ? "rounded-br-md bg-primary text-primary-foreground"
             : "rounded-bl-md bg-muted text-foreground"

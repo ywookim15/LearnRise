@@ -117,7 +117,7 @@ export default function SignUpPage() {
 
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
-          <Input id="name" placeholder="Maya Chen" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required />
+          <Input id="name" placeholder="Jane Doe" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
 
         <div className="space-y-2">

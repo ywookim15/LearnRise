@@ -215,7 +215,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
               </p>
             )}
             <p className="text-center text-xs text-muted-foreground">
-              No commitment. Cancel anytime. Test mode — use card 4242 4242 4242 4242.
+              No commitment. Cancel anytime.
             </p>
           </div>
         </div>

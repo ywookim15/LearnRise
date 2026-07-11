@@ -19,7 +19,7 @@ export const mockChats: Record<ChatTab, ChatMessage[]> = {
     {
       id: "m1",
       role: "assistant",
-      text: "Hi Maya — I'm METIS. Ask me anything about this journey, or tap Planner to reshape the roadmap and Tutor to work through a tricky concept.",
+      text: "Hi Jane — I'm METIS. Ask me anything about this journey, or tap Planner to reshape the roadmap and Tutor to work through a tricky concept.",
     },
     {
       id: "m2",

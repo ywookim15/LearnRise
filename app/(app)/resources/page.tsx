@@ -102,7 +102,7 @@ export default function ResourcesPage() {
   }
 
   return (
-    <AppPage showMemoryAgent={false}>
+    <AppPage>
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-4xl font-bold tracking-tight">My Resources</h1>

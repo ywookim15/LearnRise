@@ -58,6 +58,7 @@ export default function DashboardPage() {
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);
   const [renameTarget, setRenameTarget] = useState<DashboardFolder | null>(null);
   const [dragOverFolder, setDragOverFolder] = useState<string | null>(null);
+  const [draggingJourneyId, setDraggingJourneyId] = useState<string | null>(null);
   // dragenter/dragleave fire on every child element boundary, not just the
   // drop zone itself — an enter-counter (rather than toggling on each event)
   // keeps the highlight stable instead of flickering as the pointer crosses
@@ -98,10 +99,11 @@ export default function DashboardPage() {
     const journeyId = e.dataTransfer.getData(DND_KEY);
     if (journeyId) addJourneyToFolder(folderId, journeyId);
     setDragOverFolder(null);
+    setDraggingJourneyId(null);
   }
 
   return (
-    <AppPage showMemoryAgent={false}>
+    <AppPage>
       <div>
         <h1 className="text-4xl font-bold tracking-tight">My Learning Journeys</h1>
         <p className="mt-2 max-w-md text-muted-foreground">
@@ -132,8 +134,16 @@ export default function DashboardPage() {
                 <div
                   key={journey.id}
                   draggable
-                  onDragStart={(e) => e.dataTransfer.setData(DND_KEY, journey.id)}
-                  className="cursor-grab active:cursor-grabbing"
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData(DND_KEY, journey.id);
+                    e.dataTransfer.effectAllowed = "move";
+                    setDraggingJourneyId(journey.id);
+                  }}
+                  onDragEnd={() => setDraggingJourneyId(null)}
+                  className={cn(
+                    "cursor-grab transition-all duration-200 ease-out active:cursor-grabbing",
+                    draggingJourneyId === journey.id && "scale-[0.97] opacity-50"
+                  )}
                 >
                   <JourneyCard journey={journey} />
                 </div>
@@ -160,12 +170,18 @@ export default function DashboardPage() {
                 onDragLeave={() => handleDragLeaveFolder(folder.id)}
                 onDrop={(e) => handleDropOnFolder(e, folder.id)}
                 className={cn(
-                  "group flex items-center gap-3 rounded-2xl border bg-card p-4 shadow-card transition-all",
+                  "group relative flex items-center gap-3 overflow-hidden rounded-2xl border bg-card p-4 shadow-card transition-all duration-200 ease-out",
                   dragOverFolder === folder.id
-                    ? "border-primary ring-2 ring-primary/30"
+                    ? "scale-[1.03] border-primary bg-primary/5 shadow-lg shadow-primary/20 ring-2 ring-primary/40"
                     : "border-border hover:shadow-card-hover"
                 )}
               >
+                {dragOverFolder === folder.id && (
+                  <div className="animate-fade-in pointer-events-none absolute inset-0 flex items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-primary/60 bg-primary text-xs font-semibold text-primary-foreground">
+                    <FolderPlus className="h-4 w-4" />
+                    Drop here to file
+                  </div>
+                )}
                 <button
                   onClick={() => setOpenFolderId(folder.id)}
                   className="flex min-w-0 flex-1 items-center gap-3 text-left"

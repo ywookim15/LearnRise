@@ -9,9 +9,9 @@ export interface MockUser {
 }
 
 export const mockUser: MockUser = {
-  firstName: "Maya",
-  lastName: "Chen",
-  email: "maya.chen@example.com",
+  firstName: "Jane",
+  lastName: "Doe",
+  email: "jane.doe@example.com",
   // Inline SVG data-URI avatar so the prototype needs no network/asset pipeline.
   avatarUrl:
     "data:image/svg+xml;utf8," +
@@ -22,7 +22,7 @@ export const mockUser: MockUser = {
         </linearGradient></defs>
         <rect width='96' height='96' rx='48' fill='url(#g)'/>
         <text x='50%' y='54%' font-family='Geist, sans-serif' font-size='38'
-          fill='white' text-anchor='middle' dominant-baseline='middle' font-weight='600'>MC</text>
+          fill='white' text-anchor='middle' dominant-baseline='middle' font-weight='600'>JD</text>
       </svg>`
     ),
   plan: "pro",

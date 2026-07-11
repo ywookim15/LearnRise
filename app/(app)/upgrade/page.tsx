@@ -5,7 +5,7 @@ import { PricingPlans } from "@/components/pricing/pricing-plans";
 
 export default function UpgradePage() {
   return (
-    <AppPage showMemoryAgent={false}>
+    <AppPage>
       <PricingPlans mode="app" />
     </AppPage>
   );
