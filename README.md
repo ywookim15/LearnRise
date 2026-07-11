@@ -1,4 +1,4 @@
-# METIS — your learning GPS
+# METIS — Your Learning GPS
 
 METIS is an AI-powered adaptive learning-roadmap product for high school and college
 students. A student describes a goal ("Ace the AP Biology genetics unit," "Get through
