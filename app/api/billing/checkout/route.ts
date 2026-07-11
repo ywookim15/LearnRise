@@ -42,7 +42,17 @@ export async function POST(req: NextRequest) {
       // Belt-and-suspenders: both the session and the subscription carry the
       // user id so the webhook can always resolve the METIS user.
       client_reference_id: user.id,
-      subscription_data: { metadata: { user_id: user.id } },
+      subscription_data: {
+        metadata: { user_id: user.id },
+        // 7-day free trial (pricing page promise). If the trial ends with no
+        // payment method on file, cancel rather than silently charging later.
+        trial_period_days: 7,
+        trial_settings: { end_behavior: { missing_payment_method: "cancel" } },
+      },
+      // Collect the card up front even though the trial defers the charge —
+      // required for trial_settings.end_behavior to have anything to check,
+      // and avoids a "trial ended, no way to bill" dead end.
+      payment_method_collection: "always",
       allow_promotion_codes: true,
       success_url: `${origin}/dashboard?checkout=success`,
       cancel_url: `${origin}/upgrade?checkout=cancelled`,
