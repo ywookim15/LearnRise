@@ -3,10 +3,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Check, CircleDashed, Loader2, GitBranch, AlertCircle } from "lucide-react";
 import { ResourceTypeIcon } from "@/components/shared/icon";
-import type { UiUnit, UiChapter, DbResourceType } from "@/lib/data/journeys";
+import type { UiUnit, UiChapter, DbResourceType, SkillLevel } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
-type NodeState = "unset" | "familiar" | "known";
+type NodeState = SkillLevel;
 
 const NODE_STYLE: Record<NodeState, string> = {
   unset: "border-border bg-card",
@@ -37,10 +37,16 @@ interface BranchPath {
  * it stays correct at any card height/width). Chapters show a compact
  * type+count summary rather than every resource title — this is a map of the
  * unit's shape, not another resource list. Hover a chapter node to mark mastery
- * (Know it / Familiar) via React state so the controls are never clipped.
+ * (Know it / Familiar) — the mark is persisted server-side and triggers a
+ * narrow Planner+Curator re-fetch of just that chapter's resources.
  */
-export function UnitFlowchart({ unit }: { unit: UiUnit }) {
-  const [states, setStates] = useState<Record<string, NodeState>>({});
+export function UnitFlowchart({
+  unit,
+  onMarkSkill,
+}: {
+  unit: UiUnit;
+  onMarkSkill: (chapterId: string, level: SkillLevel) => void;
+}) {
   const [hovered, setHovered] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rootIconRef = useRef<HTMLSpanElement>(null);
@@ -48,9 +54,11 @@ export function UnitFlowchart({ unit }: { unit: UiUnit }) {
   const [paths, setPaths] = useState<BranchPath[]>([]);
   const [svgSize, setSvgSize] = useState({ w: 0, h: 0 });
 
-  function setState(id: string, s: NodeState) {
-    setStates((prev) => ({ ...prev, [id]: prev[id] === s ? "unset" : s }));
+  function handleMark(chapter: UiChapter, level: NodeState) {
+    onMarkSkill(chapter.id, chapter.skillLevel === level ? "unset" : level);
   }
+
+  const skillById = new Map(unit.chapters.map((c) => [c.id, c.skillLevel]));
 
   useLayoutEffect(() => {
     function measure() {
@@ -110,7 +118,7 @@ export function UnitFlowchart({ unit }: { unit: UiUnit }) {
               fill="none"
               strokeWidth={2}
               strokeLinecap="round"
-              className={cn("transition-colors", BRANCH_STROKE[states[p.id] ?? "unset"])}
+              className={cn("transition-colors", BRANCH_STROKE[skillById.get(p.id) ?? "unset"])}
             />
           ))}
         </svg>
@@ -135,7 +143,7 @@ export function UnitFlowchart({ unit }: { unit: UiUnit }) {
         {/* Chapter branch nodes */}
         <div className="relative z-10 ml-14 mt-4 space-y-3">
           {unit.chapters.map((chapter) => {
-            const st = states[chapter.id] ?? "unset";
+            const st = chapter.skillLevel;
             const isHovered = hovered === chapter.id;
             return (
               <div
@@ -182,13 +190,13 @@ export function UnitFlowchart({ unit }: { unit: UiUnit }) {
                   {isHovered ? (
                     <>
                       <button
-                        onClick={() => setState(chapter.id, "known")}
+                        onClick={() => handleMark(chapter, "known")}
                         className="whitespace-nowrap rounded-lg bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 hover:bg-emerald-500/20"
                       >
                         Know it
                       </button>
                       <button
-                        onClick={() => setState(chapter.id, "familiar")}
+                        onClick={() => handleMark(chapter, "familiar")}
                         className="whitespace-nowrap rounded-lg bg-secondary/10 px-2.5 py-1 text-xs font-medium text-secondary hover:bg-secondary/20"
                       >
                         Familiar

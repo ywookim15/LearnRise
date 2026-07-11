@@ -5,7 +5,9 @@ import {
   getJourneyDetail,
   setResourceComplete,
   setResourceSaved,
+  setChapterSkillLevel,
   type UiJourneyDetail,
+  type SkillLevel,
 } from "@/lib/data/journeys";
 
 interface State {
@@ -135,7 +137,72 @@ export function useJourneyDetail(journeyId: string | undefined) {
     []
   );
 
-  return { ...state, reload: load, toggleResource, toggleSaved };
+  /**
+   * Knowledge-map "Know it" / "Familiar" mark. Optimistically shows the mark
+   * and flips the chapter to "curating…" (the server clears its resources and
+   * sets resource_status='pending' for a real signal), which also arms the
+   * existing poll-while-pending loop above — so the re-curated list appears
+   * live without a manual reload. Reverts everything on failure.
+   */
+  const markChapterSkill = useCallback(
+    async (chapterId: string, skillLevel: SkillLevel) => {
+      let prevLevel: SkillLevel = "unset";
+      let prevStatus: UiJourneyDetail["units"][0]["chapters"][0]["resourceStatus"] = "complete";
+      let prevResources: UiJourneyDetail["units"][0]["chapters"][0]["resources"] = [];
+
+      setState((s) => {
+        if (!s.journey) return s;
+        return {
+          ...s,
+          journey: mutateChapter(s.journey, chapterId, (c) => {
+            prevLevel = c.skillLevel;
+            prevStatus = c.resourceStatus;
+            prevResources = c.resources;
+            return {
+              ...c,
+              skillLevel,
+              ...(skillLevel !== "unset" ? { resourceStatus: "pending", resources: [] } : {}),
+            };
+          }),
+        };
+      });
+
+      try {
+        await setChapterSkillLevel(journeyId!, chapterId, skillLevel);
+        if (skillLevel !== "unset") void load({ silent: true });
+      } catch {
+        setState((s) => {
+          if (!s.journey) return s;
+          return {
+            ...s,
+            journey: mutateChapter(s.journey, chapterId, (c) => ({
+              ...c,
+              skillLevel: prevLevel,
+              resourceStatus: prevStatus,
+              resources: prevResources,
+            })),
+          };
+        });
+      }
+    },
+    [journeyId, load]
+  );
+
+  return { ...state, reload: load, toggleResource, toggleSaved, markChapterSkill };
+}
+
+function mutateChapter(
+  journey: UiJourneyDetail,
+  chapterId: string,
+  fn: (c: UiJourneyDetail["units"][0]["chapters"][0]) => UiJourneyDetail["units"][0]["chapters"][0]
+): UiJourneyDetail {
+  return {
+    ...journey,
+    units: journey.units.map((u) => ({
+      ...u,
+      chapters: u.chapters.map((c) => (c.id === chapterId ? fn(c) : c)),
+    })),
+  };
 }
 
 function mutateResource(

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Instagram, Youtube, CheckCircle2 } from "lucide-react";
+import { Mail, Instagram, Youtube, CheckCircle2, AlertCircle } from "lucide-react";
 import { MarketingShell } from "@/components/layout/marketing-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,11 +10,38 @@ import { Label } from "@/components/ui/label";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock only — no network. Just flips to a local success state.
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSending(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          firstName: data.get("firstName"),
+          lastName: data.get("lastName"),
+          email: data.get("email"),
+          message: data.get("message"),
+          // Honeypot — visually hidden below; real users never fill it.
+          company: data.get("company"),
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || "Couldn't send your message. Please try again.");
+      setSubmitted(true);
+      form.reset();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't send your message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -60,8 +87,8 @@ export default function ContactPage() {
               <CheckCircle2 className="h-14 w-14 text-primary" />
               <h2 className="mt-4 text-xl font-semibold">Message sent!</h2>
               <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-                Thanks for reaching out. This is a mock confirmation — no message
-                was actually delivered in the prototype.
+                Thanks for reaching out — we&apos;ll get back to you at the email
+                you provided.
               </p>
               <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
                 Send another
@@ -69,26 +96,38 @@ export default function ContactPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                  {error}
+                </div>
+              )}
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First name</Label>
-                  <Input id="firstName" placeholder="Maya" required />
+                  <Input id="firstName" name="firstName" placeholder="Maya" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last name</Label>
-                  <Input id="lastName" placeholder="Chen" required />
+                  <Input id="lastName" name="lastName" placeholder="Chen" required />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Your email</Label>
-                <Input id="email" type="email" placeholder="you@example.com" required />
+                <Input id="email" name="email" type="email" placeholder="you@example.com" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" placeholder="How can we help?" className="min-h-[130px]" required />
+                <Textarea id="message" name="message" placeholder="How can we help?" className="min-h-[130px]" required />
               </div>
-              <Button type="submit" className="w-full">
-                Send message
+              {/* Honeypot: hidden from real users (off-screen, not display:none —
+                  some bots skip display:none fields), left empty by humans. */}
+              <div className="absolute -left-[9999px] opacity-0" aria-hidden="true">
+                <label htmlFor="company">Company</label>
+                <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+              <Button type="submit" className="w-full" disabled={sending}>
+                {sending ? "Sending…" : "Send message"}
               </Button>
             </form>
           )}

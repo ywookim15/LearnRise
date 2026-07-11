@@ -239,6 +239,83 @@ Call save_roadmap once with the revised remaining roadmap.`;
   return validateRoadmap(raw, inputs.goal);
 }
 
+const ADJUST_CHAPTER_TOOL: StructuredTool = {
+  name: "adjust_chapter_objective",
+  description:
+    "Revise a single chapter's learning objective to match the student's self-reported mastery of this topic.",
+  parameters: {
+    type: "object",
+    properties: {
+      revised_learning_objective: {
+        type: "string",
+        description:
+          "One concrete, revised learning objective for this chapter reflecting the student's mastery level.",
+      },
+      difficulty_note: {
+        type: "string",
+        description:
+          "One short phrase describing how difficulty/depth should shift, e.g. 'skip basics, focus on edge cases' or 'reinforce fundamentals with more examples'.",
+      },
+    },
+    required: ["revised_learning_objective"],
+  },
+};
+
+/**
+ * Knowledge-map "Know it" / "Familiar" mark: adjust ONE chapter's learning
+ * objective given the student's self-reported mastery — NOT a re-plan of the
+ * unit or journey. The revised objective becomes the new curation brief for
+ * that chapter (fed to the Curator by the caller), so resources shift to
+ * match without regenerating anything else. One Gemini call, one chapter.
+ */
+export async function adjustChapterForSkillLevel(opts: {
+  goal: string;
+  currentLevel: string;
+  unitTitle: string;
+  chapterTitle: string;
+  currentObjective: string;
+  skillLevel: "familiar" | "known";
+}): Promise<{ learningObjective: string; difficultyNote: string }> {
+  const { goal, currentLevel, unitTitle, chapterTitle, currentObjective, skillLevel } = opts;
+
+  const guidance =
+    skillLevel === "known"
+      ? "The student says they ALREADY KNOW this topic well. Skip basics — reframe the objective toward advanced application, edge cases, or a quick-check/challenge framing so resources aren't redundant with what they already know."
+      : "The student says they are FAMILIAR with this topic but not fully confident. Keep the core objective but reframe it toward reinforcement and filling gaps rather than a first introduction.";
+
+  const prompt = `You are the METIS Planner adjusting ONE chapter of an existing learning journey based on the student's self-reported mastery — you are NOT regenerating the unit or journey, only this chapter's objective.
+
+Journey goal: ${goal}
+Student's overall level: ${currentLevel || "not specified"}
+Unit: ${unitTitle}
+Chapter: ${chapterTitle}
+Current learning objective: ${currentObjective || "(none set)"}
+
+${guidance}
+
+Call adjust_chapter_objective once with the revised objective for THIS chapter only.`;
+
+  const out = await callStructuredWithFallback<{
+    revised_learning_objective?: unknown;
+    difficulty_note?: unknown;
+  }>(
+    {
+      provider: LLM.planner.provider,
+      model: LLM.planner.model,
+      prompt,
+      tool: ADJUST_CHAPTER_TOOL,
+      temperature: 0.3,
+      maxAttempts: 2,
+      maxRetryWaitMs: 5_000,
+    },
+    LLM.planner.fallback
+  );
+
+  const learningObjective = String(out.revised_learning_objective ?? "").trim() || currentObjective;
+  const difficultyNote = String(out.difficulty_note ?? "").trim();
+  return { learningObjective, difficultyNote };
+}
+
 /** Stage 2 entry point: syllabus reference + Gemini function call -> roadmap. */
 export async function generateRoadmap(inputs: PlannerInputs): Promise<RoadmapOutput> {
   // Sub-step 1: one reference-syllabus search. A failure here degrades

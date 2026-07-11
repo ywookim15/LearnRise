@@ -27,6 +27,8 @@ export interface UiResource {
   saved: boolean;
 }
 
+export type SkillLevel = "unset" | "familiar" | "known";
+
 export interface UiChapter {
   id: string;
   number: string;
@@ -34,6 +36,7 @@ export interface UiChapter {
   learningObjective: string;
   resourceStatus: ResourceStatus;
   isComplete: boolean;
+  skillLevel: SkillLevel;
   resources: UiResource[];
 }
 
@@ -95,7 +98,7 @@ const RESOURCE_SELECT =
   "id, title, url, source_name, resource_type, video_timestamp, why_this_fits, is_trusted_domain, is_complete, saved_at";
 const DETAIL_SELECT = `id, journey_name, goal, preferences, created_at, estimated_total_weeks,
   units ( id, unit_number, unit_title, estimated_weeks,
-    chapters ( id, chapter_number, chapter_title, learning_objective, is_complete, resource_status,
+    chapters ( id, chapter_number, chapter_title, learning_objective, is_complete, resource_status, skill_level,
       resources ( ${RESOURCE_SELECT} ) ) )`;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -145,6 +148,7 @@ function mapDetail(row: any): UiJourneyDetail {
           learningObjective: c.learning_objective ?? "",
           resourceStatus: (c.resource_status ?? "pending") as ResourceStatus,
           isComplete: !!c.is_complete,
+          skillLevel: (c.skill_level ?? "unset") as SkillLevel,
           resources: (c.resources ?? [])
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .map((r: any) => mapResource(r, c.chapter_number))
@@ -271,7 +275,7 @@ export async function setResourceComplete(
 
   const { data: updated, error: updErr } = await supabase
     .from("resources")
-    .update({ is_complete: next })
+    .update({ is_complete: next, completed_at: next ? new Date().toISOString() : null })
     .eq("id", resourceId)
     .select("chapter_id")
     .single();
@@ -342,6 +346,29 @@ export async function setResourceSaved(resourceId: string, next: boolean): Promi
   if (!next) {
     // A folder only ever holds saved resources — drop stale membership too.
     await supabase.from("resource_folder_items").delete().eq("resource_id", resourceId);
+  }
+}
+
+/**
+ * Knowledge-map "Know it" / "Familiar" mark. Persists the mark and (for
+ * "familiar"/"known") triggers a narrow-scope Planner + Curator adjustment for
+ * just this chapter, server-side — see the skill-level API route. Resources
+ * shift to resource_status='pending' immediately so the existing poll-while-
+ * pending mechanism in useJourneyDetail picks up the re-curated list live.
+ */
+export async function setChapterSkillLevel(
+  journeyId: string,
+  chapterId: string,
+  skillLevel: SkillLevel
+): Promise<void> {
+  const res = await fetch(`/api/journeys/${journeyId}/chapters/${chapterId}/skill-level`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ skillLevel }),
+  });
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({}));
+    throw new Error(json.error || "Couldn't save that mark. Please try again.");
   }
 }
 

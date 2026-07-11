@@ -14,7 +14,7 @@ import { unitProgress, unitResourceCount } from "@/lib/data/journeys";
 
 export default function UnitPage() {
   const params = useParams<{ id: string; unitId: string }>();
-  const { journey, loading, error, toggleResource, toggleSaved } = useJourneyDetail(params.id);
+  const { journey, loading, error, toggleResource, toggleSaved, markChapterSkill } = useJourneyDetail(params.id);
   const unit = journey?.units.find((u) => u.id === params.unitId);
 
   if (loading) {
@@ -84,7 +84,7 @@ export default function UnitPage() {
       </div>
 
       <div className="mt-6">
-        <UnitFlowchart unit={unit} />
+        <UnitFlowchart unit={unit} onMarkSkill={markChapterSkill} />
       </div>
 
       <div className="mt-8 space-y-6">
