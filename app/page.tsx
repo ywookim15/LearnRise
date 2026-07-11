@@ -21,32 +21,36 @@ const STEPS = [
   },
   {
     icon: Route,
-    title: "2 · Get a mapped roadmap",
-    body: "METIS assembles a unit-by-unit path with hand-picked resources, ordered so each step builds on the last.",
+    title: "2 · Generate a highly personalized learning journey",
+    body: "METIS creates a step-by-step path with high-quality resources. They're hand-picked from multiple types of media—video, image, graphics—so that you don't have to stare at your boring textbook for hours.",
   },
   {
     icon: BookOpenCheck,
-    title: "3 · Learn, adapt, arrive",
-    body: "Check off resources, track streaks, and lean on your AI tutor. Your route re-plans as you go.",
+    title: "3 · Learn and master",
+    body: "Check off resources, track streaks, and chat with your personalized AI tutor. Your route re-plans as you go based on your interactions.",
   },
 ];
 
 const FAQ = [
   {
     q: "What exactly is METIS?",
-    a: "METIS is a learning GPS. You give it a destination — a skill, a subject, an exam — and it builds a precise, resourced route to get you there, adapting as you progress.",
+    a: "METIS is a learning GPS. METIS designs a personalized, step-by-step learning roadmap that adapts to your schedule and your current knowledge gaps. It's designed to create the fastest and clearest path from where you are to mastery—then continuously re-routes as you go.",
   },
   {
     q: "Where do the resources come from?",
-    a: "METIS curates from across the open web and trusted providers, then sequences them into a coherent path instead of a pile of links. (In this prototype, resources are illustrative mock data.)",
+    a: "METIS curates from across the open web and trusted providers, then structures them into a path instead of a pile of links. All resources are free and open-source for you to access.",
   },
   {
     q: "Do I need to know how to structure my learning?",
-    a: "No — that's the whole point. You bring the goal; METIS brings the structure, pacing, and ordering.",
+    a: "No—that's the whole point. You bring the goal; METIS brings the structure, pacing, and ordering. METIS saves you the time of looking up resources, filtering through inaccurate or low-quality information, and deciding what to study next.",
   },
   {
     q: "How much does it cost?",
-    a: "There's a free tier with one active journey, and a Premium tier that unlocks unlimited journeys, AI summarizing, and the adaptive tutor.",
+    a: "There's a free tier with one learning journey and a Premium tier that unlocks unlimited journeys, AI summarizing, and the adaptive tutor.",
+  },
+  {
+    q: "What makes METIS different?",
+    a: "METIS does not simply answer questions the way a general chatbot or homework-help site does; it curates, sequences, and assesses as you learn, adapting to your learning style and your interests. Unlike traditional chatbots, METIS stores long-term memory, allowing you to pick off right where you left each day.",
   },
 ];
 
@@ -71,9 +75,9 @@ export default function LandingPage() {
             Your Learning GPS
           </p>
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            Learning shouldn&apos;t start with getting lost. Tell METIS where you
-            want to go and it builds the route — resourced, ordered, and adaptive
-            — so every study session moves you forward.
+            Learning made easy. Tell METIS your goal and current skill level,
+            and it builds you the exact roadmap with tailored, personalized
+            resources to get you to mastery.
           </p>
           <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
             <Button asChild size="lg" variant="gradient">
