@@ -63,8 +63,8 @@ export default function ContactPage() {
             <ContactRow
               icon={<Mail className="h-5 w-5" />}
               label="Email"
-              value="metis-general@metis6.com"
-              href="mailto:metis-general@metis6.com"
+              value="metis.s1x.general@gmail.com"
+              href="mailto:metis.s1x.general@gmail.com"
             />
             <ContactRow
               icon={<Instagram className="h-5 w-5" />}
