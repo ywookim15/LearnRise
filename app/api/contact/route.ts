@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
   }
 
   const resendKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL || "metis.s1x.general@gmail.com";
+  const toEmail = process.env.CONTACT_TO_EMAIL || "metis-general@metis6.com";
   if (!resendKey) {
     console.error("[contact] RESEND_API_KEY not configured");
     return NextResponse.json({ error: "Contact form is not configured." }, { status: 500 });
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
   try {
     const resend = new Resend(resendKey);
     const { error: sendError } = await resend.emails.send({
-      from: "METIS Contact Form <onboarding@resend.dev>",
+      from: "METIS Contact Form <contact@metis6.com>",
       to: toEmail,
       replyTo: email,
       subject: `New contact form message from ${fullName}`,
