@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
-// SERVER ONLY. Uses the test-mode secret key. Never import from client code.
+// SERVER ONLY. Uses STRIPE_SECRET_KEY (test or live mode, per environment). Never import from client code.
 let stripe: Stripe | undefined;
 
 export function getStripe(): Stripe {
@@ -27,6 +27,39 @@ export function priceIdFor(interval: BillingInterval): string | null {
   return interval === "yearly"
     ? process.env.STRIPE_PRICE_PREMIUM_YEARLY ?? null
     : process.env.STRIPE_PRICE_PREMIUM_MONTHLY ?? null;
+}
+
+/**
+ * Resolve the price id for an interval AND verify it actually exists under
+ * the currently-active Stripe key. Price ids are mode-specific just like
+ * customer ids (see getOrCreateCustomerId's comment) — a price created in
+ * test mode does not exist under a live secret key. Without this check, a
+ * stale STRIPE_PRICE_PREMIUM_* env var (left over from a test->live key
+ * migration) fails deep inside checkout.sessions.create with a generic
+ * "No such price" error that's indistinguishable from any other Stripe
+ * failure in the client-facing error message. Verifying here turns it into
+ * a specific, greppable server log so the real cause is obvious immediately.
+ */
+export async function getVerifiedPriceId(interval: BillingInterval): Promise<string> {
+  const envVar = interval === "yearly" ? "STRIPE_PRICE_PREMIUM_YEARLY" : "STRIPE_PRICE_PREMIUM_MONTHLY";
+  const priceId = priceIdFor(interval);
+  if (!priceId) {
+    throw new Error(`Billing is not configured: ${envVar} is not set.`);
+  }
+  try {
+    const price = await getStripe().prices.retrieve(priceId);
+    if (!price.active) {
+      throw new Error(`Billing is misconfigured: ${envVar} (${priceId}) is archived/inactive in Stripe.`);
+    }
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("Billing is misconfigured")) throw err;
+    throw new Error(
+      `Billing is misconfigured: ${envVar} (${priceId}) does not exist for the current Stripe key's mode. ` +
+        `If Stripe keys were recently switched between test and live, this env var likely still holds the ` +
+        `old mode's price id — update it in Vercel to a price id from the currently-active Stripe mode.`
+    );
+  }
+  return priceId;
 }
 
 /** Map a Stripe price id back to a METIS plan. Premium prices -> 'premium'. */

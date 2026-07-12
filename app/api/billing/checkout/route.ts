@@ -1,13 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getRequestUser } from "@/lib/server/auth";
-import { getStripe, priceIdFor, getOrCreateCustomerId, type BillingInterval } from "@/lib/server/stripe";
+import { getStripe, getVerifiedPriceId, getOrCreateCustomerId, type BillingInterval } from "@/lib/server/stripe";
 
 export const runtime = "nodejs";
 
 /**
  * POST /api/billing/checkout — create a Stripe Checkout Session (subscription
  * mode) for the Premium plan and return the hosted-checkout URL for the client
- * to redirect to. Test mode only.
+ * to redirect to.
  */
 export async function POST(req: NextRequest) {
   const user = await getRequestUser(req);
@@ -23,10 +23,14 @@ export async function POST(req: NextRequest) {
   }
 
   const interval: BillingInterval = body.interval === "yearly" ? "yearly" : "monthly";
-  const priceId = priceIdFor(interval);
-  if (!priceId) {
+
+  let priceId: string;
+  try {
+    priceId = await getVerifiedPriceId(interval);
+  } catch (err) {
+    console.error("[billing] price id check failed:", err instanceof Error ? err.message : err);
     return NextResponse.json(
-      { error: "Billing is not configured (missing price id)." },
+      { error: "Billing is not configured correctly for this plan. Please contact support." },
       { status: 500 }
     );
   }
