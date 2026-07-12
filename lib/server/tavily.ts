@@ -1,3 +1,5 @@
+import "server-only";
+
 import { recordProviderUsage } from "@/lib/server/usage";
 
 export interface TavilyResult {

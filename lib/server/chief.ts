@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // CHIEF AGENT — Algorithm v2, Stage 6 (Chat-Triggered Adaptation).
 //

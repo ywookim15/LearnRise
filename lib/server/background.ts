@@ -1,3 +1,5 @@
+import "server-only";
+
 import { waitUntil } from "@vercel/functions";
 
 /**

@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // FREE-TIER USAGE LIMITS — chat messages/day, adaptive re-routes/month.
 // Server-only: checked and recorded via the service-role client against

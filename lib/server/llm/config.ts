@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { Provider } from "./types";
 
 export interface AgentModel {

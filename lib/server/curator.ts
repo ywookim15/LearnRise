@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // RESOURCE CURATOR AGENT — Algorithm v2, Stage 3 (Resource Curation)
 //

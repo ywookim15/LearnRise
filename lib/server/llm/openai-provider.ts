@@ -1,3 +1,5 @@
+import "server-only";
+
 import OpenAI from "openai";
 import { OPENAI_COMPAT } from "./config";
 import { LLMError, type Provider, type StructuredTool } from "./types";

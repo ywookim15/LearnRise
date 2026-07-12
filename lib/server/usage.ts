@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // PROVIDER USAGE TRACKING (server-only)
 //

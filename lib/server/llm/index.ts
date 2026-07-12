@@ -1,3 +1,5 @@
+import "server-only";
+
 import { geminiStructuredCall } from "./gemini-provider";
 import { openAICompatStructuredCall } from "./openai-provider";
 import { paceIntervalMs } from "./config";

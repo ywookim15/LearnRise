@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // MEMORY (Stage 5) — compresses each chat exchange into the journey's
 // compressed_notes (misconceptions, stated preferences, pacing signals, what's

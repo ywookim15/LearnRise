@@ -1,3 +1,5 @@
+import "server-only";
+
 // YouTube Data API helper — Stage 3 step 8 (video chapter markers/timestamps).
 // If YOUTUBE_API_KEY is absent, everything returns null and the pipeline
 // proceeds without timestamps (graceful skip, per spec).

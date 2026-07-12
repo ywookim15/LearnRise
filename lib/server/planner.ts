@@ -1,3 +1,5 @@
+import "server-only";
+
 // -----------------------------------------------------------------------------
 // PLANNER AGENT — Algorithm v2, Stage 2 (Roadmap Generation)
 //

@@ -1,3 +1,5 @@
+import "server-only";
+
 // Provider-agnostic structured-output (function-calling) layer.
 // Every call returns the arguments of a single forced tool call — never
 // free-text that we then parse.
