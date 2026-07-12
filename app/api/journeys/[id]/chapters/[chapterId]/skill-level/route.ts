@@ -4,6 +4,8 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { adjustChapterForSkillLevel } from "@/lib/server/planner";
 import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
+import { getPlanState, checkSkillAdjustLimit, recordSkillAdjust } from "@/lib/server/usage-limits";
+import { FREE_SKILL_ADJUST_MONTHLY_LIMIT } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -73,6 +75,24 @@ export async function POST(
   if (skillLevel === "unset") {
     return NextResponse.json({ skillLevel, adjusted: false });
   }
+
+  // ---- Free-tier cap: enforce BEFORE spending a Planner call. Without this,
+  // calling this route directly (bypassing the UI) in a loop gives unlimited
+  // free Gemini/Curator calls — same cost-abuse class as chat/replan. ----
+  const { plan, status } = await getPlanState(user.id);
+  const adjustCheck = await checkSkillAdjustLimit(user.id, plan, status);
+  if (!adjustCheck.allowed) {
+    return NextResponse.json(
+      {
+        error: `You've used all ${FREE_SKILL_ADJUST_MONTHLY_LIMIT} of your free skill-level adjustments this month. Upgrade to Pro for unlimited adjustments.`,
+        code: "skill_adjust_limit",
+        skillLevel,
+        adjusted: false,
+      },
+      { status: 402 }
+    );
+  }
+  if (!adjustCheck.premium) await recordSkillAdjust(user.id);
 
   let newObjective = chapter.learning_objective as string;
   try {

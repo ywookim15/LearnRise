@@ -3,6 +3,7 @@
 export const FREE_JOURNEY_LIMIT = 1;
 export const FREE_CHAT_DAILY_LIMIT = 10;
 export const FREE_REPLAN_MONTHLY_LIMIT = 3;
+export const FREE_SKILL_ADJUST_MONTHLY_LIMIT = 20;
 
 const ENTITLED_STATUSES = new Set(["active", "trialing", "past_due"]);
 

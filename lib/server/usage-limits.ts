@@ -13,9 +13,10 @@ import {
   isPremium,
   FREE_CHAT_DAILY_LIMIT,
   FREE_REPLAN_MONTHLY_LIMIT,
+  FREE_SKILL_ADJUST_MONTHLY_LIMIT,
 } from "@/lib/entitlements";
 
-type Feature = "chat_message" | "replan";
+type Feature = "chat_message" | "replan" | "skill_adjust";
 
 export interface UsageCheck {
   allowed: boolean;
@@ -102,4 +103,30 @@ export async function checkReplanLimit(
 
 export async function recordReplan(userId: string): Promise<void> {
   await increment(userId, "replan", monthStartUtc());
+}
+
+/** May this user trigger one more knowledge-map skill-level adjustment
+ * (Planner + Curator re-fetch for a single chapter) this month? Same class
+ * of cost-bearing AI call as replan — needs the same cap, since without one
+ * a free user could hit the "Know it"/"Familiar" route directly in a loop
+ * for unlimited Gemini/Curator calls. */
+export async function checkSkillAdjustLimit(
+  userId: string,
+  plan: string | null,
+  status: string | null
+): Promise<UsageCheck> {
+  if (isPremium(plan, status)) {
+    return { allowed: true, premium: true, used: 0, limit: Infinity };
+  }
+  const used = await peekCount(userId, "skill_adjust", monthStartUtc());
+  return {
+    allowed: used < FREE_SKILL_ADJUST_MONTHLY_LIMIT,
+    premium: false,
+    used,
+    limit: FREE_SKILL_ADJUST_MONTHLY_LIMIT,
+  };
+}
+
+export async function recordSkillAdjust(userId: string): Promise<void> {
+  await increment(userId, "skill_adjust", monthStartUtc());
 }

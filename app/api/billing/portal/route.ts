@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getRequestUser } from "@/lib/server/auth";
-import { getStripe } from "@/lib/server/stripe";
+import { getStripe, getOrCreateCustomerId } from "@/lib/server/stripe";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
@@ -11,7 +11,7 @@ export const runtime = "nodejs";
  */
 export async function POST(req: NextRequest) {
   const user = await getRequestUser(req);
-  if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+  if (!user || !user.email) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
   const { data: sub } = await getSupabaseAdmin()
     .from("subscriptions")
@@ -27,8 +27,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Same mode-mismatch hazard as checkout (see getOrCreateCustomerId's
+    // comment): verify/repair the stored customer id before using it, so a
+    // test-mode id left over from a sandbox->live migration doesn't crash
+    // the portal with "No such customer".
+    const customerId = await getOrCreateCustomerId(user.id, user.email);
     const session = await getStripe().billingPortal.sessions.create({
-      customer: sub.stripe_customer_id,
+      customer: customerId,
       return_url: `${req.nextUrl.origin}/settings`,
     });
     return NextResponse.json({ url: session.url });
