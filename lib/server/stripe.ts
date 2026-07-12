@@ -60,7 +60,28 @@ export async function getOrCreateCustomerId(userId: string, email: string): Prom
     .eq("user_id", userId)
     .maybeSingle();
 
-  if (existing?.stripe_customer_id) return existing.stripe_customer_id;
+  // A stored customer id can be stale for the CURRENTLY ACTIVE Stripe key —
+  // most notably right after switching from test-mode to live-mode keys (or
+  // back), since customer ids are mode-specific and a test-mode id simply
+  // does not exist under a live key. Never trust the stored id blindly:
+  // verify it still resolves before reusing it, and if not, mint a fresh
+  // customer and repair the stored id. Do NOT remove this check — without
+  // it, checkout fails outright for every user whose id predates a
+  // sandbox/live key migration ("No such customer: ...").
+  if (existing?.stripe_customer_id) {
+    try {
+      const customer = await getStripe().customers.retrieve(existing.stripe_customer_id);
+      if (!("deleted" in customer && customer.deleted)) {
+        return existing.stripe_customer_id;
+      }
+    } catch (err) {
+      console.warn(
+        `[billing] stored stripe_customer_id ${existing.stripe_customer_id} for user ${userId} is invalid (${
+          err instanceof Error ? err.message : err
+        }); creating a new one`
+      );
+    }
+  }
 
   const customer = await getStripe().customers.create({
     email,
