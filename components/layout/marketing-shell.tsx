@@ -33,7 +33,7 @@ function MarketingFooter() {
       </div>
       <div className="border-t border-border py-5">
         <p className="text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} METIS. A prototype — mock data only.
+          © {new Date().getFullYear()} METIS. All rights reserved.
         </p>
       </div>
     </footer>

@@ -55,7 +55,7 @@ export default function ContactPage() {
             Get in touch
           </h1>
           <p className="mt-4 max-w-md text-muted-foreground">
-            Questions about your roadmap, feedback on the prototype, or just want
+            Questions about your roadmap, feedback on METIS, or just want
             to say hello? Drop us a line.
           </p>
 

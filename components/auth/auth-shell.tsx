@@ -52,7 +52,7 @@ export function AuthShell({
               })}
             </ul>
           </div>
-          <p className="text-xs text-white/60">METIS · early access</p>
+          <p className="text-xs text-white/60">© {new Date().getFullYear()} METIS</p>
         </div>
       </div>
 
