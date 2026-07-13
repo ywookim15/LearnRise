@@ -27,6 +27,9 @@ export function Sidebar() {
       </div>
 
       <nav className="flex flex-1 flex-col gap-1 px-3">
+        <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">
+          Menu
+        </p>
         {NAV.map((item) => {
           const active = item.matchPrefixes.some((p) => pathname.startsWith(p));
           const Icon = item.icon;
@@ -35,9 +38,9 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                 active
-                  ? "bg-primary text-primary-foreground shadow-brand"
+                  ? "bg-brand-gradient text-white shadow-brand"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >

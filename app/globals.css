@@ -92,4 +92,65 @@
   .text-gradient {
     @apply bg-brand-gradient bg-clip-text text-transparent;
   }
+
+  /* Faint dot grid — the subtle texture behind hero + roadmap surfaces in the
+     Stitch references. Sits under content at low opacity. */
+  .bg-dot-grid {
+    background-image: radial-gradient(hsl(var(--primary) / 0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-line-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--primary) / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--primary) / 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Layered lavender mesh used for the marketing hero canvas. */
+  .bg-hero-mesh {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(38rem 38rem at 12% -8%, rgba(99, 102, 241, 0.16), transparent 60%),
+      radial-gradient(34rem 34rem at 92% 4%, rgba(168, 85, 247, 0.16), transparent 58%),
+      radial-gradient(28rem 28rem at 60% 100%, rgba(129, 140, 248, 0.12), transparent 62%);
+  }
+
+  /* Frosted glass surface for floating cards / overlays. */
+  .glass-card {
+    background-color: hsl(var(--card) / 0.72);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  }
+
+  /* Gradient hairline border for premium/AI moments (used via ::before mask). */
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.5));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
 }

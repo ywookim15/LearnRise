@@ -23,15 +23,15 @@ export function MarketingNav() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-border/70 bg-card/60 p-1 md:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
                 pathname === l.href
-                  ? "text-primary"
+                  ? "bg-brand-gradient text-white shadow-brand"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -44,7 +44,7 @@ export function MarketingNav() {
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
             <Link href="/login">Sign In</Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="sm" variant="gradient">
             <Link href="/signup">Get Started</Link>
           </Button>
         </div>
