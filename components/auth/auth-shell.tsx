@@ -19,7 +19,8 @@ export function AuthShell({
   return (
     <div className="flex min-h-screen bg-background">
       {/* Brand panel */}
-      <div className="relative hidden w-1/2 overflow-hidden bg-brand-gradient lg:block">
+      <div className="relative hidden w-1/2 overflow-hidden bg-brand-gradient-vivid lg:block">
+        <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-30" />
         <div className="pointer-events-none absolute -right-16 top-24 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
         <div className="pointer-events-none absolute -left-10 bottom-10 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
         <div className="relative flex h-full flex-col justify-between p-12">
@@ -34,7 +35,7 @@ export function AuthShell({
               Set a destination and METIS plots the route — resourced, ordered,
               and adaptive.
             </p>
-            <ul className="mt-10 space-y-4">
+            <ul className="mt-10 space-y-3">
               {[
                 { icon: Compass, text: "Never wonder what to study next" },
                 { icon: Route, text: "Roadmaps sequenced just for you" },
@@ -42,8 +43,11 @@ export function AuthShell({
               ].map((f) => {
                 const Icon = f.icon;
                 return (
-                  <li key={f.text} className="flex items-center gap-3 text-white/90">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                  <li
+                    key={f.text}
+                    className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white/95 backdrop-blur-sm"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15">
                       <Icon className="h-4 w-4" />
                     </span>
                     {f.text}

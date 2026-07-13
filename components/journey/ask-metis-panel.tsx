@@ -114,14 +114,15 @@ export function AskMetisPanel({
 
   return (
     <aside className="flex h-full w-full flex-col border-l border-border bg-card md:w-[46%] md:min-w-[380px]">
-      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-gradient text-white shadow-brand">
+      <div className="relative flex items-center justify-between gap-2 overflow-hidden border-b border-border bg-brand-gradient px-4 py-3.5 text-white">
+        <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-20" />
+        <div className="relative flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-sm">
             <Sparkles className="h-4 w-4" />
           </span>
           <div>
-            <p className="text-sm font-semibold leading-none">Ask METIS</p>
-            <p className="mt-1 text-[11px] text-muted-foreground">
+            <p className="text-sm font-semibold leading-none">METIS AI Tutor</p>
+            <p className="mt-1 text-[11px] text-white/80">
               {chatTabs.find((t) => t.id === tab)?.blurb}
             </p>
           </div>
@@ -129,7 +130,7 @@ export function AskMetisPanel({
         <button
           onClick={onCollapse}
           aria-label="Collapse chat"
-          className="flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="relative flex h-9 w-9 items-center justify-center rounded-xl text-white/90 transition-colors hover:bg-white/15 hover:text-white"
         >
           <ChevronsRight className="h-5 w-5" />
         </button>
