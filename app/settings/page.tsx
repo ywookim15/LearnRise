@@ -96,7 +96,7 @@ export default function SettingsPage() {
     }
   }
 
-  // The Supabase session loads asynchronously — re-seed the form when the
+  // The Supabase session loads asynchronously, re-seed the form when the
   // real profile arrives (or after a save round-trips through the context).
   useEffect(() => {
     setFirstName(user.firstName);
@@ -201,7 +201,7 @@ export default function SettingsPage() {
               <Link href="/forgot-password" className="font-medium text-primary hover:underline">
                 password reset flow
               </Link>
-              {" "}— we&apos;ll email you a secure link.
+              . We&apos;ll email you a secure link.
             </p>
           </div>
         </div>

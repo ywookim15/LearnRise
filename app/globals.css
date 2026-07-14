@@ -4,61 +4,61 @@
 
 @layer base {
   :root {
-    /* Surfaces — light lavender-gray canvas with white cards (from Stitch) */
-    --background: 240 33% 98%;
-    --foreground: 222 47% 11%;
+    /* Flat, near-white cool canvas with white cards (no gradient wash). */
+    --background: 220 33% 98%;
+    --foreground: 232 66% 15%; /* navy #0D1140 — all primary text */
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 232 66% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 232 66% 15%;
 
-    /* Primary #6366F1 */
-    --primary: 239 84% 67%;
+    /* Primary accent / CTA — solid blue #0057EB */
+    --primary: 218 100% 46%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary #A855F7 */
-    --secondary: 271 91% 65%;
+    /* Secondary — solid navy #0D1140 (dark surfaces / inverted) */
+    --secondary: 232 66% 15%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted / neutral #777680 */
-    --muted: 240 20% 96%;
-    --muted-foreground: 240 4% 46%;
+    /* Muted surfaces + AA-compliant muted text (navy-tinted, ~7:1 on white) */
+    --muted: 220 24% 95%;
+    --muted-foreground: 230 22% 32%;
 
-    --accent: 240 30% 96%;
-    --accent-foreground: 239 84% 60%;
+    --accent: 218 100% 96%;
+    --accent-foreground: 218 100% 40%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 20% 91%;
-    --input: 240 20% 91%;
-    --ring: 239 84% 67%;
+    --border: 225 22% 89%;
+    --input: 225 22% 86%;
+    --ring: 218 100% 46%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 240 20% 96%;
-    --card: 222 45% 11%;
-    --card-foreground: 240 20% 96%;
-    --popover: 222 45% 11%;
-    --popover-foreground: 240 20% 96%;
-    --primary: 239 84% 67%;
+    --background: 232 50% 7%;
+    --foreground: 220 30% 96%;
+    --card: 232 40% 11%;
+    --card-foreground: 220 30% 96%;
+    --popover: 232 40% 11%;
+    --popover-foreground: 220 30% 96%;
+    --primary: 218 100% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 271 91% 65%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 222 40% 16%;
-    --muted-foreground: 240 10% 65%;
-    --accent: 222 40% 18%;
-    --accent-foreground: 240 20% 96%;
+    --secondary: 232 40% 18%;
+    --secondary-foreground: 220 30% 96%;
+    --muted: 232 32% 16%;
+    --muted-foreground: 220 18% 74%;
+    --accent: 232 40% 18%;
+    --accent-foreground: 220 30% 96%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 40% 18%;
-    --input: 222 40% 18%;
-    --ring: 239 84% 67%;
+    --border: 232 32% 20%;
+    --input: 232 32% 20%;
+    --ring: 218 100% 60%;
   }
 }
 
@@ -71,7 +71,10 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   ::selection {
-    background: rgba(99, 102, 241, 0.18);
+    background: rgba(0, 87, 235, 0.16);
+  }
+  h1, h2, h3, h4, h5 {
+    @apply font-heading;
   }
 }
 
@@ -89,8 +92,9 @@
     background-color: hsl(var(--border));
     border-radius: 9999px;
   }
+  /* Legacy name retained: now solid navy, no gradient. */
   .text-gradient {
-    @apply bg-brand-gradient bg-clip-text text-transparent;
+    color: #0d1140;
   }
 
   /* Faint dot grid — the subtle texture behind hero + roadmap surfaces in the
@@ -106,13 +110,9 @@
     background-size: 28px 28px;
   }
 
-  /* Layered lavender mesh used for the marketing hero canvas. */
+  /* Flat marketing canvas (gradient wash removed). */
   .bg-hero-mesh {
     background-color: hsl(var(--background));
-    background-image:
-      radial-gradient(38rem 38rem at 12% -8%, rgba(99, 102, 241, 0.16), transparent 60%),
-      radial-gradient(34rem 34rem at 92% 4%, rgba(168, 85, 247, 0.16), transparent 58%),
-      radial-gradient(28rem 28rem at 60% 100%, rgba(129, 140, 248, 0.12), transparent 62%);
   }
 
   /* Frosted glass surface for floating cards / overlays. */
@@ -122,7 +122,7 @@
     -webkit-backdrop-filter: blur(14px) saturate(1.4);
   }
 
-  /* Gradient hairline border for premium/AI moments (used via ::before mask). */
+  /* Solid navy hairline accent (previously a gradient). */
   .ring-gradient {
     position: relative;
   }
@@ -132,7 +132,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.5));
+    background: rgba(0, 87, 235, 0.35);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;

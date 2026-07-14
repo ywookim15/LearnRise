@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronsRight, Send, Sparkles, RefreshCw } from "lucide-react";
+import { ChevronsRight, Send, RefreshCw } from "lucide-react";
+import { LogoMark } from "@/components/shared/logo";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ProGate } from "@/components/shared/pro-gate";
 import { chatTabs, type ChatTab } from "@/lib/mock-data/chat";
@@ -15,15 +16,15 @@ interface Message {
 }
 
 const INTRO: Record<ChatTab, string> = {
-  main: "Hi — I'm METIS. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
+  main: "Hi, I'm METIS. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
   planner: "I'm your Planner. Tell me your deadline, weekly hours, or how you want to re-pace things and I'll re-plan your upcoming chapters (finished ones stay put).",
-  tutor: "I'm your Tutor. Point me at a concept or resource and I'll walk you through it — questions first, answers second.",
+  tutor: "I'm your Tutor. Point me at a concept or resource and I'll walk you through it, questions first, answers second.",
 };
 
 const SUGGESTIONS: Record<ChatTab, string[]> = {
   main: ["What should I do next?", "Summarize my progress so far", "Can you explain this resource?"],
   planner: ["Change my pacing", "I have less time this week", "Skip ahead to a different topic"],
-  tutor: ["Explain this concept simply", "Quiz me on this chapter", "I'm stuck — give me a hint"],
+  tutor: ["Explain this concept simply", "Quiz me on this chapter", "I'm stuck, give me a hint"],
 };
 
 let mid = 0;
@@ -98,7 +99,7 @@ export function AskMetisPanel({
         push(activeTab, {
           id: newId(),
           role: "system",
-          text: "Updating your roadmap — new units and resources will appear shortly.",
+          text: "Updating your roadmap, new units and resources will appear shortly.",
         });
         onRoadmapChanged?.();
       }
@@ -117,8 +118,8 @@ export function AskMetisPanel({
       <div className="relative flex items-center justify-between gap-2 overflow-hidden border-b border-border bg-brand-gradient px-4 py-3.5 text-white">
         <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-20" />
         <div className="relative flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-sm">
-            <Sparkles className="h-4 w-4" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-white">
+            <LogoMark className="h-5 w-auto" />
           </span>
           <div>
             <p className="text-sm font-semibold leading-none">METIS AI Tutor</p>

@@ -27,12 +27,15 @@ export function ProfileDropdown({ showChevron = true }: { showChevron?: boolean 
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <DropdownMenuTrigger
+        className="flex min-h-11 items-center gap-1.5 rounded-full p-0.5 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label="Account menu"
+      >
         <Avatar className="h-9 w-9 ring-2 ring-border">
-          <AvatarImage src={user.avatarUrl} alt={`${user.firstName} ${user.lastName}`} />
+          <AvatarImage src={user.avatarUrl} alt="" />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
-        {showChevron && <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+        {showChevron && <ChevronDown className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">

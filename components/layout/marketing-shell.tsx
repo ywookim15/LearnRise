@@ -26,7 +26,7 @@ function MarketingFooter() {
         <div className="space-y-3">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            METIS is your learning GPS — precise, adaptive roadmaps that turn any
+            METIS is your learning GPS. Precise, adaptive roadmaps that turn any
             goal into a resourced path.
           </p>
           <div className="flex items-center gap-2 pt-1">

@@ -1,10 +1,11 @@
-import { Check, Lock, Sparkles } from "lucide-react";
+import { Check, Lock } from "lucide-react";
+import { LogoMark } from "@/components/shared/logo";
 import { cn } from "@/lib/utils";
 
 /**
  * Stylized, self-contained preview of the METIS app shown in the marketing
  * hero (mirrors the Stitch reference's floating product card). Pure
- * presentation — no data, no interactivity — so it can sit on a public page.
+ * presentation, no data, no interactivity, so it can sit on a public page.
  */
 export function AppPreview({ className }: { className?: string }) {
   return (
@@ -57,15 +58,15 @@ export function AppPreview({ className }: { className?: string }) {
       </div>
 
       {/* Floating AI-tutor chip */}
-      <div className="absolute -bottom-5 -left-5 hidden w-52 rotate-[-2deg] rounded-2xl border border-border/70 bg-card p-3 shadow-lift sm:block">
+      <div className="absolute -bottom-5 -left-5 hidden w-52 rounded-xl border border-border bg-card p-3 shadow-lift sm:block">
         <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-gradient text-white shadow-brand">
-            <Sparkles className="h-3.5 w-3.5" />
+          <span className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-white">
+            <LogoMark className="h-4 w-auto" />
           </span>
           <p className="text-xs font-semibold">METIS AI Tutor</p>
         </div>
         <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          &ldquo;Let&apos;s break down backpropagation — want an example?&rdquo;
+          &ldquo;Let&apos;s break down backpropagation. Want a worked example?&rdquo;
         </p>
       </div>
     </div>

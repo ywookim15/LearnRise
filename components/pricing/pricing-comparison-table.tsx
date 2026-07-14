@@ -18,10 +18,10 @@ const ROWS: ComparisonRow[] = [
   { feature: "AI-generated roadmap & resources", free: "Included", pro: "Included", boolean: true },
   { feature: "Chat with METIS", free: "10 messages/day", pro: "Unlimited" },
   { feature: "Adaptive re-routing when you struggle", free: "Limited (3/month)", pro: "Unlimited" },
-  { feature: "Reasoning quality & roadmap depth", free: "Standard", pro: "Enhanced — richer, more detailed roadmaps", center: true },
+  { feature: "Reasoning quality & roadmap depth", free: "Standard", pro: "Enhanced, richer, more detailed roadmaps", center: true },
   { feature: "Analytics & progress insights", free: "Not included", pro: "Included", boolean: true },
   { feature: "Priority support", free: "Not included", pro: "Included", boolean: true },
-  { feature: "Free trial", free: "—", pro: "7 days free" },
+  { feature: "Free trial", free: "None", pro: "7 days free" },
 ];
 
 function Cell({

@@ -20,7 +20,7 @@ export function AddJourneyCard() {
   const [createOpen, setCreateOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
-  // Free tier is capped at 1 active journey — surface the upgrade prompt instead.
+  // Free tier is capped at 1 active journey, surface the upgrade prompt instead.
   // (The server also enforces this in POST /api/journeys as the real backstop.)
   const atFreeLimit = !isPremium && journeys.length >= FREE_JOURNEY_LIMIT;
 

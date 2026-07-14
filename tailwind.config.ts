@@ -62,17 +62,24 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        // Raw brand values, always available regardless of theme
+        // Raw brand values. Solid navy + blue; the blue→purple gradient is
+        // reserved for the logo asset only.
         brand: {
-          primary: "#6366F1",
-          secondary: "#A855F7",
-          tertiary: "#0F172A",
-          neutral: "#777680",
+          navy: "#0D1140",
+          blue: "#0057EB",
+          primary: "#0057EB",
+          secondary: "#0D1140",
+          tertiary: "#0D1140",
+          neutral: "#41496A",
         },
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["var(--font-eb-garamond)", "Georgia", "serif"],
+        // Body/UI text: Inter (neutral, readable). Headlines: Poppins.
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
+        heading: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        // `serif` is kept as an alias to the heading font so existing
+        // `font-serif` headline usages resolve to Poppins (not a serif).
+        serif: ["var(--font-poppins)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       fontSize: {
@@ -89,20 +96,24 @@ const config: Config = {
         "3xl": "calc(var(--radius) + 16px)",
       },
       boxShadow: {
-        // Soft, low-contrast elevation matching the Stitch cards
-        card: "0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.06)",
-        "card-hover": "0 8px 30px -6px rgba(15, 23, 42, 0.10), 0 2px 6px -2px rgba(15, 23, 42, 0.06)",
-        // Deep, diffuse lift for floating hero/preview cards
-        lift: "0 24px 60px -20px rgba(79, 70, 229, 0.30), 0 10px 24px -12px rgba(15, 23, 42, 0.14)",
-        popover: "0 12px 40px -8px rgba(15, 23, 42, 0.18)",
-        brand: "0 10px 30px -10px rgba(99, 102, 241, 0.55)",
-        "brand-lg": "0 20px 50px -12px rgba(99, 102, 241, 0.5)",
-        glow: "0 0 0 1px rgba(99,102,241,0.12), 0 8px 40px -8px rgba(168,85,247,0.35)",
+        // Restrained, neutral elevation (no colored glow — that read as templated).
+        card: "0 1px 2px 0 rgba(13, 17, 64, 0.05), 0 1px 3px -1px rgba(13, 17, 64, 0.06)",
+        "card-hover": "0 6px 20px -8px rgba(13, 17, 64, 0.14), 0 2px 6px -2px rgba(13, 17, 64, 0.06)",
+        lift: "0 20px 48px -24px rgba(13, 17, 64, 0.28), 0 8px 20px -12px rgba(13, 17, 64, 0.12)",
+        popover: "0 12px 40px -8px rgba(13, 17, 64, 0.16)",
+        // `brand` shadows kept as tokens but now neutral navy, not indigo glow.
+        brand: "0 6px 16px -8px rgba(13, 17, 64, 0.28)",
+        "brand-lg": "0 14px 34px -12px rgba(13, 17, 64, 0.30)",
+        glow: "0 1px 2px 0 rgba(13, 17, 64, 0.06)",
       },
       backgroundImage: {
-        "brand-gradient": "linear-gradient(135deg, #6366F1 0%, #A855F7 100%)",
-        "brand-gradient-soft": "linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(168,85,247,0.12) 100%)",
-        "brand-gradient-vivid": "linear-gradient(135deg, #4F46E5 0%, #6366F1 45%, #A855F7 100%)",
+        // The blue→purple gradient now lives ONLY on the logo asset. These
+        // utility names are retained but resolve to SOLID fills so every
+        // existing usage de-gradients consistently: `brand-gradient` = blue,
+        // `-vivid` = navy, `-soft` = faint blue tint.
+        "brand-gradient": "linear-gradient(#0057EB, #0057EB)",
+        "brand-gradient-soft": "linear-gradient(rgba(0,87,235,0.07), rgba(0,87,235,0.07))",
+        "brand-gradient-vivid": "linear-gradient(#0D1140, #0D1140)",
       },
       keyframes: {
         "accordion-down": {

@@ -60,7 +60,7 @@ export default function DashboardPage() {
   const [dragOverFolder, setDragOverFolder] = useState<string | null>(null);
   const [draggingJourneyId, setDraggingJourneyId] = useState<string | null>(null);
   // dragenter/dragleave fire on every child element boundary, not just the
-  // drop zone itself — an enter-counter (rather than toggling on each event)
+  // drop zone itself, an enter-counter (rather than toggling on each event)
   // keeps the highlight stable instead of flickering as the pointer crosses
   // the folder card's icon/text/menu children.
   const dragCounters = useRef<Record<string, number>>({});

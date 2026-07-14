@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
           <MailCheck className="mx-auto h-14 w-14 text-primary" />
           <p className="mt-4 text-sm text-muted-foreground">
             Open the link in your inbox to choose a new password. It expires
-            after a short while — request another if it stops working.
+            after a short while, request another if it stops working.
           </p>
           <Button asChild variant="outline" className="mt-6 w-full">
             <Link href="/login">Back to sign in</Link>

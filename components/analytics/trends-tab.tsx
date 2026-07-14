@@ -45,7 +45,7 @@ export function TrendsTab() {
       </div>
 
       <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-        <p className="text-sm font-semibold">Study consistency — last 30 days</p>
+        <p className="text-sm font-semibold">Study consistency, last 30 days</p>
         <p className="text-xs text-muted-foreground">Resources completed per day, across all journeys</p>
         <div className="mt-4 h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">

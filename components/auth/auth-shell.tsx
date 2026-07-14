@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Compass, Route, Sparkles } from "lucide-react";
+import { Compass, Route, MessagesSquare } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 
 /**
@@ -32,14 +32,14 @@ export function AuthShell({
               Your learning, precisely mapped.
             </h2>
             <p className="mt-4 max-w-sm text-white/80">
-              Set a destination and METIS plots the route — resourced, ordered,
+              Set a destination and METIS plots the route, resourced, ordered,
               and adaptive.
             </p>
             <ul className="mt-10 space-y-3">
               {[
                 { icon: Compass, text: "Never wonder what to study next" },
                 { icon: Route, text: "Roadmaps sequenced just for you" },
-                { icon: Sparkles, text: "An AI tutor that knows your path" },
+                { icon: MessagesSquare, text: "An AI tutor that knows your path" },
               ].map((f) => {
                 const Icon = f.icon;
                 return (

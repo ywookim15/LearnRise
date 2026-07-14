@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
-import { EB_Garamond } from "next/font/google";
-import { GeistSans } from "geist/font/sans";
+import { Poppins, Inter } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
 import { AppProvider } from "@/lib/context/app-context";
 import "./globals.css";
 
-const ebGaramond = EB_Garamond({
+// Distinct pairing (not one font everywhere): Poppins for headlines only,
+// Inter for all body/UI text so paragraphs read neutral and legible.
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-eb-garamond",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "METIS — Your Learning GPS",
+  title: "METIS · Your Learning GPS",
   description:
-    "METIS is your learning GPS: AI-guided, adaptive roadmaps that turn any goal into a precise, resourced path.",
+    "METIS is an AI-powered learning GPS. Tell it what you want to learn and it builds an adaptive roadmap that re-plans around you.",
 };
 
 export default function RootLayout({
@@ -25,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${ebGaramond.variable}`}
+      className={`${inter.variable} ${poppins.variable} ${GeistMono.variable}`}
     >
       <body className="min-h-screen bg-background font-sans">
         <AppProvider>{children}</AppProvider>

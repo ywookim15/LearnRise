@@ -2,7 +2,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * METIS mark — the exact provided logo artwork (triangle + breakthrough arrow),
+ * METIS mark, the exact provided logo artwork (triangle + breakthrough arrow),
  * with its white background knocked out to transparent so it sits on any light
  * surface. Source: /public/logo-mark.png.
  */

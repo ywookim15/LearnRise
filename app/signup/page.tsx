@@ -12,10 +12,8 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
@@ -23,26 +21,17 @@ export default function SignUpPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-
-    if (password !== confirm) {
-      setError("Passwords don't match.");
-      return;
-    }
-
     setPending(true);
-    const supabase = getSupabaseBrowserClient();
-    const trimmed = name.trim();
-    const [first, ...rest] = trimmed.split(/\s+/);
 
+    const supabase = getSupabaseBrowserClient();
+
+    // Account creation only asks for email + password. Your name, goal, level,
+    // timeline, and study preferences are collected in-product after sign-up
+    // (when you create your first journey), not up front.
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: {
-          full_name: trimmed,
-          first_name: first ?? "",
-          last_name: rest.join(" "),
-        },
         emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     });
@@ -74,7 +63,7 @@ export default function SignUpPage() {
     }
 
     // If email confirmation is disabled in the project, a session is returned
-    // immediately — go straight in.
+    // immediately, go straight in.
     if (data.session) {
       router.push("/dashboard");
       router.refresh();
@@ -87,15 +76,15 @@ export default function SignUpPage() {
 
   if (verifySent) {
     return (
-      <AuthShell 
-        title="Verify your email" 
+      <AuthShell
+        title="Verify your email"
         subtitle={`We sent a confirmation link to ${email}.`}
       >
-        <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-card">
-          <MailCheck className="mx-auto h-14 w-14 text-primary" />
+        <div className="rounded-lg border border-border bg-card p-8 text-center shadow-card">
+          <MailCheck className="mx-auto h-12 w-12 text-primary" aria-hidden="true" />
           <p className="mt-4 text-sm text-muted-foreground">
-            Click the link in your inbox to activate your account, then sign in. 
-            (Check spam if it doesn&apos;t arrive within a minute.)
+            Click the link in your inbox to activate your account, then sign in.
+            Check spam if it doesn&apos;t arrive within a minute.
           </p>
           <Button className="mt-6 w-full" onClick={() => router.push("/login")}>
             Continue to sign in
@@ -106,19 +95,14 @@ export default function SignUpPage() {
   }
 
   return (
-    <AuthShell title="Create your account" subtitle="Start your first learning journey — free.">
+    <AuthShell title="Create your account" subtitle="It only takes an email and a password. Your first journey is free.">
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className="flex items-start gap-2.5 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             {error}
           </div>
         )}
-
-        <div className="space-y-2">
-          <Label htmlFor="name">Full name</Label>
-          <Input id="name" placeholder="Jane Doe" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
 
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -130,13 +114,8 @@ export default function SignUpPage() {
           <Input id="password" type="password" autoComplete="new-password" placeholder="Create a password (min 6 characters)" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="confirm">Confirm password</Label>
-          <Input id="confirm" type="password" autoComplete="new-password" placeholder="Re-enter your password" minLength={6} value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
-        </div>
-
         <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Creating account…" : "Create account"}
+          {pending ? "Creating account..." : "Create account"}
         </Button>
       </form>
 

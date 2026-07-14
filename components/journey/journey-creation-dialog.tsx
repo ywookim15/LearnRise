@@ -87,7 +87,7 @@ export function JourneyCreationDialog({
               <p className="text-lg font-semibold">Generating your roadmap…</p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">
                 METIS is researching a syllabus and mapping your units and
-                chapters. This usually takes 15–30 seconds — hang tight and keep
+                chapters. This usually takes 15 to 30 seconds, hang tight and keep
                 this open. Resources fill in afterward.
               </p>
             </div>
@@ -101,7 +101,7 @@ export function JourneyCreationDialog({
               <DialogTitle>Create a new learning journey</DialogTitle>
               <DialogDescription>
                 Tell METIS what you want to learn. It&apos;ll generate a mapped
-                roadmap — the more specific you are, the better the route.
+                roadmap, the more specific you are, the better the route.
               </DialogDescription>
             </DialogHeader>
 
@@ -123,7 +123,7 @@ export function JourneyCreationDialog({
                   id="goal"
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  placeholder="e.g. Ace the AP Biology genetics unit — be as specific as possible."
+                  placeholder="e.g. Ace the AP Biology genetics unit, be as specific as possible."
                   required
                 />
               </div>

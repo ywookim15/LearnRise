@@ -132,7 +132,7 @@ function ChapterResources({
   return (
     <p className="flex items-center gap-2 px-3 py-2.5 text-xs text-muted-foreground">
       <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
-      No resources found yet — this chapter is flagged as a gap.
+      No resources found yet, this chapter is flagged as a gap.
     </p>
   );
 }

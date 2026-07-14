@@ -75,7 +75,7 @@ export function OverviewTab() {
         <p>
           <span className="font-medium text-foreground">Not shown yet: </span>
           total study time and per-message chat history aren&apos;t tracked anywhere
-          in the app today — there&apos;s no session/duration log, and the chat
+          in the app today, there&apos;s no session/duration log, and the chat
           memory table stores one compressed summary per journey rather than a
           timestamped history. Everything above is computed from real
           completion data instead of estimated.

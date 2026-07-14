@@ -29,7 +29,7 @@ export default function ContactPage() {
           lastName: data.get("lastName"),
           email: data.get("email"),
           message: data.get("message"),
-          // Honeypot — visually hidden below; real users never fill it.
+          // Honeypot, visually hidden below; real users never fill it.
           company: data.get("company"),
         }),
       });
@@ -87,7 +87,7 @@ export default function ContactPage() {
               <CheckCircle2 className="h-14 w-14 text-primary" />
               <h2 className="mt-4 text-xl font-semibold">Message sent!</h2>
               <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-                Thanks for reaching out — we&apos;ll get back to you at the email
+                Thanks for reaching out, we&apos;ll get back to you at the email
                 you provided.
               </p>
               <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>

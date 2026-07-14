@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, X, Sparkles, Zap, ShieldCheck, BarChart3, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
+import { Check, X, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -28,10 +28,10 @@ const FREE_FEATURES = [
 ];
 
 const PREMIUM_FEATURES = [
-  { icon: Sparkles, label: "Unlimited active learning journeys" },
-  { icon: Zap, label: "Unlimited chat & adaptive re-routing" },
-  { icon: BarChart3, label: "Analytics & progress insights" },
-  { icon: ShieldCheck, label: "Priority support" },
+  "Unlimited active learning journeys",
+  "Unlimited chat & adaptive re-routing",
+  "Analytics & progress insights",
+  "Priority support",
 ];
 
 export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
@@ -111,24 +111,21 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       {/* Plans */}
       <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* Free */}
-        <div className="flex flex-col rounded-3xl border border-border bg-card p-8 shadow-card">
-          <h2 className="text-xl font-semibold">Free Tier</h2>
+        <div className="flex flex-col rounded-xl border border-border bg-card p-8">
+          <h2 className="font-heading text-xl font-semibold">Free Tier</h2>
           <p className="mt-1 text-sm text-muted-foreground">Essential tools to start your journey.</p>
           <div className="mt-6 flex items-baseline gap-1">
-            <span className="text-5xl font-bold tracking-tight">$0</span>
+            <span className="font-heading text-5xl font-bold tracking-tight">$0</span>
             <span className="text-sm text-muted-foreground">/forever</span>
           </div>
           <ul className="mt-6 flex-1 space-y-3">
             {FREE_FEATURES.map((f) => (
-              <li key={f.label} className="flex items-center gap-3 text-sm">
-                <span
-                  className={cn(
-                    "flex h-5 w-5 shrink-0 items-center justify-center rounded-full",
-                    f.included ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {f.included ? <Check className="h-3 w-3" strokeWidth={3} /> : <X className="h-3 w-3" strokeWidth={3} />}
-                </span>
+              <li key={f.label} className="flex items-start gap-3 text-sm">
+                {f.included ? (
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                ) : (
+                  <X className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" strokeWidth={2.5} aria-hidden="true" />
+                )}
                 <span className={cn(!f.included && "text-muted-foreground line-through")}>
                   {f.label}
                 </span>
@@ -149,28 +146,23 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         </div>
 
         {/* Premium */}
-        <div className="relative flex flex-col overflow-hidden rounded-3xl border-2 border-primary bg-card p-8 shadow-card-hover">
+        <div className="relative flex flex-col overflow-hidden rounded-xl border-2 border-primary bg-card p-8">
           <div className="absolute right-6 top-6">
             <Badge variant="gradient">1-week free trial</Badge>
           </div>
-          <h2 className="text-xl font-semibold text-primary">Premium Tier</h2>
+          <h2 className="font-heading text-xl font-semibold text-primary">Premium Tier</h2>
           <p className="mt-1 text-sm text-muted-foreground">The full Learning GPS experience.</p>
           <div className="mt-6 flex items-baseline gap-1">
-            <span className="text-5xl font-bold tracking-tight">{PRICE[billing].amount}</span>
+            <span className="font-heading text-5xl font-bold tracking-tight">{PRICE[billing].amount}</span>
             <span className="text-sm text-muted-foreground">{PRICE[billing].suffix}</span>
           </div>
           <ul className="mt-6 flex-1 space-y-3">
-            {PREMIUM_FEATURES.map((f) => {
-              const Icon = f.icon;
-              return (
-                <li key={f.label} className="flex items-center gap-3 text-sm font-medium">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-white">
-                    <Icon className="h-3.5 w-3.5" />
-                  </span>
-                  {f.label}
-                </li>
-              );
-            })}
+            {PREMIUM_FEATURES.map((label) => (
+              <li key={label} className="flex items-start gap-3 text-sm font-medium">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                {label}
+              </li>
+            ))}
           </ul>
           <div className="mt-8 space-y-3">
             {mode === "public" ? (

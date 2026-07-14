@@ -35,9 +35,9 @@ interface BranchPath {
  * Knowledge-tree view of a unit: the unit is the root and each chapter branches
  * off it along a curved SVG connector (measured against real DOM positions, so
  * it stays correct at any card height/width). Chapters show a compact
- * type+count summary rather than every resource title — this is a map of the
+ * type+count summary rather than every resource title, this is a map of the
  * unit's shape, not another resource list. Hover a chapter node to mark mastery
- * (Know it / Familiar) — the mark is persisted server-side and triggers a
+ * (Know it / Familiar), the mark is persisted server-side and triggers a
  * narrow Planner+Curator re-fetch of just that chapter's resources.
  */
 export function UnitFlowchart({
@@ -101,7 +101,7 @@ export function UnitFlowchart({
     <div className="rounded-2xl border border-border bg-brand-gradient-soft p-6">
       <div className="mb-5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         <GitBranch className="h-3.5 w-3.5" />
-        Knowledge map — what you&apos;ll learn in this unit
+        Knowledge map, what you&apos;ll learn in this unit
       </div>
 
       <div ref={containerRef} className="relative">
@@ -215,7 +215,7 @@ export function UnitFlowchart({
   );
 }
 
-/** Compact "1 video · 2 articles" style summary — never names individual resources. */
+/** Compact "1 video · 2 articles" style summary, never names individual resources. */
 function ResourceSummary({ chapter }: { chapter: UiChapter }) {
   if (chapter.resources.length === 0) {
     if (chapter.resourceStatus === "pending") {
