@@ -69,8 +69,8 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
           GPS for your potential
         </p>
-        <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight text-foreground sm:text-5xl">
-          Invest in your <span className="italic text-primary">learning journey.</span>
+        <h1 className="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-tight text-secondary sm:text-5xl">
+          Invest in your <span className="text-gradient">learning journey</span>.
         </h1>
         <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
           Choose the path that fits your goals. From casual exploration to
@@ -111,7 +111,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       {/* Plans */}
       <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* Free */}
-        <div className="flex flex-col rounded-xl border border-border bg-card p-8">
+        <div className="flex flex-col rounded-3xl border border-border bg-card p-8">
           <h2 className="font-heading text-xl font-semibold">Free Tier</h2>
           <p className="mt-1 text-sm text-muted-foreground">Essential tools to start your journey.</p>
           <div className="mt-6 flex items-baseline gap-1">
@@ -146,33 +146,32 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         </div>
 
         {/* Premium */}
-        <div className="relative flex flex-col overflow-hidden rounded-xl border-2 border-primary bg-card p-8">
-          <div className="absolute right-6 top-6">
-            <Badge variant="gradient">1-week free trial</Badge>
+        <div className="relative flex flex-col overflow-hidden rounded-3xl bg-brand-gradient p-8 text-white shadow-brand-lg">
+          <div className="absolute right-6 top-6 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-widest backdrop-blur-md">
+            Most popular
           </div>
-          <h2 className="font-heading text-xl font-semibold text-primary">Premium Tier</h2>
-          <p className="mt-1 text-sm text-muted-foreground">The full Learning GPS experience.</p>
+          <h2 className="font-heading text-xl font-bold">Premium Tier</h2>
+          <p className="mt-1 text-sm text-white/70">The full Learning GPS experience.</p>
           <div className="mt-6 flex items-baseline gap-1">
             <span className="font-heading text-5xl font-bold tracking-tight">{PRICE[billing].amount}</span>
-            <span className="text-sm text-muted-foreground">{PRICE[billing].suffix}</span>
+            <span className="text-sm text-white/70">{PRICE[billing].suffix}</span>
           </div>
           <ul className="mt-6 flex-1 space-y-3">
             {PREMIUM_FEATURES.map((label) => (
               <li key={label} className="flex items-start gap-3 text-sm font-medium">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.5} aria-hidden="true" />
                 {label}
               </li>
             ))}
           </ul>
           <div className="mt-8 space-y-3">
             {mode === "public" ? (
-              <Button asChild variant="gradient" className="w-full">
+              <Button asChild className="w-full bg-white text-secondary hover:bg-white/90">
                 <Link href="/signup">Upgrade Now</Link>
               </Button>
             ) : isPremium ? (
               <Button
-                variant="outline"
-                className="w-full"
+                className="w-full border border-white/40 bg-white/10 text-white hover:bg-white/20"
                 onClick={handleManage}
                 disabled={pending !== null}
               >
@@ -185,8 +184,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
               </Button>
             ) : (
               <Button
-                variant="gradient"
-                className="w-full"
+                className="w-full bg-white text-secondary hover:bg-white/90"
                 onClick={handleUpgrade}
                 disabled={pending !== null}
               >
@@ -201,12 +199,12 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
               </Button>
             )}
             {error && (
-              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-destructive">
+              <p className="flex items-center justify-center gap-1.5 text-center text-xs text-white">
                 <AlertCircle className="h-3.5 w-3.5" />
                 {error}
               </p>
             )}
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-xs text-white/70">
               No commitment. Cancel anytime.
             </p>
           </div>
@@ -214,6 +212,26 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       </div>
 
       {mode === "public" && <PricingComparisonTable />}
+
+      {mode === "public" && (
+        <div className="mx-auto mt-20 max-w-5xl overflow-hidden rounded-3xl bg-secondary px-8 py-16 text-center text-white">
+          <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+            Ready to master your path?
+          </h2>
+          <p className="mx-auto mt-4 max-w-md text-white/70">
+            Start with one free journey. Upgrade any time for unlimited journeys
+            and the full adaptive tutor.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button asChild size="lg" className="bg-white text-secondary hover:bg-white/90">
+              <Link href="/signup">Create free account</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
+              <Link href="/about">Explore the platform</Link>
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

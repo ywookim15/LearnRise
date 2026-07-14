@@ -24,9 +24,9 @@ import type { UiJourneySummary, Accent } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
 const ACCENT: Record<Accent, string> = {
-  primary: "bg-primary/10 text-primary",
-  secondary: "bg-secondary/10 text-secondary",
-  tertiary: "bg-brand-tertiary/10 text-brand-tertiary",
+  primary: "bg-brand-gradient text-white shadow-brand",
+  secondary: "bg-primary text-white shadow-brand",
+  tertiary: "bg-secondary text-white",
 };
 
 export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
@@ -99,7 +99,7 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
       </p>
 
       <div className="mt-4 flex gap-2">
-        <Button asChild className="flex-1">
+        <Button asChild variant="gradient" className="flex-1">
           <Link href={`/journey/${journey.id}`}>Resume</Link>
         </Button>
       </div>

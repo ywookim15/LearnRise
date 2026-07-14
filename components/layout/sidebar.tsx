@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown } from "lucide-react";
+import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown, Zap } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
@@ -47,7 +47,7 @@ export function Sidebar({
               className={cn(
                 "flex min-h-11 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                 active
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-brand-gradient text-white shadow-brand"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
@@ -87,13 +87,16 @@ export function Sidebar({
           <Link
             href="/upgrade"
             onClick={onNavigate}
-            className="block rounded-lg bg-secondary p-4 transition-colors hover:bg-secondary/90"
+            className="block rounded-xl bg-brand-gradient p-4 shadow-brand transition-all hover:shadow-brand-lg"
           >
-            <p className="text-sm font-semibold text-secondary-foreground">Upgrade Plan</p>
-            <p className="mt-1 text-xs leading-snug text-secondary-foreground/80">
+            <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
+              <Zap className="h-4 w-4" aria-hidden="true" />
+              Upgrade Plan
+            </p>
+            <p className="mt-1 text-xs leading-snug text-white/80">
               Unlock adaptive tutor and multi-journey memory sync.
             </p>
-            <span className="mt-3 flex min-h-9 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-secondary">
+            <span className="mt-3 flex min-h-9 items-center justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-secondary">
               Upgrade
             </span>
           </Link>
