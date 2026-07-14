@@ -20,23 +20,23 @@ export function MarketingNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
+    <header className="glass sticky top-0 z-50 border-b border-border/70">
+      <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6">
         <Link href="/" aria-label="METIS home">
           <Logo />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-card p-1 md:flex">
+        <nav className="hidden items-center gap-10 md:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               className={cn(
-                "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                "text-sm font-medium transition-colors",
                 pathname === l.href
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
               )}
             >
               {l.label}
@@ -44,11 +44,11 @@ export function MarketingNav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
             <Link href="/login">Sign In</Link>
           </Button>
-          <Button asChild size="sm" className="hidden sm:inline-flex">
+          <Button asChild size="sm" variant="gradient" className="hidden rounded-full px-6 sm:inline-flex">
             <Link href="/signup">Get Started</Link>
           </Button>
 
@@ -77,7 +77,7 @@ export function MarketingNav() {
                 className={cn(
                   "flex min-h-11 items-center rounded-lg px-3 text-base font-medium transition-colors",
                   pathname === l.href
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-accent text-primary"
                     : "text-foreground hover:bg-muted"
                 )}
               >
@@ -88,7 +88,7 @@ export function MarketingNav() {
               <Button asChild variant="outline" onClick={() => setOpen(false)}>
                 <Link href="/login">Sign In</Link>
               </Button>
-              <Button asChild onClick={() => setOpen(false)}>
+              <Button asChild variant="gradient" onClick={() => setOpen(false)}>
                 <Link href="/signup">Get Started</Link>
               </Button>
             </div>

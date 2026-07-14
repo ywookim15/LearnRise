@@ -71,7 +71,7 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   ::selection {
-    background: rgba(0, 87, 235, 0.16);
+    background: rgba(157, 90, 239, 0.18);
   }
   h1, h2, h3, h4, h5 {
     @apply font-heading;
@@ -92,9 +92,13 @@
     background-color: hsl(var(--border));
     border-radius: 9999px;
   }
-  /* Legacy name retained: now solid navy, no gradient. */
+  /* Blue-to-purple brand gradient, clipped to text. */
   .text-gradient {
-    color: #0d1140;
+    background: linear-gradient(135deg, #0158d9 0%, #9d5aef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   /* Faint dot grid — the subtle texture behind hero + roadmap surfaces in the
@@ -110,19 +114,42 @@
     background-size: 28px 28px;
   }
 
-  /* Flat marketing canvas (gradient wash removed). */
+  /* Marketing canvas with a soft blue/purple glow wash (Academic Precision). */
   .bg-hero-mesh {
     background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(40rem 40rem at 100% -10%, rgba(157, 90, 239, 0.10), transparent 60%),
+      radial-gradient(36rem 36rem at -10% 10%, rgba(1, 88, 217, 0.10), transparent 58%);
   }
 
-  /* Frosted glass surface for floating cards / overlays. */
-  .glass-card {
-    background-color: hsl(var(--card) / 0.72);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  /* Glassmorphism per the brief: translucent white + heavy blur + thin border. */
+  .glass-card,
+  .glass {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
-  /* Solid navy hairline accent (previously a gradient). */
+  /* Skewed low-opacity gradient wash behind a section (diagonal-accent motif). */
+  .diagonal-accent {
+    position: relative;
+    overflow: hidden;
+  }
+  .diagonal-accent::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 110%;
+    height: 120%;
+    background: linear-gradient(135deg, rgba(1, 88, 217, 0.04) 0%, rgba(157, 90, 239, 0.04) 100%);
+    transform: skewY(-3deg);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Gradient hairline border for premium/AI moments (via ::before mask). */
   .ring-gradient {
     position: relative;
   }
@@ -131,8 +158,8 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1px;
-    background: rgba(0, 87, 235, 0.35);
+    padding: 1.5px;
+    background: linear-gradient(135deg, #0158d9, #9d5aef);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;

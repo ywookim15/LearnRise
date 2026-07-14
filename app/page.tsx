@@ -1,29 +1,81 @@
 import Link from "next/link";
-import { ArrowRight, Route, MessagesSquare, RefreshCw } from "lucide-react";
+import {
+  ArrowRight,
+  Compass,
+  Flag,
+  Navigation,
+  Shuffle,
+  Network,
+  Library,
+  BadgeCheck,
+  Brain,
+  Check,
+} from "lucide-react";
 import { MarketingShell } from "@/components/layout/marketing-shell";
-import { LogoMark } from "@/components/shared/logo";
 import { AppPreview } from "@/components/marketing/app-preview";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const STEPS = [
   {
-    title: "Tell METIS your goal",
-    body: "Share what you want to learn, your current level, your timeline, and how you like to study. Be as specific as you want.",
+    icon: Flag,
+    title: "Set your goal",
+    body: "Define what you want to master. METIS maps the terrain and calculates the optimal route.",
+    highlight: false,
   },
   {
-    title: "Get a personalized journey",
-    body: "METIS builds a step-by-step path of high-quality resources, hand-picked across video, articles, and practice so you are not stuck staring at one textbook for hours.",
+    icon: Navigation,
+    title: "Follow the path",
+    body: "Curated, high-signal resources delivered in a logical, step-by-step sequence.",
+    highlight: true,
   },
   {
-    title: "Learn and master",
-    body: "Check off resources, track streaks, and ask your AI tutor when you are stuck. Your route re-plans as you go, based on how you are actually doing.",
+    icon: Shuffle,
+    title: "Adaptive rerouting",
+    body: "Struggling with a concept? METIS reroutes to clearer explanations before you fall behind.",
+    highlight: false,
   },
+];
+
+const VALUES = [
+  {
+    icon: Network,
+    title: "Cognitive mapping",
+    body: "Dynamic knowledge graphs that track exactly what you know and where the gaps are.",
+  },
+  {
+    icon: Library,
+    title: "Vetted content",
+    body: "Only high-quality open resources enter your path, sequenced instead of dumped as links.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Verified mastery",
+    body: "Checkpoints confirm foundational understanding before you move on to the next concept.",
+  },
+  {
+    icon: Brain,
+    title: "Adaptive tutor",
+    body: "Ask METIS anything about your path, and it works through concepts with you, in context.",
+  },
+];
+
+const FREE_FEATURES = [
+  "1 active learning journey",
+  "AI-generated roadmap and resources",
+  "10 messages/day with the tutor",
+];
+const PRO_FEATURES = [
+  "Unlimited active journeys",
+  "Unlimited chat and adaptive rerouting",
+  "Analytics and progress insights",
+  "Priority support",
 ];
 
 const FAQ = [
   {
-    q: "What exactly is METIS?",
-    a: "METIS is a learning GPS. It designs a personalized, step-by-step roadmap that adapts to your schedule and your current knowledge gaps, building the fastest, clearest path from where you are to mastery and re-routing as you go.",
+    q: "How exactly does the “GPS” adaptivity work?",
+    a: "Just like a GPS reroutes you when you miss a turn, METIS reroutes your roadmap when you struggle with a concept. It finds the gap, then adjusts pacing, ordering, and resources so you never stay stuck.",
   },
   {
     q: "Where do the resources come from?",
@@ -31,15 +83,11 @@ const FAQ = [
   },
   {
     q: "Do I need to know how to structure my learning?",
-    a: "No. That is the whole point. You bring the goal, and METIS brings the structure, pacing, and ordering. It saves you the time of hunting for resources, filtering out low-quality information, and deciding what to study next.",
+    a: "No. You bring the goal, and METIS brings the structure, pacing, and ordering. It saves you the time of hunting for resources and deciding what to study next.",
   },
   {
     q: "How much does it cost?",
     a: "There is a free tier with one learning journey, and a Premium tier that unlocks unlimited journeys, analytics, and the adaptive tutor. See the pricing page for details.",
-  },
-  {
-    q: "What makes METIS different?",
-    a: "METIS does not just answer questions the way a general chatbot does. It curates, sequences, and assesses as you learn, adapting to your style and interests. It also keeps long-term memory, so you pick up right where you left off each day.",
   },
 ];
 
@@ -48,33 +96,28 @@ export default function LandingPage() {
     <MarketingShell>
       {/* Hero */}
       <section className="relative overflow-hidden bg-hero-mesh">
-        <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-40" />
-        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-20 pt-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-28 lg:pt-20">
-          {/* Left column */}
+        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pb-24 pt-16 lg:grid-cols-2 lg:gap-12 lg:pb-28 lg:pt-24">
           <div className="text-center lg:text-left">
-            <div className="flex items-center justify-center gap-2.5 lg:justify-start">
-              <LogoMark className="h-9 w-auto" />
-              <span className="font-heading text-xl font-bold tracking-[0.12em] text-foreground">
-                METIS
-              </span>
+            <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground">
+              <Compass className="h-4 w-4" aria-hidden="true" />
+              AI-powered learning roadmaps
             </div>
-            <h1 className="mt-6 font-heading text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Learn anything, one clear step at a time.
+            <h1 className="mt-7 font-heading text-5xl font-bold leading-[1.1] tracking-tight text-secondary sm:text-6xl lg:text-7xl">
+              Your Learning <span className="text-gradient">GPS</span>.
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              METIS is an AI-powered learning GPS for students and self-learners.
-              Tell it what you want to learn, and it builds an adaptive roadmap of
-              curated resources that re-plans around you as you go.
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              METIS turns any learning goal into a personalized, adaptive roadmap
+              that recalculates as you progress. Like Google Maps, but for learning.
             </p>
-            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-              <Button asChild size="lg">
+            <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
+              <Button asChild size="lg" variant="gradient" className="rounded-xl">
                 <Link href="/signup">
-                  Start your first journey
+                  Start your journey
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/pricing">See pricing</Link>
+              <Button asChild size="lg" variant="outline" className="rounded-xl">
+                <Link href="/about">See how it works</Link>
               </Button>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -82,7 +125,6 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Right column, real product preview */}
           <div>
             <AppPreview className="mx-auto max-w-md lg:mr-0" />
           </div>
@@ -90,133 +132,141 @@ export default function LandingPage() {
       </section>
 
       {/* How METIS works */}
-      <section className="mx-auto w-full max-w-6xl px-6 py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            How METIS works
-          </p>
-          <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            From &ldquo;I want to learn this&rdquo; to a route you can follow
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Three steps. No more staring at a blank syllabus or a pile of tabs.
-          </p>
-        </div>
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {STEPS.map((s, i) => (
-            <div
-              key={s.title}
-              className="rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/40"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-md border border-primary/30 font-heading text-base font-bold text-primary">
-                {i + 1}
-              </div>
-              <h3 className="mt-5 font-heading text-lg font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Button asChild variant="ghost">
-            <Link href="/about">
-              More about the METIS method
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+      <section className="diagonal-accent py-28">
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
+              How METIS works
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Intelligent pathfinding that adapts to your pace and the way you learn.
+            </p>
+          </div>
+          <div className="mt-16 grid gap-12 md:grid-cols-3">
+            {STEPS.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.title} className="flex flex-col items-center text-center">
+                  <div
+                    className={cn(
+                      "flex h-24 w-24 items-center justify-center rounded-3xl border transition-transform duration-300 hover:-translate-y-2",
+                      s.highlight
+                        ? "border-white/20 bg-brand-gradient text-white shadow-brand-lg"
+                        : "border-border bg-card text-secondary shadow-card"
+                    )}
+                  >
+                    <Icon className="h-9 w-9" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-8 font-heading text-xl font-bold text-secondary">{s.title}</h3>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.body}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Feature strip */}
-      <section className="border-y border-border bg-card">
-        <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:grid-cols-3">
-          <Feature
-            icon={<Route className="h-5 w-5" />}
-            title="Ordered, not overwhelming"
-            body="Resources sequenced into units and chapters, so you always know the next right step."
-          />
-          <Feature
-            icon={<MessagesSquare className="h-5 w-5" />}
-            title="An AI tutor that knows your path"
-            body="Ask METIS anything, re-plan your schedule, or work through a concept with the tutor."
-          />
-          <Feature
-            icon={<RefreshCw className="h-5 w-5" />}
-            title="Adapts as you go"
-            body="Check things off and your roadmap, pacing, and recommendations adjust to match."
-          />
+      {/* Value propositions */}
+      <section className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {VALUES.map((v) => {
+            const Icon = v.icon;
+            return (
+              <div
+                key={v.title}
+                className="group rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              >
+                <Icon className="h-8 w-8 text-secondary transition-transform group-hover:scale-110" aria-hidden="true" />
+                <h4 className="mt-6 font-heading text-lg font-bold text-secondary">{v.title}</h4>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Pricing teaser */}
+      <section className="relative overflow-hidden bg-secondary py-28 text-white">
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 -translate-x-1/4 skew-x-[-20deg] bg-brand-gradient opacity-10" />
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">Invest in your mastery</h2>
+            <p className="mt-4 text-lg text-white/60">
+              Start free. Upgrade when you want unlimited journeys and the full adaptive tutor.
+            </p>
+          </div>
+          <div className="mx-auto mt-14 grid max-w-4xl gap-8 md:grid-cols-2">
+            {/* Free */}
+            <div className="flex flex-col rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur-md">
+              <h3 className="font-heading text-xl font-bold text-white/90">Free</h3>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="font-heading text-5xl font-bold">$0</span>
+                <span className="font-medium text-white/40">/forever</span>
+              </div>
+              <ul className="mt-8 flex-1 space-y-4">
+                {FREE_FEATURES.map((f) => (
+                  <li key={f} className="flex items-center gap-3 text-white/80">
+                    <Check className="h-5 w-5 shrink-0 text-white/90" strokeWidth={2.5} aria-hidden="true" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Button asChild variant="outline" className="mt-10 w-full rounded-xl border-white/20 bg-transparent text-white hover:bg-white/10">
+                <Link href="/signup">Start for free</Link>
+              </Button>
+            </div>
+
+            {/* Pro */}
+            <div className="relative flex flex-col overflow-hidden rounded-3xl bg-brand-gradient p-10 shadow-brand-lg">
+              <div className="absolute right-8 top-8 rounded-full bg-white/20 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest backdrop-blur-md">
+                Recommended
+              </div>
+              <h3 className="font-heading text-xl font-bold">Premium</h3>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="font-heading text-5xl font-bold">$5.99</span>
+                <span className="font-medium text-white/70">/month</span>
+              </div>
+              <ul className="mt-8 flex-1 space-y-4">
+                {PRO_FEATURES.map((f) => (
+                  <li key={f} className="flex items-center gap-3 font-medium">
+                    <Check className="h-5 w-5 shrink-0" strokeWidth={2.5} aria-hidden="true" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Button asChild className="mt-10 w-full rounded-xl bg-white text-secondary hover:bg-white/90">
+                <Link href="/signup">Start 7-day free trial</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto w-full max-w-3xl px-6 py-24">
-        <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Questions
-          </p>
-          <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Frequently asked
-          </h2>
-        </div>
-        <div className="mt-12 space-y-3">
+      <section className="mx-auto w-full max-w-3xl px-6 py-28">
+        <h2 className="text-center font-heading text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
+          Frequently asked questions
+        </h2>
+        <div className="mt-14 space-y-4">
           {FAQ.map((item) => (
             <details
               key={item.q}
-              className="group rounded-lg border border-border bg-card p-5 transition-colors open:border-primary/40 [&_summary]:cursor-pointer"
+              className="group rounded-2xl border border-border bg-card p-6 transition-colors open:border-primary/40 [&_summary]:cursor-pointer"
             >
-              <summary className="flex list-none items-center justify-between gap-4 text-base font-semibold">
+              <summary className="flex list-none items-center justify-between gap-4 text-lg font-bold text-secondary">
                 {item.q}
                 <span
                   aria-hidden="true"
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground transition-all group-open:rotate-45 group-open:border-primary group-open:text-primary"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-2xl font-light leading-none text-muted-foreground transition-all group-open:rotate-45 group-open:border-primary group-open:text-primary"
                 >
                   +
                 </span>
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">{item.a}</p>
             </details>
           ))}
         </div>
       </section>
-
-      {/* CTA */}
-      <section className="mx-auto w-full max-w-6xl px-6 pb-28">
-        <div className="rounded-2xl bg-secondary px-8 py-16 text-center">
-          <h2 className="font-heading text-3xl font-bold text-secondary-foreground sm:text-4xl">
-            Ready to stop getting lost?
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-lg text-secondary-foreground/80">
-            Set your destination. METIS handles the route.
-          </p>
-          <Button
-            asChild
-            size="lg"
-            className="mt-8 bg-white text-secondary hover:bg-white/90"
-          >
-            <Link href="/signup">
-              Create your free account
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
     </MarketingShell>
-  );
-}
-
-function Feature({
-  icon,
-  title,
-  body,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-}) {
-  return (
-    <div className="border-l-2 border-primary/60 pl-4">
-      <span className="text-primary">{icon}</span>
-      <h3 className="mt-3 font-heading font-semibold">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-    </div>
   );
 }

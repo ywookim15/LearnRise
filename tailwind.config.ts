@@ -62,11 +62,14 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        // Raw brand values. Solid navy + blue; the blue→purple gradient is
-        // reserved for the logo asset only.
+        // Raw brand values (Academic Precision). Navy foundation, blue + purple
+        // accents, and the blue→purple gradient (see backgroundImage below).
         brand: {
           navy: "#0D1140",
           blue: "#0057EB",
+          purple: "#B021FF",
+          "gradient-start": "#0158D9",
+          "gradient-end": "#9D5AEF",
           primary: "#0057EB",
           secondary: "#0D1140",
           tertiary: "#0D1140",
@@ -96,24 +99,23 @@ const config: Config = {
         "3xl": "calc(var(--radius) + 16px)",
       },
       boxShadow: {
-        // Restrained, neutral elevation (no colored glow — that read as templated).
-        card: "0 1px 2px 0 rgba(13, 17, 64, 0.05), 0 1px 3px -1px rgba(13, 17, 64, 0.06)",
-        "card-hover": "0 6px 20px -8px rgba(13, 17, 64, 0.14), 0 2px 6px -2px rgba(13, 17, 64, 0.06)",
-        lift: "0 20px 48px -24px rgba(13, 17, 64, 0.28), 0 8px 20px -12px rgba(13, 17, 64, 0.12)",
+        // Diffused, navy-tinted elevation per the brief (organic to the palette,
+        // not heavy neutral drop shadows).
+        card: "0 1px 2px 0 rgba(13, 17, 64, 0.04), 0 1px 3px -1px rgba(13, 17, 64, 0.05)",
+        "card-hover": "0 10px 30px -6px rgba(13, 17, 64, 0.08), 0 4px 10px -4px rgba(13, 17, 64, 0.06)",
+        lift: "0 32px 64px -12px rgba(13, 17, 64, 0.12)",
         popover: "0 12px 40px -8px rgba(13, 17, 64, 0.16)",
-        // `brand` shadows kept as tokens but now neutral navy, not indigo glow.
-        brand: "0 6px 16px -8px rgba(13, 17, 64, 0.28)",
-        "brand-lg": "0 14px 34px -12px rgba(13, 17, 64, 0.30)",
-        glow: "0 1px 2px 0 rgba(13, 17, 64, 0.06)",
+        // Colored glow for gradient CTAs / achievement moments.
+        brand: "0 10px 24px -10px rgba(1, 88, 217, 0.45)",
+        "brand-lg": "0 40px 80px -15px rgba(1, 88, 217, 0.40)",
+        glow: "0 0 0 1px rgba(1,88,217,0.10), 0 12px 40px -8px rgba(157,90,239,0.30)",
       },
       backgroundImage: {
-        // The blue→purple gradient now lives ONLY on the logo asset. These
-        // utility names are retained but resolve to SOLID fills so every
-        // existing usage de-gradients consistently: `brand-gradient` = blue,
-        // `-vivid` = navy, `-soft` = faint blue tint.
-        "brand-gradient": "linear-gradient(#0057EB, #0057EB)",
-        "brand-gradient-soft": "linear-gradient(rgba(0,87,235,0.07), rgba(0,87,235,0.07))",
-        "brand-gradient-vivid": "linear-gradient(#0D1140, #0D1140)",
+        // Blue→purple brand gradient (Academic Precision). Primary CTAs,
+        // progress fills, and achievement moments use this.
+        "brand-gradient": "linear-gradient(135deg, #0158D9 0%, #9D5AEF 100%)",
+        "brand-gradient-soft": "linear-gradient(135deg, rgba(1,88,217,0.10) 0%, rgba(157,90,239,0.10) 100%)",
+        "brand-gradient-vivid": "linear-gradient(135deg, #0158D9 0%, #9D5AEF 100%)",
       },
       keyframes: {
         "accordion-down": {
