@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Compass,
   Flag,
   Navigation,
   Shuffle,
@@ -98,11 +97,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden bg-hero-mesh">
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pb-24 pt-16 lg:grid-cols-2 lg:gap-12 lg:pb-28 lg:pt-24">
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground">
-              <Compass className="h-4 w-4" aria-hidden="true" />
-              AI-powered learning roadmaps
-            </div>
-            <h1 className="mt-7 font-heading text-5xl font-bold leading-[1.1] tracking-tight text-secondary sm:text-6xl lg:text-7xl">
+            <h1 className="font-heading text-5xl font-bold leading-[1.1] tracking-tight text-secondary sm:text-6xl lg:text-7xl">
               Your Learning <span className="text-gradient">GPS</span>.
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">

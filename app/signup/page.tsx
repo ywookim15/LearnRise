@@ -8,12 +8,15 @@ import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LanguageSelect } from "@/components/shared/language-select";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { DEFAULT_LANGUAGE, getLanguage } from "@/lib/i18n/languages";
 
 export default function SignUpPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
@@ -25,13 +28,14 @@ export default function SignUpPage() {
 
     const supabase = getSupabaseBrowserClient();
 
-    // Account creation only asks for email + password. Your name, goal, level,
-    // timeline, and study preferences are collected in-product after sign-up
-    // (when you create your first journey), not up front.
+    // Account creation asks for email + password + the language you want to
+    // learn in. Name, goal, level, timeline, and study preferences are
+    // collected in-product after sign-up (when you create your first journey).
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        data: { learning_language: language },
         emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     });
@@ -112,6 +116,15 @@ export default function SignUpPage() {
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" autoComplete="new-password" placeholder="Create a password (min 6 characters)" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="language">Language you want to learn in</Label>
+          <LanguageSelect id="language" value={language} onChange={setLanguage} disabled={pending} />
+          <p className="text-xs text-muted-foreground">
+            METIS builds your roadmaps, finds resources, and tutors you in{" "}
+            {getLanguage(language).englishName}. You can change this later in Settings.
+          </p>
         </div>
 
         <Button type="submit" className="w-full" disabled={pending}>

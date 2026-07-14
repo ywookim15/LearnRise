@@ -50,7 +50,7 @@ export async function POST(
   // Ownership + journey inputs
   const { data: journey } = await admin
     .from("journeys")
-    .select("id, user_id, journey_name, goal, current_level, preferences, start_date, end_date, hours_per_week")
+    .select("id, user_id, journey_name, goal, current_level, preferences, start_date, end_date, hours_per_week, learning_language")
     .eq("id", params.id)
     .single();
   if (!journey) return NextResponse.json({ error: "Journey not found" }, { status: 404 });
@@ -103,6 +103,7 @@ export async function POST(
       goal: journey.goal,
       memory,
       chapters,
+      language: journey.learning_language ?? "en",
     });
   } catch (err) {
     console.error("[chat] classify failed:", err);
@@ -119,6 +120,7 @@ export async function POST(
     startDate: journey.start_date ?? null,
     endDate: journey.end_date ?? null,
     hoursPerWeek: journey.hours_per_week ?? null,
+    language: journey.learning_language ?? "en",
   };
 
   let roadmapUpdating = false;

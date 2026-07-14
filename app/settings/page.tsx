@@ -16,9 +16,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { LanguageSelect } from "@/components/shared/language-select";
 import { useApp } from "@/lib/context/app-context";
 import { openBillingPortal } from "@/lib/data/subscription";
 import { uploadAvatar, removeAvatar, deleteAccount } from "@/lib/data/profile";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { DEFAULT_LANGUAGE, getLanguage, normalizeLanguage } from "@/lib/i18n/languages";
 
 export default function SettingsPage() {
   const { user, updateUser, isPremium, subscription, logout } = useApp();
@@ -27,6 +30,8 @@ export default function SettingsPage() {
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
   const [saved, setSaved] = useState(false);
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+  const [langSaved, setLangSaved] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [billingPending, setBillingPending] = useState(false);
   const [billingError, setBillingError] = useState<string | null>(null);
@@ -103,6 +108,24 @@ export default function SettingsPage() {
     setLastName(user.lastName);
     setEmail(user.email);
   }, [user.firstName, user.lastName, user.email]);
+
+  // Load the saved learning language from auth metadata once the session is up.
+  useEffect(() => {
+    getSupabaseBrowserClient()
+      .auth.getSession()
+      .then(({ data }) => {
+        const code = (data.session?.user.user_metadata as Record<string, unknown> | undefined)
+          ?.learning_language;
+        if (typeof code === "string") setLanguage(normalizeLanguage(code));
+      });
+  }, []);
+
+  async function handleLanguageChange(code: string) {
+    setLanguage(code);
+    await getSupabaseBrowserClient().auth.updateUser({ data: { learning_language: code } });
+    setLangSaved(true);
+    setTimeout(() => setLangSaved(false), 2000);
+  }
 
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -215,6 +238,29 @@ export default function SettingsPage() {
           )}
         </div>
       </form>
+
+      {/* Learning language */}
+      <section className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Learning language
+          </h2>
+          {langSaved && (
+            <span className="flex items-center gap-1 text-sm font-medium text-emerald-600">
+              <Check className="h-4 w-4" />
+              Saved
+            </span>
+          )}
+        </div>
+        <div className="mt-4 max-w-sm">
+          <LanguageSelect id="learning-language" value={language} onChange={handleLanguageChange} />
+        </div>
+        <p className="mt-3 text-sm text-muted-foreground">
+          New journeys, their resources, and the tutor are generated in{" "}
+          <span className="font-medium text-foreground">{getLanguage(language).englishName}</span>.
+          Existing journeys keep the language they were created in.
+        </p>
+      </section>
 
       {/* Plan */}
       <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-border bg-brand-gradient-soft p-6 sm:flex-row sm:items-center sm:justify-between">

@@ -48,7 +48,7 @@ export async function POST(
   // Ownership chain: chapter -> unit -> journey -> user.
   const { data: chapter } = await admin
     .from("chapters")
-    .select("id, chapter_title, learning_objective, unit_id, units(id, unit_title, journey_id, journeys(id, user_id, goal, current_level))")
+    .select("id, chapter_title, learning_objective, unit_id, units(id, unit_title, journey_id, journeys(id, user_id, goal, current_level, learning_language))")
     .eq("id", params.chapterId)
     .single();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -103,6 +103,7 @@ export async function POST(
       chapterTitle: chapter.chapter_title,
       currentObjective: chapter.learning_objective ?? "",
       skillLevel,
+      language: journey.learning_language ?? "en",
     });
     newObjective = adjusted.learningObjective;
   } catch (err) {

@@ -18,6 +18,7 @@ import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { replanRemaining, type PlannerInputs } from "@/lib/server/planner";
 import { curateJourneyResources } from "@/lib/server/curator";
+import { getLanguage } from "@/lib/i18n/languages";
 
 export type ChatMode = "main" | "planner" | "tutor";
 export type ChatIntent = "conversational" | "replan" | "resource_refresh";
@@ -95,6 +96,7 @@ export async function classifyAndRespond(opts: {
   goal: string;
   memory: string;
   chapters: RoadmapSnapshotChapter[];
+  language?: string;
 }): Promise<{
   intent: ChatIntent;
   reply: string;
@@ -103,6 +105,11 @@ export async function classifyAndRespond(opts: {
   replanGuidance: string;
 }> {
   const { mode, message, journeyName, goal, memory, chapters } = opts;
+  const lang = getLanguage(opts.language);
+  const replyLangLine =
+    lang.code === "en"
+      ? ""
+      : `\nIMPORTANT: Write "reply" in ${lang.englishName} (${lang.nativeName}) — the student is learning in that language. Classification fields stay as specified.`;
 
   const roadmap = chapters
     .map((c) => `  ${c.number} ${c.title} [${c.isComplete ? "DONE" : "todo"}]`)
@@ -134,6 +141,7 @@ Decide the intent and write a helpful, concise reply (2-4 sentences, warm but no
 - conversational: just answer / explain. Most messages are this.
 - replan: only when the student wants to change the PLAN of upcoming material (pace, scope, order, depth, skip ahead). Put the instruction in replan_guidance. Never touch DONE chapters.
 - resource_refresh: only when the student wants different/better resources for specific chapters, or a resource-style change. List chapter numbers in target_chapter_numbers; if it's a style change put it in new_preference.
+${replyLangLine}
 
 Call respond_to_student.`,
     tool: CLASSIFY_FN,

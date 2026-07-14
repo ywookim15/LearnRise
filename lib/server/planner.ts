@@ -13,6 +13,7 @@ import "server-only";
 
 import { callStructuredWithFallback, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch } from "@/lib/server/tavily";
+import { getLanguage } from "@/lib/i18n/languages";
 
 export interface PlannerInputs {
   goal: string;
@@ -21,6 +22,18 @@ export interface PlannerInputs {
   startDate: string | null; // ISO date
   endDate: string | null;
   hoursPerWeek: number | null;
+  language: string; // learning-language code (see lib/i18n/languages)
+}
+
+/**
+ * Instruction appended to every learner-facing LLM prompt so all generated
+ * text lands in the learner's chosen language. Empty for English (the default)
+ * to avoid diluting the prompt.
+ */
+export function languageDirective(code: string): string {
+  const lang = getLanguage(code);
+  if (lang.code === "en") return "";
+  return `\nLANGUAGE: Write ALL learner-facing text (journey_name, unit_title, chapter_title, learning_objective, and any prose) in ${lang.englishName} (${lang.nativeName}). Use natural, fluent ${lang.englishName}. Keep widely-recognized technical/proper terms as-is when there is no common translation.`;
 }
 
 export interface RoadmapChapter {
@@ -142,6 +155,7 @@ RULES
 5. Each chapter gets ONE specific learning_objective (concrete and checkable, not vague).
 6. chapter_number format is "<unit_number>-<chapter_index>", e.g. "2-3".
 7. Do NOT include resources, links, or materials — a separate agent curates those.
+${languageDirective(inputs.language)}
 
 Call save_roadmap exactly once with the complete roadmap.`;
 }
@@ -225,6 +239,7 @@ RULES
 2. Honor the request: if they want to go faster/slower, adjust depth and chapter count accordingly; if they want to restructure or skip ahead, do so.
 3. Each chapter needs one concrete learning_objective. chapter_number format "<unit>-<chapter>".
 4. Keep it coherent as a continuation of what they've already done.
+${languageDirective(inputs.language)}
 
 Call save_roadmap once with the revised remaining roadmap.`;
 
@@ -277,6 +292,7 @@ export async function adjustChapterForSkillLevel(opts: {
   chapterTitle: string;
   currentObjective: string;
   skillLevel: "familiar" | "known";
+  language?: string;
 }): Promise<{ learningObjective: string; difficultyNote: string }> {
   const { goal, currentLevel, unitTitle, chapterTitle, currentObjective, skillLevel } = opts;
 
@@ -294,6 +310,7 @@ Chapter: ${chapterTitle}
 Current learning objective: ${currentObjective || "(none set)"}
 
 ${guidance}
+${languageDirective(opts.language ?? "en")}
 
 Call adjust_chapter_objective once with the revised objective for THIS chapter only.`;
 

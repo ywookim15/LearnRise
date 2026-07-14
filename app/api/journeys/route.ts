@@ -6,6 +6,7 @@ import { LLMRateLimitError } from "@/lib/server/llm";
 import { curateJourneyResources } from "@/lib/server/curator";
 import { runInBackground } from "@/lib/server/background";
 import { canCreateJourney } from "@/lib/entitlements";
+import { normalizeLanguage } from "@/lib/i18n/languages";
 
 export const runtime = "nodejs";
 // Roadmap generation = 1 Tavily search + 1 Gemini call; usually well under this.
@@ -18,6 +19,7 @@ interface CreateJourneyBody {
   startDate?: string;
   endDate?: string;
   hoursPerWeek?: number | string;
+  language?: string; // optional per-journey override of the user's default
 }
 
 /**
@@ -60,6 +62,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Learning language: per-journey override if sent, else the user's default
+  // (auth user_metadata.learning_language), else English.
+  const userDefaultLang = (user.user_metadata as Record<string, unknown> | undefined)?.learning_language;
+  const language = normalizeLanguage(
+    body.language || (typeof userDefaultLang === "string" ? userDefaultLang : undefined)
+  );
+
   const hoursRaw = Number(body.hoursPerWeek);
   const inputs: PlannerInputs = {
     goal,
@@ -71,6 +80,7 @@ export async function POST(req: NextRequest) {
       Number.isFinite(hoursRaw) && hoursRaw >= 1 && hoursRaw <= 168
         ? Math.round(hoursRaw)
         : null,
+    language,
   };
 
   // ---- Stage 2: Planner (syllabus search + Gemini function call) ----
@@ -108,6 +118,7 @@ export async function POST(req: NextRequest) {
       start_date: inputs.startDate,
       end_date: inputs.endDate,
       hours_per_week: inputs.hoursPerWeek,
+      learning_language: inputs.language,
       journey_name: roadmap.journey_name,
       estimated_total_weeks: roadmap.estimated_total_weeks,
     })

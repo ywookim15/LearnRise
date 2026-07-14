@@ -28,6 +28,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch, type TavilyResult } from "@/lib/server/tavily";
 import { getYoutubeTimestamps } from "@/lib/server/youtube";
+import { getLanguage } from "@/lib/i18n/languages";
 
 export type CurationResourceType = "video" | "article" | "practice_set";
 
@@ -40,6 +41,7 @@ interface JourneyContext {
   currentLevel: string;
   preferences: string;
   preferredType: CurationResourceType | null;
+  language: string; // learning-language code (see lib/i18n/languages)
   /** domain -> reputation notes, cached for the whole journey run */
   repCache: Map<string, string>;
 }
@@ -239,6 +241,11 @@ Stated preferences: ${ctx.preferences || "none"}
 Chapter ${chapter.chapter_number} (${chapter.unit_title}): ${chapter.chapter_title}
 Learning objective: ${chapter.learning_objective}
 ${biasType ? `IMPORTANT: the journey is currently under-serving the student's preferred media type (${biasType}) — bias this selection toward ${biasType} resources when quality permits.` : ""}
+${
+  getLanguage(ctx.language).code !== "en"
+    ? `LANGUAGE: The learner is studying in ${getLanguage(ctx.language).englishName} (${getLanguage(ctx.language).nativeName}). Strongly prefer resources IN that language; only fall back to another language when no adequate ${getLanguage(ctx.language).englishName} resource exists. Write "why_this_fits" in ${getLanguage(ctx.language).englishName}.`
+    : ""
+}
 
 The actual page content of each candidate is below. Judge each one:
 - Does it genuinely teach this chapter's learning objective (not just mention the topic)?
@@ -306,7 +313,10 @@ async function curateChapter(
     : "";
 
   // ---- Steps 1-2: preference-aware search (~8 candidates, raw content on) ----
-  const primaryQuery = `${chapter.chapter_title} ${chapter.learning_objective.slice(0, 180)} ${prefTerms}`
+  // Bias the query toward the learner's language so native-language resources
+  // surface (empty hint for English, so its behavior is unchanged).
+  const langHint = getLanguage(ctx.language).searchHint;
+  const primaryQuery = `${chapter.chapter_title} ${chapter.learning_objective.slice(0, 180)} ${prefTerms} ${langHint}`
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 380);
@@ -457,7 +467,7 @@ export async function curateJourneyResources(
 
   const { data: journey, error: jErr } = await admin
     .from("journeys")
-    .select("id, goal, current_level, preferences")
+    .select("id, goal, current_level, preferences, learning_language")
     .eq("id", journeyId)
     .single();
   if (jErr || !journey) {
@@ -503,6 +513,7 @@ export async function curateJourneyResources(
     currentLevel: journey.current_level ?? "",
     preferences: journey.preferences ?? "",
     preferredType: detectPreferredType(journey.preferences ?? ""),
+    language: (journey.learning_language as string) ?? "en",
     repCache: new Map(),
   };
 
