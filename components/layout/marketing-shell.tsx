@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Instagram, Youtube } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { MarketingNav } from "@/components/layout/marketing-nav";
 import { Logo } from "@/components/shared/logo";
 
@@ -20,14 +21,15 @@ const SOCIALS = [
 ];
 
 function MarketingFooter() {
+  const t = useTranslations("footer");
+  const nav = useTranslations("nav");
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="space-y-3">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            METIS is your learning GPS. Precise, adaptive roadmaps that turn any
-            goal into a resourced path.
+            {t("tagline")}
           </p>
           <div className="flex items-center gap-2 pt-1">
             {SOCIALS.map(({ href, label, icon: Icon }) => (
@@ -46,27 +48,27 @@ function MarketingFooter() {
         </div>
 
         <FooterCol
-          title="Product"
+          title={t("product")}
           links={[
-            { href: "/about", label: "About" },
-            { href: "/pricing", label: "Pricing" },
-            { href: "/contact", label: "Contact" },
+            { href: "/about", label: nav("about") },
+            { href: "/pricing", label: nav("pricing") },
+            { href: "/contact", label: nav("contact") },
           ]}
         />
         <FooterCol
-          title="Account"
+          title={t("account")}
           links={[
-            { href: "/login", label: "Sign In" },
-            { href: "/signup", label: "Get Started" },
+            { href: "/login", label: nav("signIn") },
+            { href: "/signup", label: nav("getStarted") },
           ]}
         />
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} METIS. All rights reserved.</p>
+          <p>{t("rights", { year: new Date().getFullYear() })}</p>
           <div className="flex items-center gap-6">
-            <Link href="/about" className="hover:text-foreground">Privacy Policy</Link>
-            <Link href="/about" className="hover:text-foreground">Terms of Service</Link>
+            <Link href="/about" className="hover:text-foreground">{t("privacy")}</Link>
+            <Link href="/about" className="hover:text-foreground">{t("terms")}</Link>
           </div>
         </div>
       </div>
@@ -86,7 +88,7 @@ function FooterCol({
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-foreground">{title}</p>
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
-          <li key={l.label}>
+          <li key={l.href}>
             <Link href={l.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
               {l.label}
             </Link>

@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "about": "概要",
+    "pricing": "料金",
+    "contact": "お問い合わせ",
+    "signIn": "ログイン",
+    "getStarted": "始める",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる"
+  },
+  "footer": {
+    "tagline": "METIS はあなたの学習 GPS です。あらゆる目標を、教材のそろった道筋に変える精密で適応的なロードマップ。",
+    "product": "プロダクト",
+    "account": "アカウント",
+    "rights": "© {year} METIS. 無断転載を禁じます。",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  }
+}

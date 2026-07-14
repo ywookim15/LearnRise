@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "首页",
+    "about": "关于",
+    "pricing": "定价",
+    "contact": "联系",
+    "signIn": "登录",
+    "getStarted": "开始使用",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "footer": {
+    "tagline": "METIS 是你的学习 GPS。精准、自适应的路线图，把任何目标变成有资源支撑的路径。",
+    "product": "产品",
+    "account": "账户",
+    "rights": "© {year} METIS. 保留所有权利。",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
+  }
+}

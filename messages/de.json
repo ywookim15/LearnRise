@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Start",
+    "about": "Über uns",
+    "pricing": "Preise",
+    "contact": "Kontakt",
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
+  },
+  "footer": {
+    "tagline": "METIS ist dein Lern-GPS. Präzise, adaptive Roadmaps, die jedes Ziel in einen mit Ressourcen ausgestatteten Weg verwandeln.",
+    "product": "Produkt",
+    "account": "Konto",
+    "rights": "© {year} METIS. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen"
+  }
+}

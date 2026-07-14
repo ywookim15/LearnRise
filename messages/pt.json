@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "pricing": "Preços",
+    "contact": "Contato",
+    "signIn": "Entrar",
+    "getStarted": "Começar",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "footer": {
+    "tagline": "O METIS é o seu GPS de aprendizagem. Roteiros precisos e adaptáveis que transformam qualquer objetivo num caminho com recursos.",
+    "product": "Produto",
+    "account": "Conta",
+    "rights": "© {year} METIS. Todos os direitos reservados.",
+    "privacy": "Política de privacidade",
+    "terms": "Termos de serviço"
+  }
+}

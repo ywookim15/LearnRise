@@ -3,20 +3,22 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/contact", label: "Contact" },
-];
+  { href: "/", key: "home" },
+  { href: "/about", key: "about" },
+  { href: "/pricing", key: "pricing" },
+  { href: "/contact", key: "contact" },
+] as const;
 
 export function MarketingNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,24 +41,24 @@ export function MarketingNav() {
                   : "text-muted-foreground hover:text-primary"
               )}
             >
-              {l.label}
+              {t(l.key)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-3">
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <Link href="/login">Sign In</Link>
+            <Link href="/login">{t("signIn")}</Link>
           </Button>
           <Button asChild size="sm" variant="gradient" className="hidden rounded-full px-6 sm:inline-flex">
-            <Link href="/signup">Get Started</Link>
+            <Link href="/signup">{t("getStarted")}</Link>
           </Button>
 
           {/* Mobile menu toggle */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("closeMenu") : t("openMenu")}
             aria-expanded={open}
             className="flex h-11 w-11 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
           >
@@ -81,15 +83,15 @@ export function MarketingNav() {
                     : "text-foreground hover:bg-muted"
                 )}
               >
-                {l.label}
+                {t(l.key)}
               </Link>
             ))}
             <div className="mt-3 grid grid-cols-2 gap-2">
               <Button asChild variant="outline" onClick={() => setOpen(false)}>
-                <Link href="/login">Sign In</Link>
+                <Link href="/login">{t("signIn")}</Link>
               </Button>
               <Button asChild variant="gradient" onClick={() => setOpen(false)}>
-                <Link href="/signup">Get Started</Link>
+                <Link href="/signup">{t("getStarted")}</Link>
               </Button>
             </div>
           </div>

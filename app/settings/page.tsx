@@ -22,6 +22,7 @@ import { openBillingPortal } from "@/lib/data/subscription";
 import { uploadAvatar, removeAvatar, deleteAccount } from "@/lib/data/profile";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { DEFAULT_LANGUAGE, getLanguage, normalizeLanguage } from "@/lib/i18n/languages";
+import { setLocaleCookie } from "@/lib/i18n/set-locale";
 
 export default function SettingsPage() {
   const { user, updateUser, isPremium, subscription, logout } = useApp();
@@ -122,8 +123,11 @@ export default function SettingsPage() {
 
   async function handleLanguageChange(code: string) {
     setLanguage(code);
+    // One choice drives BOTH the interface locale and the AI/learning language.
+    setLocaleCookie(code);
     await getSupabaseBrowserClient().auth.updateUser({ data: { learning_language: code } });
     setLangSaved(true);
+    router.refresh(); // re-render server components in the new locale
     setTimeout(() => setLangSaved(false), 2000);
   }
 
