@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "Cargando tu sesión...",
       "openMenu": "Abrir menú",
-      "goToDashboard": "Ir al panel"
+      "goToDashboard": "Ir al panel",
+      "backToDashboard": "Volver al panel"
+    },
+    "notificationsPage": {
+      "title": "Mis notificaciones",
+      "unreadCount": "{count} sin leer",
+      "allCaughtUp": "Estás al día",
+      "markAllRead": "Marcar todo como leído",
+      "emptyTitle": "Aún no hay notificaciones",
+      "emptyBody": "Los recordatorios de racha y los avisos de rutas aparecerán aquí."
     }
+  },
+  "settings": {
+    "title": "Perfil y ajustes",
+    "subtitle": "Gestiona tu cuenta. Los cambios de nombre y correo se guardan en tu cuenta de METIS (los cambios de correo requieren confirmación mediante un enlace en tu bandeja de entrada).",
+    "profilePicture": "Foto de perfil",
+    "uploadNew": "Subir nueva",
+    "remove": "Quitar",
+    "avatarHint": "PNG, JPG, WEBP o GIF · hasta 3 MB.",
+    "uploadFailed": "Error al subir.",
+    "removeFailed": "No se pudo quitar la foto.",
+    "accountDetails": "Datos de la cuenta",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "passwordHelp": "Para cambiar tu contraseña, usa el <link>restablecimiento de contraseña</link>. Te enviaremos un enlace seguro por correo.",
+    "saveChanges": "Guardar cambios",
+    "saved": "Guardado",
+    "learningLanguage": "Idioma de aprendizaje",
+    "languageHelp": "Las nuevas rutas, sus recursos y el tutor se generan en <b>{lang}</b>. Las rutas existentes conservan el idioma con el que se crearon.",
+    "yourPlan": "Tu plan",
+    "planStatusFree": "Actualmente tienes el plan Gratis.",
+    "planStatusPremium": "Actualmente tienes el plan Premium.",
+    "manageBilling": "Gestionar facturación",
+    "upgradeMyPlan": "Mejorar mi plan",
+    "billingError": "No se pudo abrir el portal de facturación.",
+    "dangerZone": "Zona de peligro",
+    "dangerDesc": "Elimina permanentemente tu cuenta y todos los datos asociados.",
+    "deleteAccount": "Eliminar cuenta",
+    "deleteTitle": "¿Eliminar tu cuenta?",
+    "deleteDesc": "Esto elimina permanentemente tu cuenta, tus rutas y tu progreso. No se puede deshacer. Introduce tu contraseña para confirmar.",
+    "passwordPlaceholder": "Introduce tu contraseña",
+    "deleteAccountError": "No se pudo eliminar la cuenta.",
+    "cancel": "Cancelar"
   }
 }

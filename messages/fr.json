@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "Chargement de votre session...",
       "openMenu": "Ouvrir le menu",
-      "goToDashboard": "Aller au tableau de bord"
+      "goToDashboard": "Aller au tableau de bord",
+      "backToDashboard": "Retour au tableau de bord"
+    },
+    "notificationsPage": {
+      "title": "Mes notifications",
+      "unreadCount": "{count} non lues",
+      "allCaughtUp": "Vous êtes à jour",
+      "markAllRead": "Tout marquer comme lu",
+      "emptyTitle": "Aucune notification pour le moment",
+      "emptyBody": "Les rappels de série et les invitations de parcours apparaîtront ici."
     }
+  },
+  "settings": {
+    "title": "Profil et paramètres",
+    "subtitle": "Gérez votre compte. Les modifications du nom et de l'e-mail sont enregistrées sur votre compte METIS (les changements d'e-mail nécessitent une confirmation via un lien reçu par e-mail).",
+    "profilePicture": "Photo de profil",
+    "uploadNew": "Téléverser une nouvelle",
+    "remove": "Supprimer",
+    "avatarHint": "PNG, JPG, WEBP ou GIF · jusqu'à 3 Mo.",
+    "uploadFailed": "Échec du téléversement.",
+    "removeFailed": "Impossible de supprimer la photo.",
+    "accountDetails": "Détails du compte",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Mot de passe",
+    "passwordHelp": "Pour changer votre mot de passe, utilisez la <link>réinitialisation de mot de passe</link>. Nous vous enverrons un lien sécurisé par e-mail.",
+    "saveChanges": "Enregistrer les modifications",
+    "saved": "Enregistré",
+    "learningLanguage": "Langue d'apprentissage",
+    "languageHelp": "Les nouveaux parcours, leurs ressources et le tuteur sont générés en <b>{lang}</b>. Les parcours existants conservent la langue dans laquelle ils ont été créés.",
+    "yourPlan": "Votre offre",
+    "planStatusFree": "Vous êtes actuellement sur l'offre Gratuite.",
+    "planStatusPremium": "Vous êtes actuellement sur l'offre Premium.",
+    "manageBilling": "Gérer la facturation",
+    "upgradeMyPlan": "Améliorer mon offre",
+    "billingError": "Impossible d'ouvrir le portail de facturation.",
+    "dangerZone": "Zone sensible",
+    "dangerDesc": "Supprimez définitivement votre compte et toutes les données associées.",
+    "deleteAccount": "Supprimer le compte",
+    "deleteTitle": "Supprimer votre compte ?",
+    "deleteDesc": "Cela supprime définitivement votre compte, vos parcours et votre progression. C'est irréversible. Saisissez votre mot de passe pour confirmer.",
+    "passwordPlaceholder": "Saisissez votre mot de passe",
+    "deleteAccountError": "Impossible de supprimer le compte.",
+    "cancel": "Annuler"
   }
 }

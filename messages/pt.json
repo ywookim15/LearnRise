@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "Carregando sua sessão...",
       "openMenu": "Abrir menu",
-      "goToDashboard": "Ir para o painel"
+      "goToDashboard": "Ir para o painel",
+      "backToDashboard": "Voltar ao painel"
+    },
+    "notificationsPage": {
+      "title": "Minhas notificações",
+      "unreadCount": "{count} não lidas",
+      "allCaughtUp": "Você está em dia",
+      "markAllRead": "Marcar todas como lidas",
+      "emptyTitle": "Ainda não há notificações",
+      "emptyBody": "Lembretes de sequência e avisos de jornada aparecerão aqui."
     }
+  },
+  "settings": {
+    "title": "Perfil e configurações",
+    "subtitle": "Gerencie sua conta. Alterações de nome e e-mail são salvas na sua conta METIS (alterações de e-mail exigem confirmação por meio de um link na caixa de entrada).",
+    "profilePicture": "Foto de perfil",
+    "uploadNew": "Enviar nova",
+    "remove": "Remover",
+    "avatarHint": "PNG, JPG, WEBP ou GIF · até 3 MB.",
+    "uploadFailed": "Falha no envio.",
+    "removeFailed": "Não foi possível remover a foto.",
+    "accountDetails": "Dados da conta",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Senha",
+    "passwordHelp": "Para alterar sua senha, use a <link>redefinição de senha</link>. Enviaremos um link seguro por e-mail.",
+    "saveChanges": "Salvar alterações",
+    "saved": "Salvo",
+    "learningLanguage": "Idioma de aprendizado",
+    "languageHelp": "Novas jornadas, seus recursos e o tutor são gerados em <b>{lang}</b>. As jornadas existentes mantêm o idioma em que foram criadas.",
+    "yourPlan": "Seu plano",
+    "planStatusFree": "Você está atualmente no plano Gratuito.",
+    "planStatusPremium": "Você está atualmente no plano Premium.",
+    "manageBilling": "Gerenciar cobrança",
+    "upgradeMyPlan": "Fazer upgrade do meu plano",
+    "billingError": "Não foi possível abrir o portal de cobrança.",
+    "dangerZone": "Zona de perigo",
+    "dangerDesc": "Exclua permanentemente sua conta e todos os dados associados.",
+    "deleteAccount": "Excluir conta",
+    "deleteTitle": "Excluir sua conta?",
+    "deleteDesc": "Isso exclui permanentemente sua conta, jornadas e progresso. Não pode ser desfeito. Digite sua senha para confirmar.",
+    "passwordPlaceholder": "Digite sua senha",
+    "deleteAccountError": "Não foi possível excluir a conta.",
+    "cancel": "Cancelar"
   }
 }

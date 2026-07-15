@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "セッションを読み込み中...",
       "openMenu": "メニューを開く",
-      "goToDashboard": "ダッシュボードへ移動"
+      "goToDashboard": "ダッシュボードへ移動",
+      "backToDashboard": "ダッシュボードに戻る"
+    },
+    "notificationsPage": {
+      "title": "通知",
+      "unreadCount": "未読 {count} 件",
+      "allCaughtUp": "すべて確認済みです",
+      "markAllRead": "すべて既読にする",
+      "emptyTitle": "まだ通知はありません",
+      "emptyBody": "連続学習のリマインダーやジャーニーのお知らせがここに表示されます。"
     }
+  },
+  "settings": {
+    "title": "プロフィールと設定",
+    "subtitle": "アカウントを管理します。名前とメールの変更はMETISアカウントに保存されます（メール変更には受信トレイのリンクによる確認が必要です）。",
+    "profilePicture": "プロフィール写真",
+    "uploadNew": "新しくアップロード",
+    "remove": "削除",
+    "avatarHint": "PNG、JPG、WEBP、GIF · 最大3MB。",
+    "uploadFailed": "アップロードに失敗しました。",
+    "removeFailed": "写真を削除できませんでした。",
+    "accountDetails": "アカウント情報",
+    "firstName": "名",
+    "lastName": "姓",
+    "emailLabel": "メール",
+    "passwordLabel": "パスワード",
+    "passwordHelp": "パスワードを変更するには、<link>パスワードのリセット</link>をご利用ください。安全なリンクをメールでお送りします。",
+    "saveChanges": "変更を保存",
+    "saved": "保存しました",
+    "learningLanguage": "学習言語",
+    "languageHelp": "新しいジャーニー、そのリソース、チューターは<b>{lang}</b>で生成されます。既存のジャーニーは作成時の言語のままです。",
+    "yourPlan": "あなたのプラン",
+    "planStatusFree": "現在、無料プランをご利用中です。",
+    "planStatusPremium": "現在、プレミアムプランをご利用中です。",
+    "manageBilling": "請求を管理",
+    "upgradeMyPlan": "プランをアップグレード",
+    "billingError": "請求ポータルを開けませんでした。",
+    "dangerZone": "危険な操作",
+    "dangerDesc": "アカウントと関連するすべてのデータを完全に削除します。",
+    "deleteAccount": "アカウントを削除",
+    "deleteTitle": "アカウントを削除しますか？",
+    "deleteDesc": "これによりアカウント、ジャーニー、進捗が完全に削除されます。元に戻せません。確認のためパスワードを入力してください。",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "deleteAccountError": "アカウントを削除できませんでした。",
+    "cancel": "キャンセル"
   }
 }

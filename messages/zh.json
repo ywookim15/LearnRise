@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "正在加载您的会话...",
       "openMenu": "打开菜单",
-      "goToDashboard": "前往仪表板"
+      "goToDashboard": "前往仪表板",
+      "backToDashboard": "返回仪表板"
+    },
+    "notificationsPage": {
+      "title": "我的通知",
+      "unreadCount": "{count} 条未读",
+      "allCaughtUp": "您已全部查看",
+      "markAllRead": "全部标记为已读",
+      "emptyTitle": "暂无通知",
+      "emptyBody": "连续学习提醒和旅程提示将显示在这里。"
     }
+  },
+  "settings": {
+    "title": "个人资料与设置",
+    "subtitle": "管理您的账户。姓名和邮箱的更改将保存到您的 METIS 账户（更改邮箱需通过收件箱链接确认）。",
+    "profilePicture": "头像",
+    "uploadNew": "上传新头像",
+    "remove": "移除",
+    "avatarHint": "PNG、JPG、WEBP 或 GIF · 最大 3 MB。",
+    "uploadFailed": "上传失败。",
+    "removeFailed": "无法移除头像。",
+    "accountDetails": "账户信息",
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "emailLabel": "邮箱",
+    "passwordLabel": "密码",
+    "passwordHelp": "要更改密码，请使用<link>密码重置流程</link>。我们会通过邮件向您发送一个安全链接。",
+    "saveChanges": "保存更改",
+    "saved": "已保存",
+    "learningLanguage": "学习语言",
+    "languageHelp": "新的旅程、其资源和导师将以<b>{lang}</b>生成。现有旅程保留其创建时的语言。",
+    "yourPlan": "您的套餐",
+    "planStatusFree": "您当前使用的是免费套餐。",
+    "planStatusPremium": "您当前使用的是高级套餐。",
+    "manageBilling": "管理账单",
+    "upgradeMyPlan": "升级我的套餐",
+    "billingError": "无法打开账单门户。",
+    "dangerZone": "危险区域",
+    "dangerDesc": "永久删除您的账户及所有关联数据。",
+    "deleteAccount": "删除账户",
+    "deleteTitle": "删除您的账户？",
+    "deleteDesc": "这将永久删除您的账户、旅程和进度。此操作无法撤销。请输入密码以确认。",
+    "passwordPlaceholder": "请输入您的密码",
+    "deleteAccountError": "无法删除账户。",
+    "cancel": "取消"
   }
 }

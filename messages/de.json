@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "Deine Sitzung wird geladen...",
       "openMenu": "Menü öffnen",
-      "goToDashboard": "Zum Dashboard"
+      "goToDashboard": "Zum Dashboard",
+      "backToDashboard": "Zurück zum Dashboard"
+    },
+    "notificationsPage": {
+      "title": "Meine Benachrichtigungen",
+      "unreadCount": "{count} ungelesen",
+      "allCaughtUp": "Du bist auf dem neuesten Stand",
+      "markAllRead": "Alle als gelesen markieren",
+      "emptyTitle": "Noch keine Benachrichtigungen",
+      "emptyBody": "Serien-Erinnerungen und Lernpfad-Hinweise erscheinen hier."
     }
+  },
+  "settings": {
+    "title": "Profil & Einstellungen",
+    "subtitle": "Verwalte dein Konto. Änderungen an Name und E-Mail werden in deinem METIS-Konto gespeichert (E-Mail-Änderungen erfordern eine Bestätigung über einen Link im Posteingang).",
+    "profilePicture": "Profilbild",
+    "uploadNew": "Neues hochladen",
+    "remove": "Entfernen",
+    "avatarHint": "PNG, JPG, WEBP oder GIF · bis zu 3 MB.",
+    "uploadFailed": "Upload fehlgeschlagen.",
+    "removeFailed": "Bild konnte nicht entfernt werden.",
+    "accountDetails": "Kontodetails",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "passwordHelp": "Um dein Passwort zu ändern, nutze die <link>Passwort-Zurücksetzung</link>. Wir senden dir einen sicheren Link per E-Mail.",
+    "saveChanges": "Änderungen speichern",
+    "saved": "Gespeichert",
+    "learningLanguage": "Lernsprache",
+    "languageHelp": "Neue Lernpfade, ihre Ressourcen und der Tutor werden auf <b>{lang}</b> erstellt. Bestehende Lernpfade behalten die Sprache, in der sie erstellt wurden.",
+    "yourPlan": "Dein Tarif",
+    "planStatusFree": "Du nutzt derzeit den kostenlosen Tarif.",
+    "planStatusPremium": "Du nutzt derzeit den Premium-Tarif.",
+    "manageBilling": "Abrechnung verwalten",
+    "upgradeMyPlan": "Meinen Tarif upgraden",
+    "billingError": "Abrechnungsportal konnte nicht geöffnet werden.",
+    "dangerZone": "Gefahrenzone",
+    "dangerDesc": "Lösche dein Konto und alle zugehörigen Daten dauerhaft.",
+    "deleteAccount": "Konto löschen",
+    "deleteTitle": "Konto löschen?",
+    "deleteDesc": "Dies löscht dein Konto, deine Lernpfade und deinen Fortschritt dauerhaft. Das kann nicht rückgängig gemacht werden. Gib zur Bestätigung dein Passwort ein.",
+    "passwordPlaceholder": "Gib dein Passwort ein",
+    "deleteAccountError": "Konto konnte nicht gelöscht werden.",
+    "cancel": "Abbrechen"
   }
 }

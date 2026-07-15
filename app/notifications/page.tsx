@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Bell, Flame, Sparkles, TrendingUp, BookOpen, Settings2 } from "lucide-react";
 import { StandaloneShell } from "@/components/layout/standalone-shell";
 import { Button } from "@/components/ui/button";
@@ -16,20 +17,21 @@ const ICON: Record<NotificationType, typeof Bell> = {
 };
 
 export default function NotificationsPage() {
+  const t = useTranslations("app.notificationsPage");
   const { notifications, unreadCount, markAllRead } = useApp();
 
   return (
     <StandaloneShell>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-serif text-3xl tracking-tight">My Notifications</h1>
+          <h1 className="font-serif text-3xl tracking-tight">{t("title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {unreadCount > 0 ? `${unreadCount} unread` : "You're all caught up"}
+            {unreadCount > 0 ? t("unreadCount", { count: unreadCount }) : t("allCaughtUp")}
           </p>
         </div>
         {unreadCount > 0 && (
           <Button variant="outline" size="sm" onClick={markAllRead}>
-            Mark all read
+            {t("markAllRead")}
           </Button>
         )}
       </div>
@@ -38,9 +40,9 @@ export default function NotificationsPage() {
         {notifications.length === 0 && (
           <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
             <Bell className="h-8 w-8 text-muted-foreground" />
-            <p className="text-sm font-medium">No notifications yet</p>
+            <p className="text-sm font-medium">{t("emptyTitle")}</p>
             <p className="text-xs text-muted-foreground">
-              Streak reminders and journey nudges will show up here.
+              {t("emptyBody")}
             </p>
           </div>
         )}

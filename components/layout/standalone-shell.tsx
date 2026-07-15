@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
@@ -15,12 +16,13 @@ import { useApp } from "@/lib/context/app-context";
 export function StandaloneShell({
   children,
   backHref = "/dashboard",
-  backLabel = "Back to Dashboard",
+  backLabel,
 }: {
   children: ReactNode;
   backHref?: string;
   backLabel?: string;
 }) {
+  const t = useTranslations("app.shell");
   const { isLoggedIn, authReady } = useApp();
   const router = useRouter();
 
@@ -32,7 +34,7 @@ export function StandaloneShell({
   if (!authReady || !isLoggedIn) {
     return (
       <div className="flex h-screen items-center justify-center bg-background text-sm text-muted-foreground">
-        Loading your session…
+        {t("loadingSession")}
       </div>
     );
   }
@@ -44,7 +46,7 @@ export function StandaloneShell({
           <Button asChild variant="ghost" size="sm">
             <Link href={backHref}>
               <ArrowLeft className="h-4 w-4" />
-              {backLabel}
+              {backLabel ?? t("backToDashboard")}
             </Link>
           </Button>
           <Logo />

@@ -361,7 +361,50 @@
     "shell": {
       "loadingSession": "Loading your session...",
       "openMenu": "Open menu",
-      "goToDashboard": "Go to dashboard"
+      "goToDashboard": "Go to dashboard",
+      "backToDashboard": "Back to Dashboard"
+    },
+    "notificationsPage": {
+      "title": "My Notifications",
+      "unreadCount": "{count} unread",
+      "allCaughtUp": "You're all caught up",
+      "markAllRead": "Mark all read",
+      "emptyTitle": "No notifications yet",
+      "emptyBody": "Streak reminders and journey nudges will show up here."
     }
+  },
+  "settings": {
+    "title": "Profile & Settings",
+    "subtitle": "Manage your account. Name and email changes are saved to your METIS account (email changes require confirmation via inbox link).",
+    "profilePicture": "Profile picture",
+    "uploadNew": "Upload new",
+    "remove": "Remove",
+    "avatarHint": "PNG, JPG, WEBP or GIF · up to 3 MB.",
+    "uploadFailed": "Upload failed.",
+    "removeFailed": "Couldn't remove picture.",
+    "accountDetails": "Account details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "passwordHelp": "To change your password, use the <link>password reset flow</link>. We'll email you a secure link.",
+    "saveChanges": "Save changes",
+    "saved": "Saved",
+    "learningLanguage": "Learning language",
+    "languageHelp": "New journeys, their resources, and the tutor are generated in <b>{lang}</b>. Existing journeys keep the language they were created in.",
+    "yourPlan": "Your plan",
+    "planStatusFree": "You're currently on the Free plan.",
+    "planStatusPremium": "You're currently on the Premium plan.",
+    "manageBilling": "Manage billing",
+    "upgradeMyPlan": "Upgrade my plan",
+    "billingError": "Couldn't open billing portal.",
+    "dangerZone": "Danger zone",
+    "dangerDesc": "Permanently delete your account and all associated data.",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete your account?",
+    "deleteDesc": "This permanently deletes your account, journeys, and progress. This can't be undone. Enter your password to confirm.",
+    "passwordPlaceholder": "Enter your password",
+    "deleteAccountError": "Couldn't delete account.",
+    "cancel": "Cancel"
   }
 }
