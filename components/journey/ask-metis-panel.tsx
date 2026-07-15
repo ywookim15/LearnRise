@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ChevronsRight, Send, RefreshCw } from "lucide-react";
 import { LogoMark } from "@/components/shared/logo";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -15,18 +16,6 @@ interface Message {
   pending?: boolean;
 }
 
-const INTRO: Record<ChatTab, string> = {
-  main: "Hi, I'm METIS. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
-  planner: "I'm your Planner. Tell me your deadline, weekly hours, or how you want to re-pace things and I'll re-plan your upcoming chapters (finished ones stay put).",
-  tutor: "I'm your Tutor. Point me at a concept or resource and I'll walk you through it, questions first, answers second.",
-};
-
-const SUGGESTIONS: Record<ChatTab, string[]> = {
-  main: ["What should I do next?", "Summarize my progress so far", "Can you explain this resource?"],
-  planner: ["Change my pacing", "I have less time this week", "Skip ahead to a different topic"],
-  tutor: ["Explain this concept simply", "Quiz me on this chapter", "I'm stuck, give me a hint"],
-};
-
 let mid = 0;
 const newId = () => `m${mid++}`;
 
@@ -39,12 +28,13 @@ export function AskMetisPanel({
   onCollapse: () => void;
   onRoadmapChanged?: () => void;
 }) {
+  const t = useTranslations("app.ask");
   const [tab, setTab] = useState<ChatTab>("main");
-  const [threads, setThreads] = useState<Record<ChatTab, Message[]>>({
-    main: [{ id: newId(), role: "assistant", text: INTRO.main }],
-    planner: [{ id: newId(), role: "assistant", text: INTRO.planner }],
-    tutor: [{ id: newId(), role: "assistant", text: INTRO.tutor }],
-  });
+  const [threads, setThreads] = useState<Record<ChatTab, Message[]>>(() => ({
+    main: [{ id: newId(), role: "assistant", text: t("intro.main") }],
+    planner: [{ id: newId(), role: "assistant", text: t("intro.planner") }],
+    tutor: [{ id: newId(), role: "assistant", text: t("intro.tutor") }],
+  }));
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [limitReached, setLimitReached] = useState(false);
@@ -91,7 +81,7 @@ export function AskMetisPanel({
           setLimitReached(true);
           return;
         }
-        throw new Error(json.error || "METIS couldn't respond. Please try again.");
+        throw new Error(json.error || t("errorRespond"));
       }
 
       replace(activeTab, placeholderId, { text: json.reply, pending: false });
@@ -99,13 +89,13 @@ export function AskMetisPanel({
         push(activeTab, {
           id: newId(),
           role: "system",
-          text: "Updating your roadmap, new units and resources will appear shortly.",
+          text: t("roadmapUpdating"),
         });
         onRoadmapChanged?.();
       }
     } catch (err) {
       replace(activeTab, placeholderId, {
-        text: err instanceof Error ? err.message : "Something went wrong.",
+        text: err instanceof Error ? err.message : t("errorGeneric"),
         pending: false,
       });
     } finally {
@@ -122,15 +112,15 @@ export function AskMetisPanel({
             <LogoMark className="h-5 w-auto" />
           </span>
           <div>
-            <p className="text-sm font-semibold leading-none">METIS AI Tutor</p>
+            <p className="text-sm font-semibold leading-none">{t("title")}</p>
             <p className="mt-1 text-[11px] text-white/80">
-              {chatTabs.find((t) => t.id === tab)?.blurb}
+              {t(`tabs.${tab}.blurb`)}
             </p>
           </div>
         </div>
         <button
           onClick={onCollapse}
-          aria-label="Collapse chat"
+          aria-label={t("collapseChat")}
           className="relative flex h-9 w-9 items-center justify-center rounded-xl text-white/90 transition-colors hover:bg-white/15 hover:text-white"
         >
           <ChevronsRight className="h-5 w-5" />
@@ -139,30 +129,30 @@ export function AskMetisPanel({
 
       <ProGate
         active={limitReached}
-        title="Usage ran out"
-        subtitle="You've used all of today's free messages. Upgrade to Pro for unlimited chat with METIS."
+        title={t("limitTitle")}
+        subtitle={t("limitSubtitle")}
         className="flex min-h-0 flex-1 flex-col"
         contentClassName="flex min-h-0 flex-1 flex-col"
       >
         <Tabs value={tab} onValueChange={(v) => setTab(v as ChatTab)} className="flex min-h-0 flex-1 flex-col">
           <div className="px-4 pt-3">
             <TabsList className="w-full">
-              {chatTabs.map((t) => (
-                <TabsTrigger key={t.id} value={t.id} className="flex-1">
-                  {t.label}
+              {chatTabs.map((ct) => (
+                <TabsTrigger key={ct.id} value={ct.id} className="flex-1">
+                  {t(`tabs.${ct.id}.label`)}
                 </TabsTrigger>
               ))}
             </TabsList>
           </div>
 
-          {chatTabs.map((t) => (
+          {chatTabs.map((ct) => (
             <TabsContent
-              key={t.id}
-              value={t.id}
-              ref={t.id === tab ? scrollRef : undefined}
+              key={ct.id}
+              value={ct.id}
+              ref={ct.id === tab ? scrollRef : undefined}
               className="min-h-0 flex-1 space-y-4 overflow-y-auto scrollbar-slim px-4 py-4"
             >
-              {threads[t.id].map((m) =>
+              {threads[ct.id].map((m) =>
                 m.role === "system" ? (
                   <div key={m.id} className="flex items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
                     <RefreshCw className="h-3 w-3 animate-spin" />
@@ -178,7 +168,7 @@ export function AskMetisPanel({
 
         <div className="border-t border-border px-3 pt-3">
           <div className="flex gap-1.5 overflow-x-auto pb-3 scrollbar-slim">
-            {SUGGESTIONS[tab].map((suggestion) => (
+            {(t.raw(`suggestions.${tab}`) as string[]).map((suggestion) => (
               <button
                 key={suggestion}
                 onClick={() => void send(suggestion)}
@@ -200,14 +190,14 @@ export function AskMetisPanel({
                 }
               }}
               disabled={sending}
-              placeholder={`Message METIS (${chatTabs.find((t) => t.id === tab)?.label})…`}
+              placeholder={t("placeholder", { tab: t(`tabs.${tab}.label`) })}
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:opacity-60"
             />
             <button
               onClick={() => void send()}
               disabled={sending || !input.trim()}
               className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-gradient text-white transition-opacity disabled:opacity-40"
-              aria-label="Send"
+              aria-label={t("send")}
             >
               <Send className="h-4 w-4" />
             </button>

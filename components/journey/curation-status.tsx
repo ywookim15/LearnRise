@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Loader2, AlertTriangle } from "lucide-react";
 import type { UiJourneyDetail } from "@/lib/data/journeys";
 import { useUsage, formatResetIn } from "@/lib/data/use-usage";
@@ -12,6 +13,7 @@ import { cn } from "@/lib/utils";
  * explains the pause. Self-hides once everything has settled.
  */
 export function CurationStatus({ journey }: { journey: UiJourneyDetail }) {
+  const t = useTranslations("app.curation");
   const { available, providers } = useUsage();
 
   const chapters = journey.units.flatMap((u) => u.chapters);
@@ -33,7 +35,7 @@ export function CurationStatus({ journey }: { journey: UiJourneyDetail }) {
         <div className="flex min-w-0 items-center gap-2 text-sm font-medium">
           <Loader2 className="h-4 w-4 shrink-0 animate-spin text-secondary" />
           <span className="truncate">
-            Curating resources, {done} of {total} topics done
+            {t("curating", { done, total })}
           </span>
         </div>
         <span className="shrink-0 text-sm font-bold text-primary">{pct}%</span>
@@ -49,14 +51,16 @@ export function CurationStatus({ journey }: { journey: UiJourneyDetail }) {
       {available && throttled ? (
         <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-destructive">
           <AlertTriangle className="h-3.5 w-3.5" />
-          Paused, {throttled.provider === "tavily" ? "web search" : "curator"} hit its rate
-          limit{throttled.retryAfterSec ? `, auto-retry in ~${formatResetIn(throttled.retryAfterSec * 1000)}` : ""}
-          . It resumes on its own.
+          {t("paused", {
+            what: throttled.provider === "tavily" ? t("webSearch") : t("curator"),
+            retry: throttled.retryAfterSec
+              ? t("autoRetry", { time: formatResetIn(throttled.retryAfterSec * 1000) })
+              : "",
+          })}
         </p>
       ) : (
         <p className="mt-2 text-xs text-muted-foreground">
-          METIS fills these in a few at a time. Keep this page open and they&apos;ll finish
-          automatically.
+          {t("fillInfo")}
         </p>
       )}
     </div>

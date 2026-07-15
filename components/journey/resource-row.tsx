@@ -2,9 +2,10 @@
 
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 import { Bookmark, ExternalLink, ShieldCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ResourceTypeIcon, resourceTypeLabel } from "@/components/shared/icon";
+import { ResourceTypeIcon } from "@/components/shared/icon";
 import type { UiResource } from "@/lib/data/journeys";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,7 @@ export function ResourceRow({
   onToggle: () => void;
   onToggleSave: () => void;
 }) {
+  const t = useTranslations("app.resource");
   const rowRef = useRef<HTMLDivElement>(null);
   const [preview, setPreview] = useState<PreviewPos | null>(null);
 
@@ -52,7 +54,7 @@ export function ResourceRow({
       <Checkbox
         checked={resource.completed}
         onCheckedChange={onToggle}
-        aria-label={`Mark ${resource.title} complete`}
+        aria-label={t("markComplete", { title: resource.title })}
       />
       <span className="w-8 shrink-0 text-xs font-semibold text-muted-foreground">
         {resource.label}
@@ -73,7 +75,7 @@ export function ResourceRow({
           <ExternalLink className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover/row:opacity-60" />
         </p>
         <p className="truncate text-xs text-muted-foreground">
-          {resourceTypeLabel[resource.type]} · {resource.source}
+          {t(`type.${resource.type}`)} · {resource.source}
         </p>
       </a>
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors group-hover/row:bg-card group-hover/row:text-primary">
@@ -85,7 +87,7 @@ export function ResourceRow({
           e.stopPropagation();
           onToggleSave();
         }}
-        aria-label={resource.saved ? "Remove from saved resources" : "Save resource"}
+        aria-label={resource.saved ? t("removeSaved") : t("save")}
         aria-pressed={resource.saved}
         className={cn(
           "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-card hover:text-primary",
@@ -118,21 +120,21 @@ export function ResourceRow({
             </div>
             {resource.whyThisFits && (
               <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
-                <span className="font-medium text-foreground">Why this fits: </span>
+                <span className="font-medium text-foreground">{t("whyThisFits")} </span>
                 {resource.whyThisFits}
               </p>
             )}
             {resource.videoTimestamp && (
               <p className="mt-2 line-clamp-2 text-[11px] text-muted-foreground">
-                <span className="font-medium">Chapters:</span> {resource.videoTimestamp}
+                <span className="font-medium">{t("chapters")}</span> {resource.videoTimestamp}
               </p>
             )}
             <div className="mt-3 flex items-center justify-between text-[11px] font-medium text-muted-foreground">
-              <span className="rounded-full bg-muted px-2 py-0.5">{resourceTypeLabel[resource.type]}</span>
+              <span className="rounded-full bg-muted px-2 py-0.5">{t(`type.${resource.type}`)}</span>
               {resource.isTrusted && (
                 <span className="flex items-center gap-1 text-emerald-600">
                   <ShieldCheck className="h-3 w-3" />
-                  Trusted source
+                  {t("trustedSource")}
                 </span>
               )}
             </div>

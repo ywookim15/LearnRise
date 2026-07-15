@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ChevronRight, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { AppPage } from "@/components/layout/app-page";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,8 @@ import { useJourneyDetail } from "@/lib/data/use-journey-detail";
 import { unitProgress, unitResourceCount } from "@/lib/data/journeys";
 
 export default function UnitPage() {
+  const t = useTranslations("app.unitPage");
+  const tc = useTranslations("app.chapterStatus");
   const params = useParams<{ id: string; unitId: string }>();
   const { journey, loading, error, toggleResource, toggleSaved, markChapterSkill } = useJourneyDetail(params.id);
   const unit = journey?.units.find((u) => u.id === params.unitId);
@@ -32,10 +35,10 @@ export default function UnitPage() {
       <AppPage>
         <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
           <AlertCircle className="h-10 w-10 text-muted-foreground" />
-          <p className="text-lg font-semibold">Unit not found</p>
+          <p className="text-lg font-semibold">{t("notFound")}</p>
           <Button asChild>
             <Link href={journey ? `/journey/${journey.id}` : "/dashboard"}>
-              {journey ? "Back to journey" : "Back to Dashboard"}
+              {journey ? t("backToJourney") : t("backToDashboard")}
             </Link>
           </Button>
         </div>
@@ -48,14 +51,14 @@ export default function UnitPage() {
   const breadcrumb = (
     <div className="flex items-center gap-1.5 text-sm">
       <Link href="/dashboard" className="text-muted-foreground hover:text-foreground">
-        Journeys
+        {t("journeys")}
       </Link>
       <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
       <Link href={`/journey/${journey.id}`} className="text-muted-foreground hover:text-foreground">
         {journey.name}
       </Link>
       <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
-      <span className="truncate font-medium text-primary">Unit {unit.number}</span>
+      <span className="truncate font-medium text-primary">{t("unitLabel", { number: unit.number })}</span>
     </div>
   );
 
@@ -64,21 +67,20 @@ export default function UnitPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-            Unit {unit.number}
+            {t("unitLabel", { number: unit.number })}
           </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">{unit.title}</h1>
         </div>
         <div className="w-full sm:w-56">
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold uppercase tracking-wide text-muted-foreground">
-              Unit progress
+              {t("unitProgress")}
             </span>
             <span className="font-bold text-primary">{progress}%</span>
           </div>
           <Progress value={progress} className="mt-2" />
           <p className="mt-1.5 text-xs text-muted-foreground">
-            {unitResourceCount(unit)} resources across {unit.chapters.length}{" "}
-            {unit.chapters.length === 1 ? "chapter" : "chapters"}
+            {t("resourcesAcross", { resources: unitResourceCount(unit), chapters: unit.chapters.length })}
           </p>
         </div>
       </div>
@@ -101,7 +103,7 @@ export default function UnitPage() {
                 <div className="mt-3 rounded-2xl border border-primary/15 bg-brand-gradient-soft p-4">
                   <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-primary">
                     <Sparkles className="h-3.5 w-3.5" />
-                    Learning objective
+                    {t("learningObjective")}
                   </div>
                   <p className="text-sm leading-relaxed text-foreground/80">
                     {chapter.learningObjective}
@@ -122,12 +124,12 @@ export default function UnitPage() {
               ) : chapter.resourceStatus === "pending" ? (
                 <p className="flex items-center gap-2 px-3 py-3 text-xs text-muted-foreground">
                   <Loader2 className="h-3.5 w-3.5 animate-spin text-secondary" />
-                  METIS is curating resources for this chapter…
+                  {tc("curating")}
                 </p>
               ) : (
                 <p className="flex items-center gap-2 px-3 py-3 text-xs text-muted-foreground">
                   <AlertCircle className="h-3.5 w-3.5" />
-                  No resources found yet, this chapter is flagged as a gap.
+                  {tc("gap")}
                 </p>
               )}
             </div>

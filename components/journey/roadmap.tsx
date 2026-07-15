@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Minus, Plus, Loader2, AlertCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { ResourceRow } from "@/components/journey/resource-row";
@@ -17,6 +18,7 @@ export function Roadmap({
   onToggleResource: (resourceId: string) => void;
   onToggleSave: (resourceId: string) => void;
 }) {
+  const t = useTranslations("app.roadmap");
   const [expanded, setExpanded] = useState<Set<string>>(
     new Set(journey.units[0] ? [journey.units[0].id] : [])
   );
@@ -52,8 +54,8 @@ export function Roadmap({
                 <div className="min-w-0">
                   <p className="truncate font-semibold group-hover:text-primary">{unit.title}</p>
                   <p className="truncate text-xs text-muted-foreground">
-                    {count} {count === 1 ? "resource" : "resources"}
-                    {unit.estimatedWeeks ? ` · ~${unit.estimatedWeeks} weeks` : ""}
+                    {t("resourceCount", { count })}
+                    {unit.estimatedWeeks ? ` · ${t("weeks", { count: unit.estimatedWeeks })}` : ""}
                   </p>
                 </div>
               </Link>
@@ -67,7 +69,7 @@ export function Roadmap({
 
               <button
                 onClick={() => toggle(unit.id)}
-                aria-label={isOpen ? "Collapse unit" : "Expand unit"}
+                aria-label={isOpen ? t("collapseUnit") : t("expandUnit")}
                 aria-expanded={isOpen}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
@@ -107,6 +109,7 @@ function ChapterResources({
   onToggleResource: (resourceId: string) => void;
   onToggleSave: (resourceId: string) => void;
 }) {
+  const t = useTranslations("app.chapterStatus");
   if (chapter.resources.length > 0) {
     return (
       <>
@@ -125,14 +128,14 @@ function ChapterResources({
     return (
       <p className="flex items-center gap-2 px-3 py-2.5 text-xs text-muted-foreground">
         <Loader2 className="h-3.5 w-3.5 animate-spin text-secondary" />
-        METIS is curating resources for this chapter…
+        {t("curating")}
       </p>
     );
   }
   return (
     <p className="flex items-center gap-2 px-3 py-2.5 text-xs text-muted-foreground">
       <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
-      No resources found yet, this chapter is flagged as a gap.
+      {t("gap")}
     </p>
   );
 }

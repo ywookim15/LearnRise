@@ -371,6 +371,132 @@
       "markAllRead": "Mark all read",
       "emptyTitle": "No notifications yet",
       "emptyBody": "Streak reminders and journey nudges will show up here."
+    },
+    "journeyPage": {
+      "loading": "Loading…",
+      "notFound": "Journey not found",
+      "loadError": "Couldn't load this journey",
+      "notFoundDesc": "This journey doesn't exist or you don't have access to it.",
+      "backToDashboard": "Back to Dashboard",
+      "journeys": "Journeys",
+      "askMetis": "Ask METIS",
+      "overallProgress": "Overall progress"
+    },
+    "curation": {
+      "curating": "Curating resources, {done} of {total} topics done",
+      "paused": "Paused, {what} hit its rate limit{retry}. It resumes on its own.",
+      "webSearch": "web search",
+      "curator": "curator",
+      "autoRetry": ", auto-retry in ~{time}",
+      "fillInfo": "METIS fills these in a few at a time. Keep this page open and they'll finish automatically."
+    },
+    "chapterStatus": {
+      "curating": "METIS is curating resources for this chapter…",
+      "gap": "No resources found yet, this chapter is flagged as a gap."
+    },
+    "roadmap": {
+      "resourceCount": "{count, plural, one {# resource} other {# resources}}",
+      "weeks": "~{count} weeks",
+      "collapseUnit": "Collapse unit",
+      "expandUnit": "Expand unit"
+    },
+    "resource": {
+      "type": {
+        "video": "Video",
+        "article": "Article",
+        "practice_set": "Practice"
+      },
+      "markComplete": "Mark {title} complete",
+      "removeSaved": "Remove from saved resources",
+      "save": "Save resource",
+      "whyThisFits": "Why this fits:",
+      "chapters": "Chapters:",
+      "trustedSource": "Trusted source"
+    },
+    "ask": {
+      "title": "METIS AI Tutor",
+      "tabs": {
+        "main": {
+          "label": "Main",
+          "blurb": "General questions about your journey"
+        },
+        "planner": {
+          "label": "Planner",
+          "blurb": "Adjust pacing, scope, and schedule"
+        },
+        "tutor": {
+          "label": "Tutor",
+          "blurb": "Work through a concept step by step"
+        }
+      },
+      "intro": {
+        "main": "Hi, I'm METIS. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
+        "planner": "I'm your Planner. Tell me your deadline, weekly hours, or how you want to re-pace things and I'll re-plan your upcoming chapters (finished ones stay put).",
+        "tutor": "I'm your Tutor. Point me at a concept or resource and I'll walk you through it, questions first, answers second."
+      },
+      "suggestions": {
+        "main": [
+          "What should I do next?",
+          "Summarize my progress so far",
+          "Can you explain this resource?"
+        ],
+        "planner": [
+          "Change my pacing",
+          "I have less time this week",
+          "Skip ahead to a different topic"
+        ],
+        "tutor": [
+          "Explain this concept simply",
+          "Quiz me on this chapter",
+          "I'm stuck, give me a hint"
+        ]
+      },
+      "collapseChat": "Collapse chat",
+      "limitTitle": "Usage ran out",
+      "limitSubtitle": "You've used all of today's free messages. Upgrade to Pro for unlimited chat with METIS.",
+      "errorRespond": "METIS couldn't respond. Please try again.",
+      "errorGeneric": "Something went wrong.",
+      "roadmapUpdating": "Updating your roadmap, new units and resources will appear shortly.",
+      "placeholder": "Message METIS ({tab})…",
+      "send": "Send"
+    },
+    "createJourney": {
+      "generatingTitle": "Generating your roadmap…",
+      "generatingBody": "METIS is researching a syllabus and mapping your units and chapters. This usually takes 15 to 30 seconds, hang tight and keep this open. Resources fill in afterward.",
+      "title": "Create a new learning journey",
+      "subtitle": "Tell METIS what you want to learn. It'll generate a mapped roadmap, the more specific you are, the better the route.",
+      "goal": "Goal",
+      "goalPlaceholder": "e.g. Ace the AP Biology genetics unit, be as specific as possible.",
+      "currentLevel": "Current level",
+      "currentLevelPlaceholder": "Where are you starting from? Be as specific as possible.",
+      "time": "Time",
+      "startDate": "Start date",
+      "endDate": "Target end date",
+      "hoursPerWeek": "hours / week you can study",
+      "preferences": "Preferences",
+      "preferencesPlaceholder": "e.g. prefer videos and interactive practice over long readings.",
+      "cancel": "Cancel",
+      "generate": "Generate roadmap",
+      "error": "Something went wrong. Please try again."
+    },
+    "unitPage": {
+      "notFound": "Unit not found",
+      "backToJourney": "Back to journey",
+      "backToDashboard": "Back to Dashboard",
+      "journeys": "Journeys",
+      "unitLabel": "Unit {number}",
+      "unitProgress": "Unit progress",
+      "resourcesAcross": "{resources} resources across {chapters, plural, one {# chapter} other {# chapters}}",
+      "learningObjective": "Learning objective"
+    },
+    "flowchart": {
+      "knowledgeMap": "Knowledge map, what you'll learn in this unit",
+      "topicsHint": "{count, plural, one {# topic} other {# topics}} · hover a node to mark your mastery",
+      "topic": "Topic {number}",
+      "knowIt": "Know it",
+      "familiar": "Familiar",
+      "curating": "curating…",
+      "gap": "gap"
     }
   },
   "settings": {

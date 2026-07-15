@@ -371,6 +371,132 @@
       "markAllRead": "Marcar todo como leído",
       "emptyTitle": "Aún no hay notificaciones",
       "emptyBody": "Los recordatorios de racha y los avisos de rutas aparecerán aquí."
+    },
+    "journeyPage": {
+      "loading": "Cargando…",
+      "notFound": "Ruta no encontrada",
+      "loadError": "No se pudo cargar esta ruta",
+      "notFoundDesc": "Esta ruta no existe o no tienes acceso a ella.",
+      "backToDashboard": "Volver al panel",
+      "journeys": "Rutas",
+      "askMetis": "Ask METIS",
+      "overallProgress": "Progreso general"
+    },
+    "curation": {
+      "curating": "Curando recursos, {done} de {total} temas listos",
+      "paused": "En pausa, {what} alcanzó su límite de peticiones{retry}. Se reanuda solo.",
+      "webSearch": "la búsqueda web",
+      "curator": "el curador",
+      "autoRetry": ", reintento automático en ~{time}",
+      "fillInfo": "METIS los completa de a pocos. Mantén esta página abierta y terminarán automáticamente."
+    },
+    "chapterStatus": {
+      "curating": "METIS está curando recursos para este capítulo…",
+      "gap": "Aún no se encontraron recursos, este capítulo está marcado como una laguna."
+    },
+    "roadmap": {
+      "resourceCount": "{count, plural, one {# recurso} other {# recursos}}",
+      "weeks": "~{count} semanas",
+      "collapseUnit": "Contraer unidad",
+      "expandUnit": "Expandir unidad"
+    },
+    "resource": {
+      "type": {
+        "video": "Vídeo",
+        "article": "Artículo",
+        "practice_set": "Práctica"
+      },
+      "markComplete": "Marcar {title} como completado",
+      "removeSaved": "Quitar de recursos guardados",
+      "save": "Guardar recurso",
+      "whyThisFits": "Por qué encaja:",
+      "chapters": "Capítulos:",
+      "trustedSource": "Fuente de confianza"
+    },
+    "ask": {
+      "title": "Tutor de IA METIS",
+      "tabs": {
+        "main": {
+          "label": "Principal",
+          "blurb": "Preguntas generales sobre tu ruta"
+        },
+        "planner": {
+          "label": "Planificador",
+          "blurb": "Ajusta el ritmo, el alcance y el calendario"
+        },
+        "tutor": {
+          "label": "Tutor",
+          "blurb": "Trabaja un concepto paso a paso"
+        }
+      },
+      "intro": {
+        "main": "Hola, soy METIS. Pregúntame lo que quieras sobre esta ruta. También puedo replanificar las próximas unidades o actualizar los recursos de un capítulo si me lo pides.",
+        "planner": "Soy tu Planificador. Dime tu fecha límite, tus horas semanales o cómo quieres reajustar el ritmo y replanificaré tus próximos capítulos (los terminados no se mueven).",
+        "tutor": "Soy tu Tutor. Señálame un concepto o recurso y te lo explicaré paso a paso, primero las preguntas, después las respuestas."
+      },
+      "suggestions": {
+        "main": [
+          "¿Qué debería hacer ahora?",
+          "Resume mi progreso hasta ahora",
+          "¿Puedes explicar este recurso?"
+        ],
+        "planner": [
+          "Cambia mi ritmo",
+          "Tengo menos tiempo esta semana",
+          "Saltar a otro tema"
+        ],
+        "tutor": [
+          "Explica este concepto de forma sencilla",
+          "Hazme un cuestionario de este capítulo",
+          "Estoy atascado, dame una pista"
+        ]
+      },
+      "collapseChat": "Contraer chat",
+      "limitTitle": "Se agotó tu uso",
+      "limitSubtitle": "Has usado todos los mensajes gratuitos de hoy. Mejora a Pro para chatear sin límites con METIS.",
+      "errorRespond": "METIS no pudo responder. Inténtalo de nuevo.",
+      "errorGeneric": "Algo salió mal.",
+      "roadmapUpdating": "Actualizando tu hoja de ruta, las nuevas unidades y recursos aparecerán en breve.",
+      "placeholder": "Mensaje para METIS ({tab})…",
+      "send": "Enviar"
+    },
+    "createJourney": {
+      "generatingTitle": "Generando tu hoja de ruta…",
+      "generatingBody": "METIS está investigando un temario y mapeando tus unidades y capítulos. Esto suele tardar de 15 a 30 segundos, ten paciencia y mantén esto abierto. Los recursos se completan después.",
+      "title": "Crear una nueva ruta de aprendizaje",
+      "subtitle": "Dile a METIS qué quieres aprender. Generará una hoja de ruta mapeada; cuanto más específico seas, mejor será el recorrido.",
+      "goal": "Objetivo",
+      "goalPlaceholder": "p. ej. Dominar la unidad de genética de Biología AP, sé lo más específico posible.",
+      "currentLevel": "Nivel actual",
+      "currentLevelPlaceholder": "¿Desde dónde partes? Sé lo más específico posible.",
+      "time": "Tiempo",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha límite objetivo",
+      "hoursPerWeek": "horas / semana que puedes estudiar",
+      "preferences": "Preferencias",
+      "preferencesPlaceholder": "p. ej. prefiero vídeos y práctica interactiva antes que lecturas largas.",
+      "cancel": "Cancelar",
+      "generate": "Generar hoja de ruta",
+      "error": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "unitPage": {
+      "notFound": "Unidad no encontrada",
+      "backToJourney": "Volver a la ruta",
+      "backToDashboard": "Volver al panel",
+      "journeys": "Rutas",
+      "unitLabel": "Unidad {number}",
+      "unitProgress": "Progreso de la unidad",
+      "resourcesAcross": "{resources} recursos en {chapters, plural, one {# capítulo} other {# capítulos}}",
+      "learningObjective": "Objetivo de aprendizaje"
+    },
+    "flowchart": {
+      "knowledgeMap": "Mapa de conocimiento, lo que aprenderás en esta unidad",
+      "topicsHint": "{count, plural, one {# tema} other {# temas}} · pasa el cursor sobre un nodo para marcar tu dominio",
+      "topic": "Tema {number}",
+      "knowIt": "Lo sé",
+      "familiar": "Me suena",
+      "curating": "curando…",
+      "gap": "laguna"
     }
   },
   "settings": {

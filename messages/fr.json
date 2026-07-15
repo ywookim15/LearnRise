@@ -371,6 +371,132 @@
       "markAllRead": "Tout marquer comme lu",
       "emptyTitle": "Aucune notification pour le moment",
       "emptyBody": "Les rappels de série et les invitations de parcours apparaîtront ici."
+    },
+    "journeyPage": {
+      "loading": "Chargement…",
+      "notFound": "Parcours introuvable",
+      "loadError": "Impossible de charger ce parcours",
+      "notFoundDesc": "Ce parcours n'existe pas ou vous n'y avez pas accès.",
+      "backToDashboard": "Retour au tableau de bord",
+      "journeys": "Parcours",
+      "askMetis": "Ask METIS",
+      "overallProgress": "Progression globale"
+    },
+    "curation": {
+      "curating": "Curation des ressources, {done} sur {total} thèmes terminés",
+      "paused": "En pause, {what} a atteint sa limite de requêtes{retry}. Ça reprend tout seul.",
+      "webSearch": "la recherche web",
+      "curator": "le curateur",
+      "autoRetry": ", nouvelle tentative dans ~{time}",
+      "fillInfo": "METIS les complète quelques-uns à la fois. Gardez cette page ouverte et elles se termineront automatiquement."
+    },
+    "chapterStatus": {
+      "curating": "METIS sélectionne des ressources pour ce chapitre…",
+      "gap": "Aucune ressource trouvée pour l'instant, ce chapitre est signalé comme une lacune."
+    },
+    "roadmap": {
+      "resourceCount": "{count, plural, one {# ressource} other {# ressources}}",
+      "weeks": "~{count} semaines",
+      "collapseUnit": "Réduire l'unité",
+      "expandUnit": "Développer l'unité"
+    },
+    "resource": {
+      "type": {
+        "video": "Vidéo",
+        "article": "Article",
+        "practice_set": "Exercices"
+      },
+      "markComplete": "Marquer {title} comme terminé",
+      "removeSaved": "Retirer des ressources enregistrées",
+      "save": "Enregistrer la ressource",
+      "whyThisFits": "Pourquoi c'est adapté :",
+      "chapters": "Chapitres :",
+      "trustedSource": "Source fiable"
+    },
+    "ask": {
+      "title": "Tuteur IA METIS",
+      "tabs": {
+        "main": {
+          "label": "Principal",
+          "blurb": "Questions générales sur votre parcours"
+        },
+        "planner": {
+          "label": "Planificateur",
+          "blurb": "Ajustez le rythme, la portée et le calendrier"
+        },
+        "tutor": {
+          "label": "Tuteur",
+          "blurb": "Travaillez un concept étape par étape"
+        }
+      },
+      "intro": {
+        "main": "Bonjour, je suis METIS. Posez-moi vos questions sur ce parcours. Je peux aussi replanifier les prochaines unités ou actualiser les ressources d'un chapitre si vous le demandez.",
+        "planner": "Je suis votre Planificateur. Indiquez-moi votre échéance, vos heures hebdomadaires ou comment vous voulez réajuster le rythme, et je replanifierai vos prochains chapitres (les terminés restent en place).",
+        "tutor": "Je suis votre Tuteur. Indiquez-moi un concept ou une ressource et je vous guiderai pas à pas, les questions d'abord, les réponses ensuite."
+      },
+      "suggestions": {
+        "main": [
+          "Que dois-je faire ensuite ?",
+          "Résume ma progression jusqu'ici",
+          "Peux-tu expliquer cette ressource ?"
+        ],
+        "planner": [
+          "Change mon rythme",
+          "J'ai moins de temps cette semaine",
+          "Passer à un autre thème"
+        ],
+        "tutor": [
+          "Explique ce concept simplement",
+          "Interroge-moi sur ce chapitre",
+          "Je suis bloqué, donne-moi un indice"
+        ]
+      },
+      "collapseChat": "Réduire le chat",
+      "limitTitle": "Utilisation épuisée",
+      "limitSubtitle": "Vous avez utilisé tous les messages gratuits d'aujourd'hui. Passez à Pro pour discuter sans limite avec METIS.",
+      "errorRespond": "METIS n'a pas pu répondre. Veuillez réessayer.",
+      "errorGeneric": "Une erreur s'est produite.",
+      "roadmapUpdating": "Mise à jour de votre feuille de route, de nouvelles unités et ressources apparaîtront bientôt.",
+      "placeholder": "Message à METIS ({tab})…",
+      "send": "Envoyer"
+    },
+    "createJourney": {
+      "generatingTitle": "Génération de votre feuille de route…",
+      "generatingBody": "METIS recherche un programme et cartographie vos unités et chapitres. Cela prend généralement 15 à 30 secondes, patientez et gardez cette fenêtre ouverte. Les ressources se remplissent ensuite.",
+      "title": "Créer un nouveau parcours d'apprentissage",
+      "subtitle": "Dites à METIS ce que vous voulez apprendre. Il générera une feuille de route cartographiée ; plus vous êtes précis, meilleur sera l'itinéraire.",
+      "goal": "Objectif",
+      "goalPlaceholder": "p. ex. Réussir l'unité de génétique de SVT, soyez le plus précis possible.",
+      "currentLevel": "Niveau actuel",
+      "currentLevelPlaceholder": "D'où partez-vous ? Soyez le plus précis possible.",
+      "time": "Temps",
+      "startDate": "Date de début",
+      "endDate": "Date de fin visée",
+      "hoursPerWeek": "heures / semaine que vous pouvez étudier",
+      "preferences": "Préférences",
+      "preferencesPlaceholder": "p. ex. je préfère les vidéos et la pratique interactive aux longues lectures.",
+      "cancel": "Annuler",
+      "generate": "Générer la feuille de route",
+      "error": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "unitPage": {
+      "notFound": "Unité introuvable",
+      "backToJourney": "Retour au parcours",
+      "backToDashboard": "Retour au tableau de bord",
+      "journeys": "Parcours",
+      "unitLabel": "Unité {number}",
+      "unitProgress": "Progression de l'unité",
+      "resourcesAcross": "{resources} ressources réparties sur {chapters, plural, one {# chapitre} other {# chapitres}}",
+      "learningObjective": "Objectif d'apprentissage"
+    },
+    "flowchart": {
+      "knowledgeMap": "Carte des connaissances, ce que vous apprendrez dans cette unité",
+      "topicsHint": "{count, plural, one {# thème} other {# thèmes}} · survolez un nœud pour indiquer votre maîtrise",
+      "topic": "Thème {number}",
+      "knowIt": "Je maîtrise",
+      "familiar": "Familier",
+      "curating": "curation…",
+      "gap": "lacune"
     }
   },
   "settings": {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Sparkles, ChevronRight, Loader2, AlertCircle } from "lucide-react";
 import { Topbar } from "@/components/layout/topbar";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { useJourneyDetail } from "@/lib/data/use-journey-detail";
 import { detailProgress } from "@/lib/data/journeys";
 
 export default function JourneyPage() {
+  const t = useTranslations("app.journeyPage");
   const params = useParams<{ id: string }>();
   const { journey, loading, error, toggleResource, toggleSaved, reload } = useJourneyDetail(params.id);
   const [askOpen, setAskOpen] = useState(false);
@@ -22,7 +24,7 @@ export default function JourneyPage() {
   if (loading) {
     return (
       <div className="flex h-full flex-1 flex-col overflow-hidden">
-        <Topbar left={<span className="text-sm text-muted-foreground">Loading…</span>} />
+        <Topbar left={<span className="text-sm text-muted-foreground">{t("loading")}</span>} />
         <div className="flex flex-1 items-center justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </div>
@@ -35,15 +37,13 @@ export default function JourneyPage() {
       <div className="flex h-full flex-1 flex-col items-center justify-center gap-4 p-10 text-center">
         <AlertCircle className="h-10 w-10 text-muted-foreground" />
         <p className="text-lg font-semibold">
-          {error === "not_found" || !journey ? "Journey not found" : "Couldn't load this journey"}
+          {error === "not_found" || !journey ? t("notFound") : t("loadError")}
         </p>
         <p className="max-w-sm text-sm text-muted-foreground">
-          {error && error !== "not_found"
-            ? error
-            : "This journey doesn't exist or you don't have access to it."}
+          {error && error !== "not_found" ? error : t("notFoundDesc")}
         </p>
         <Button asChild>
-          <Link href="/dashboard">Back to Dashboard</Link>
+          <Link href="/dashboard">{t("backToDashboard")}</Link>
         </Button>
       </div>
     );
@@ -54,7 +54,7 @@ export default function JourneyPage() {
   const breadcrumb = (
     <div className="flex items-center gap-1.5 text-sm">
       <Link href="/dashboard" className="text-muted-foreground hover:text-foreground">
-        Journeys
+        {t("journeys")}
       </Link>
       <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
       <span className="truncate font-medium text-primary">{journey.name}</span>
@@ -77,7 +77,7 @@ export default function JourneyPage() {
               {!askOpen && (
                 <Button variant="gradient" onClick={() => setAskOpen(true)} className="shrink-0">
                   <Sparkles className="h-4 w-4" />
-                  Ask METIS
+                  {t("askMetis")}
                 </Button>
               )}
             </div>
@@ -85,7 +85,7 @@ export default function JourneyPage() {
             <div className="mt-6 rounded-2xl border border-border bg-card p-4 shadow-card">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold uppercase tracking-wide text-muted-foreground">
-                  Overall progress
+                  {t("overallProgress")}
                 </span>
                 <span className="font-bold text-primary">{progress}%</span>
               </div>

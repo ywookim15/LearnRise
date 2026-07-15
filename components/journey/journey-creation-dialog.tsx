@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Sparkles, Target, GraduationCap, CalendarRange, Wand2, Loader2, AlertCircle } from "lucide-react";
 import {
   Dialog,
@@ -23,6 +24,7 @@ export function JourneyCreationDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const t = useTranslations("app.createJourney");
   const { createJourney } = useApp();
   const router = useRouter();
 
@@ -64,7 +66,7 @@ export function JourneyCreationDialog({
       reset();
       router.push(`/journey/${journeyId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setError(err instanceof Error ? err.message : t("error"));
       setGenerating(false);
     }
   }
@@ -84,11 +86,9 @@ export function JourneyCreationDialog({
               <Loader2 className="h-6 w-6 animate-spin" />
             </div>
             <div>
-              <p className="text-lg font-semibold">Generating your roadmap…</p>
+              <p className="text-lg font-semibold">{t("generatingTitle")}</p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-                METIS is researching a syllabus and mapping your units and
-                chapters. This usually takes 15 to 30 seconds, hang tight and keep
-                this open. Resources fill in afterward.
+                {t("generatingBody")}
               </p>
             </div>
           </div>
@@ -98,10 +98,9 @@ export function JourneyCreationDialog({
               <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-brand">
                 <Sparkles className="h-5 w-5" />
               </div>
-              <DialogTitle>Create a new learning journey</DialogTitle>
+              <DialogTitle>{t("title")}</DialogTitle>
               <DialogDescription>
-                Tell METIS what you want to learn. It&apos;ll generate a mapped
-                roadmap, the more specific you are, the better the route.
+                {t("subtitle")}
               </DialogDescription>
             </DialogHeader>
 
@@ -117,13 +116,13 @@ export function JourneyCreationDialog({
               <div className="space-y-2">
                 <Label htmlFor="goal" className="flex items-center gap-2">
                   <Target className="h-4 w-4 text-primary" />
-                  Goal
+                  {t("goal")}
                 </Label>
                 <Textarea
                   id="goal"
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  placeholder="e.g. Ace the AP Biology genetics unit, be as specific as possible."
+                  placeholder={t("goalPlaceholder")}
                   required
                 />
               </div>
@@ -131,13 +130,13 @@ export function JourneyCreationDialog({
               <div className="space-y-2">
                 <Label htmlFor="level" className="flex items-center gap-2">
                   <GraduationCap className="h-4 w-4 text-primary" />
-                  Current level
+                  {t("currentLevel")}
                 </Label>
                 <Textarea
                   id="level"
                   value={currentLevel}
                   onChange={(e) => setCurrentLevel(e.target.value)}
-                  placeholder="Where are you starting from? Be as specific as possible."
+                  placeholder={t("currentLevelPlaceholder")}
                   className="min-h-[70px]"
                 />
               </div>
@@ -145,15 +144,15 @@ export function JourneyCreationDialog({
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
                   <CalendarRange className="h-4 w-4 text-primary" />
-                  Time
+                  {t("time")}
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <span className="text-xs text-muted-foreground">Start date</span>
+                    <span className="text-xs text-muted-foreground">{t("startDate")}</span>
                     <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-xs text-muted-foreground">Target end date</span>
+                    <span className="text-xs text-muted-foreground">{t("endDate")}</span>
                     <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                   </div>
                 </div>
@@ -166,20 +165,20 @@ export function JourneyCreationDialog({
                     onChange={(e) => setHoursPerWeek(e.target.value)}
                     className="w-24"
                   />
-                  <span className="text-sm text-muted-foreground">hours / week you can study</span>
+                  <span className="text-sm text-muted-foreground">{t("hoursPerWeek")}</span>
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="prefs" className="flex items-center gap-2">
                   <Wand2 className="h-4 w-4 text-primary" />
-                  Preferences
+                  {t("preferences")}
                 </Label>
                 <Textarea
                   id="prefs"
                   value={preferences}
                   onChange={(e) => setPreferences(e.target.value)}
-                  placeholder="e.g. prefer videos and interactive practice over long readings."
+                  placeholder={t("preferencesPlaceholder")}
                   className="min-h-[70px]"
                 />
               </div>
@@ -188,11 +187,11 @@ export function JourneyCreationDialog({
 
               <div className="mt-4 flex shrink-0 justify-end gap-2 border-t border-border pt-4">
                 <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
                 <Button type="submit" variant="gradient">
                   <Sparkles className="h-4 w-4" />
-                  Generate roadmap
+                  {t("generate")}
                 </Button>
               </div>
             </form>

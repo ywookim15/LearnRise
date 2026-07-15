@@ -371,6 +371,132 @@
       "markAllRead": "全部标记为已读",
       "emptyTitle": "暂无通知",
       "emptyBody": "连续学习提醒和旅程提示将显示在这里。"
+    },
+    "journeyPage": {
+      "loading": "加载中…",
+      "notFound": "未找到旅程",
+      "loadError": "无法加载此旅程",
+      "notFoundDesc": "此旅程不存在，或你没有访问权限。",
+      "backToDashboard": "返回仪表板",
+      "journeys": "旅程",
+      "askMetis": "Ask METIS",
+      "overallProgress": "总体进度"
+    },
+    "curation": {
+      "curating": "正在整理资源，{total} 个主题中已完成 {done} 个",
+      "paused": "已暂停，{what}达到了速率限制{retry}。它会自动恢复。",
+      "webSearch": "网页搜索",
+      "curator": "整理器",
+      "autoRetry": "，约 {time} 后自动重试",
+      "fillInfo": "METIS 每次填充几个。保持此页面打开，它们会自动完成。"
+    },
+    "chapterStatus": {
+      "curating": "METIS 正在为本章整理资源…",
+      "gap": "尚未找到资源，本章被标记为空缺。"
+    },
+    "roadmap": {
+      "resourceCount": "{count} 个资源",
+      "weeks": "约 {count} 周",
+      "collapseUnit": "收起单元",
+      "expandUnit": "展开单元"
+    },
+    "resource": {
+      "type": {
+        "video": "视频",
+        "article": "文章",
+        "practice_set": "练习"
+      },
+      "markComplete": "将{title}标记为完成",
+      "removeSaved": "从已保存资源中移除",
+      "save": "保存资源",
+      "whyThisFits": "为何合适：",
+      "chapters": "章节：",
+      "trustedSource": "可信来源"
+    },
+    "ask": {
+      "title": "METIS AI 导师",
+      "tabs": {
+        "main": {
+          "label": "主聊",
+          "blurb": "关于你旅程的一般问题"
+        },
+        "planner": {
+          "label": "规划器",
+          "blurb": "调整节奏、范围和日程"
+        },
+        "tutor": {
+          "label": "导师",
+          "blurb": "逐步攻克一个概念"
+        }
+      },
+      "intro": {
+        "main": "你好，我是 METIS。关于这段旅程，尽管问我。如果你需要，我还可以重新规划即将到来的单元，或刷新某一章的资源。",
+        "planner": "我是你的规划器。告诉我你的截止日期、每周学习时间，或你希望如何重新安排节奏，我会重新规划你即将到来的章节（已完成的保持不变）。",
+        "tutor": "我是你的导师。指给我一个概念或资源，我会带你逐步理解，先提问，后解答。"
+      },
+      "suggestions": {
+        "main": [
+          "接下来我该做什么？",
+          "总结一下我目前的进度",
+          "能解释一下这个资源吗？"
+        ],
+        "planner": [
+          "调整我的节奏",
+          "我这周时间较少",
+          "跳到另一个主题"
+        ],
+        "tutor": [
+          "用简单的方式解释这个概念",
+          "就本章给我出个小测验",
+          "我卡住了，给我个提示"
+        ]
+      },
+      "collapseChat": "收起聊天",
+      "limitTitle": "用量已用完",
+      "limitSubtitle": "你已用完今天的免费消息。升级到 Pro 即可与 METIS 无限畅聊。",
+      "errorRespond": "METIS 无法回复，请重试。",
+      "errorGeneric": "出了点问题。",
+      "roadmapUpdating": "正在更新你的路线图，新的单元和资源即将出现。",
+      "placeholder": "给 METIS 发消息（{tab}）…",
+      "send": "发送"
+    },
+    "createJourney": {
+      "generatingTitle": "正在生成你的路线图…",
+      "generatingBody": "METIS 正在研究教学大纲并规划你的单元和章节。这通常需要 15 到 30 秒，请稍候并保持此窗口打开。资源随后填充。",
+      "title": "创建新的学习旅程",
+      "subtitle": "告诉 METIS 你想学什么。它会生成一份规划好的路线图，你越具体，路线越好。",
+      "goal": "目标",
+      "goalPlaceholder": "例如：攻克 AP 生物学遗传学单元，请尽量具体。",
+      "currentLevel": "当前水平",
+      "currentLevelPlaceholder": "你从哪里开始？请尽量具体。",
+      "time": "时间",
+      "startDate": "开始日期",
+      "endDate": "目标结束日期",
+      "hoursPerWeek": "每周可学习的小时数",
+      "preferences": "偏好",
+      "preferencesPlaceholder": "例如：相比长篇阅读，更喜欢视频和互动练习。",
+      "cancel": "取消",
+      "generate": "生成路线图",
+      "error": "出了点问题，请重试。"
+    },
+    "unitPage": {
+      "notFound": "未找到单元",
+      "backToJourney": "返回旅程",
+      "backToDashboard": "返回仪表板",
+      "journeys": "旅程",
+      "unitLabel": "单元 {number}",
+      "unitProgress": "单元进度",
+      "resourcesAcross": "{resources} 个资源，分布在 {chapters} 个章节",
+      "learningObjective": "学习目标"
+    },
+    "flowchart": {
+      "knowledgeMap": "知识地图，你将在本单元学到什么",
+      "topicsHint": "{count} 个主题 · 将鼠标悬停在节点上以标记你的掌握程度",
+      "topic": "主题 {number}",
+      "knowIt": "我会",
+      "familiar": "熟悉",
+      "curating": "整理中…",
+      "gap": "空缺"
     }
   },
   "settings": {

@@ -371,6 +371,132 @@
       "markAllRead": "Alle als gelesen markieren",
       "emptyTitle": "Noch keine Benachrichtigungen",
       "emptyBody": "Serien-Erinnerungen und Lernpfad-Hinweise erscheinen hier."
+    },
+    "journeyPage": {
+      "loading": "Wird geladen…",
+      "notFound": "Lernpfad nicht gefunden",
+      "loadError": "Dieser Lernpfad konnte nicht geladen werden",
+      "notFoundDesc": "Dieser Lernpfad existiert nicht oder du hast keinen Zugriff darauf.",
+      "backToDashboard": "Zurück zum Dashboard",
+      "journeys": "Lernpfade",
+      "askMetis": "Ask METIS",
+      "overallProgress": "Gesamtfortschritt"
+    },
+    "curation": {
+      "curating": "Ressourcen werden kuratiert, {done} von {total} Themen fertig",
+      "paused": "Pausiert, {what} hat sein Anfragelimit erreicht{retry}. Es wird von selbst fortgesetzt.",
+      "webSearch": "die Websuche",
+      "curator": "der Kurator",
+      "autoRetry": ", automatischer Neuversuch in ~{time}",
+      "fillInfo": "METIS füllt diese nach und nach aus. Lass diese Seite offen, dann werden sie automatisch fertig."
+    },
+    "chapterStatus": {
+      "curating": "METIS kuratiert Ressourcen für dieses Kapitel…",
+      "gap": "Noch keine Ressourcen gefunden, dieses Kapitel ist als Lücke markiert."
+    },
+    "roadmap": {
+      "resourceCount": "{count, plural, one {# Ressource} other {# Ressourcen}}",
+      "weeks": "~{count} Wochen",
+      "collapseUnit": "Einheit einklappen",
+      "expandUnit": "Einheit ausklappen"
+    },
+    "resource": {
+      "type": {
+        "video": "Video",
+        "article": "Artikel",
+        "practice_set": "Übung"
+      },
+      "markComplete": "{title} als erledigt markieren",
+      "removeSaved": "Aus gespeicherten Ressourcen entfernen",
+      "save": "Ressource speichern",
+      "whyThisFits": "Warum das passt:",
+      "chapters": "Kapitel:",
+      "trustedSource": "Vertrauenswürdige Quelle"
+    },
+    "ask": {
+      "title": "METIS KI-Tutor",
+      "tabs": {
+        "main": {
+          "label": "Haupt",
+          "blurb": "Allgemeine Fragen zu deinem Lernpfad"
+        },
+        "planner": {
+          "label": "Planer",
+          "blurb": "Tempo, Umfang und Zeitplan anpassen"
+        },
+        "tutor": {
+          "label": "Tutor",
+          "blurb": "Ein Konzept Schritt für Schritt durcharbeiten"
+        }
+      },
+      "intro": {
+        "main": "Hi, ich bin METIS. Frag mich alles zu diesem Lernpfad. Auf Wunsch kann ich auch kommende Einheiten neu planen oder die Ressourcen eines Kapitels aktualisieren.",
+        "planner": "Ich bin dein Planer. Nenn mir deine Frist, deine wöchentlichen Stunden oder wie du das Tempo ändern willst, und ich plane deine kommenden Kapitel neu (abgeschlossene bleiben unverändert).",
+        "tutor": "Ich bin dein Tutor. Zeig mir ein Konzept oder eine Ressource und ich führe dich Schritt für Schritt hindurch, erst Fragen, dann Antworten."
+      },
+      "suggestions": {
+        "main": [
+          "Was soll ich als Nächstes tun?",
+          "Fasse meinen bisherigen Fortschritt zusammen",
+          "Kannst du diese Ressource erklären?"
+        ],
+        "planner": [
+          "Ändere mein Tempo",
+          "Ich habe diese Woche weniger Zeit",
+          "Zu einem anderen Thema springen"
+        ],
+        "tutor": [
+          "Erkläre dieses Konzept einfach",
+          "Prüfe mich zu diesem Kapitel",
+          "Ich hänge fest, gib mir einen Hinweis"
+        ]
+      },
+      "collapseChat": "Chat einklappen",
+      "limitTitle": "Nutzung aufgebraucht",
+      "limitSubtitle": "Du hast alle kostenlosen Nachrichten von heute verbraucht. Upgrade auf Pro für unbegrenzten Chat mit METIS.",
+      "errorRespond": "METIS konnte nicht antworten. Bitte versuche es erneut.",
+      "errorGeneric": "Etwas ist schiefgelaufen.",
+      "roadmapUpdating": "Deine Roadmap wird aktualisiert, neue Einheiten und Ressourcen erscheinen in Kürze.",
+      "placeholder": "Nachricht an METIS ({tab})…",
+      "send": "Senden"
+    },
+    "createJourney": {
+      "generatingTitle": "Deine Roadmap wird erstellt…",
+      "generatingBody": "METIS recherchiert einen Lehrplan und kartiert deine Einheiten und Kapitel. Das dauert in der Regel 15 bis 30 Sekunden, hab etwas Geduld und lass dies geöffnet. Die Ressourcen werden danach ergänzt.",
+      "title": "Neuen Lernpfad erstellen",
+      "subtitle": "Sag METIS, was du lernen möchtest. Es erstellt eine kartierte Roadmap, je konkreter du bist, desto besser die Route.",
+      "goal": "Ziel",
+      "goalPlaceholder": "z. B. Die Genetik-Einheit in AP-Biologie meistern, sei so konkret wie möglich.",
+      "currentLevel": "Aktuelles Niveau",
+      "currentLevelPlaceholder": "Wo startest du? Sei so konkret wie möglich.",
+      "time": "Zeit",
+      "startDate": "Startdatum",
+      "endDate": "Angestrebtes Enddatum",
+      "hoursPerWeek": "Stunden / Woche, die du lernen kannst",
+      "preferences": "Präferenzen",
+      "preferencesPlaceholder": "z. B. lieber Videos und interaktive Übungen als lange Texte.",
+      "cancel": "Abbrechen",
+      "generate": "Roadmap erstellen",
+      "error": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    },
+    "unitPage": {
+      "notFound": "Einheit nicht gefunden",
+      "backToJourney": "Zurück zum Lernpfad",
+      "backToDashboard": "Zurück zum Dashboard",
+      "journeys": "Lernpfade",
+      "unitLabel": "Einheit {number}",
+      "unitProgress": "Fortschritt der Einheit",
+      "resourcesAcross": "{resources} Ressourcen in {chapters, plural, one {# Kapitel} other {# Kapiteln}}",
+      "learningObjective": "Lernziel"
+    },
+    "flowchart": {
+      "knowledgeMap": "Wissenslandkarte, was du in dieser Einheit lernst",
+      "topicsHint": "{count, plural, one {# Thema} other {# Themen}} · fahre über einen Knoten, um deine Beherrschung zu markieren",
+      "topic": "Thema {number}",
+      "knowIt": "Kann ich",
+      "familiar": "Vertraut",
+      "curating": "kuratiere…",
+      "gap": "Lücke"
     }
   },
   "settings": {

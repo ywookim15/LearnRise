@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check, CircleDashed, Loader2, GitBranch, AlertCircle } from "lucide-react";
 import { ResourceTypeIcon } from "@/components/shared/icon";
 import type { UiUnit, UiChapter, DbResourceType, SkillLevel } from "@/lib/data/journeys";
@@ -47,6 +48,7 @@ export function UnitFlowchart({
   unit: UiUnit;
   onMarkSkill: (chapterId: string, level: SkillLevel) => void;
 }) {
+  const t = useTranslations("app.flowchart");
   const [hovered, setHovered] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rootIconRef = useRef<HTMLSpanElement>(null);
@@ -101,7 +103,7 @@ export function UnitFlowchart({
     <div className="rounded-2xl border border-border bg-brand-gradient-soft p-6">
       <div className="mb-5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         <GitBranch className="h-3.5 w-3.5" />
-        Knowledge map, what you&apos;ll learn in this unit
+        {t("knowledgeMap")}
       </div>
 
       <div ref={containerRef} className="relative">
@@ -134,8 +136,7 @@ export function UnitFlowchart({
           <div>
             <p className="font-semibold leading-tight">{unit.title}</p>
             <p className="text-xs text-muted-foreground">
-              {unit.chapters.length} {unit.chapters.length === 1 ? "topic" : "topics"} · hover a
-              node to mark your mastery
+              {t("topicsHint", { count: unit.chapters.length })}
             </p>
           </div>
         </div>
@@ -180,7 +181,7 @@ export function UnitFlowchart({
                   </span>
                   <div className="min-w-0">
                     <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                      Topic {chapter.number}
+                      {t("topic", { number: chapter.number })}
                     </p>
                     <p className="truncate text-sm font-semibold leading-snug">{chapter.title}</p>
                   </div>
@@ -193,13 +194,13 @@ export function UnitFlowchart({
                         onClick={() => handleMark(chapter, "known")}
                         className="whitespace-nowrap rounded-lg bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 hover:bg-emerald-500/20"
                       >
-                        Know it
+                        {t("knowIt")}
                       </button>
                       <button
                         onClick={() => handleMark(chapter, "familiar")}
                         className="whitespace-nowrap rounded-lg bg-secondary/10 px-2.5 py-1 text-xs font-medium text-secondary hover:bg-secondary/20"
                       >
-                        Familiar
+                        {t("familiar")}
                       </button>
                     </>
                   ) : (
@@ -217,19 +218,20 @@ export function UnitFlowchart({
 
 /** Compact "1 video · 2 articles" style summary, never names individual resources. */
 function ResourceSummary({ chapter }: { chapter: UiChapter }) {
+  const t = useTranslations("app.flowchart");
   if (chapter.resources.length === 0) {
     if (chapter.resourceStatus === "pending") {
       return (
         <span className="flex items-center gap-1.5 whitespace-nowrap text-[11px] text-muted-foreground">
           <Loader2 className="h-3 w-3 animate-spin text-secondary" />
-          curating…
+          {t("curating")}
         </span>
       );
     }
     return (
       <span className="flex items-center gap-1 whitespace-nowrap text-[11px] text-muted-foreground">
         <AlertCircle className="h-3 w-3" />
-        gap
+        {t("gap")}
       </span>
     );
   }
