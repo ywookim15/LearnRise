@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Check, X, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,32 +14,24 @@ import { cn } from "@/lib/utils";
 
 type Billing = "monthly" | "yearly";
 
-// Prices match the Business Plan and the live Stripe test prices.
-const PRICE: Record<Billing, { amount: string; suffix: string }> = {
-  monthly: { amount: "$5.99", suffix: "/month" },
-  yearly: { amount: "$56.99", suffix: "/year" },
-};
-
-const FREE_FEATURES = [
-  { label: "1 active learning journey", included: true },
-  { label: "AI-generated roadmap & resources", included: true },
-  { label: "10 messages/day with METIS chat", included: true },
-  { label: "3 adaptive re-routes/month", included: true },
-  { label: "Analytics & progress insights", included: false },
-];
-
-const PREMIUM_FEATURES = [
-  "Unlimited active learning journeys",
-  "Unlimited chat & adaptive re-routing",
-  "Analytics & progress insights",
-  "Priority support",
-];
+// Amounts match the live Stripe prices (kept verbatim across locales).
+const AMOUNT: Record<Billing, string> = { monthly: "$5.99", yearly: "$56.99" };
 
 export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
+  const t = useTranslations("pricingPage");
   const [billing, setBilling] = useState<Billing>("yearly");
   const { isPremium } = useApp();
   const [pending, setPending] = useState<null | "checkout" | "portal">(null);
   const [error, setError] = useState<string | null>(null);
+
+  const freeFeatures = [
+    { label: t("freeFeat1"), included: true },
+    { label: t("freeFeat2"), included: true },
+    { label: t("freeFeat3"), included: true },
+    { label: t("freeFeat4"), included: true },
+    { label: t("freeFeat5"), included: false },
+  ];
+  const premiumFeatures = [t("proFeat1"), t("proFeat2"), t("proFeat3"), t("proFeat4")];
 
   async function handleUpgrade() {
     setError(null);
@@ -47,7 +40,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       await startCheckout(billing); // redirects to Stripe on success
     } catch (e) {
       setPending(null);
-      setError(e instanceof Error ? e.message : "Couldn't start checkout.");
+      setError(e instanceof Error ? e.message : t("checkoutError"));
     }
   }
 
@@ -58,7 +51,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       await openBillingPortal();
     } catch (e) {
       setPending(null);
-      setError(e instanceof Error ? e.message : "Couldn't open billing portal.");
+      setError(e instanceof Error ? e.message : t("portalError"));
     }
   }
 
@@ -67,14 +60,13 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       {/* Hero */}
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-          GPS for your potential
+          {t("eyebrow")}
         </p>
         <h1 className="mt-4 font-heading text-4xl font-bold leading-[1.05] tracking-tight text-secondary sm:text-5xl">
-          Invest in your <span className="text-gradient">learning journey</span>.
+          {t.rich("title", { grad: (c) => <span className="text-gradient">{c}</span> })}
         </h1>
         <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
-          Choose the path that fits your goals. From casual exploration to
-          intensive professional mastery, METIS guides every step.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -88,12 +80,12 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
             billing === "monthly" ? "text-foreground" : "text-muted-foreground"
           )}
         >
-          Monthly
+          {t("monthly")}
         </button>
         <Switch
           checked={billing === "yearly"}
           onCheckedChange={(checked) => setBilling(checked ? "yearly" : "monthly")}
-          aria-label="Toggle yearly billing"
+          aria-label={t("toggleYearlyLabel")}
         />
         <button
           type="button"
@@ -103,23 +95,23 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
             billing === "yearly" ? "text-foreground" : "text-muted-foreground"
           )}
         >
-          Yearly
+          {t("yearly")}
         </button>
-        <Badge variant="secondary">Save over 20%</Badge>
+        <Badge variant="secondary">{t("save")}</Badge>
       </div>
 
       {/* Plans */}
       <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* Free */}
         <div className="flex flex-col rounded-3xl border border-border bg-card p-8">
-          <h2 className="font-heading text-xl font-semibold">Free Tier</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Essential tools to start your journey.</p>
+          <h2 className="font-heading text-xl font-semibold">{t("freeTier")}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{t("freeTierDesc")}</p>
           <div className="mt-6 flex items-baseline gap-1">
             <span className="font-heading text-5xl font-bold tracking-tight">$0</span>
-            <span className="text-sm text-muted-foreground">/forever</span>
+            <span className="text-sm text-muted-foreground">{t("perForever")}</span>
           </div>
           <ul className="mt-6 flex-1 space-y-3">
-            {FREE_FEATURES.map((f) => (
+            {freeFeatures.map((f) => (
               <li key={f.label} className="flex items-start gap-3 text-sm">
                 {f.included ? (
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
@@ -135,11 +127,11 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
           <div className="mt-8">
             {mode === "public" ? (
               <Button asChild variant="outline" className="w-full">
-                <Link href="/signup">Start for free</Link>
+                <Link href="/signup">{t("startForFree")}</Link>
               </Button>
             ) : (
               <Button variant="outline" className="w-full" disabled>
-                {isPremium ? "Included with Premium" : "Current Plan"}
+                {isPremium ? t("includedWithPremium") : t("currentPlan")}
               </Button>
             )}
           </div>
@@ -148,16 +140,16 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
         {/* Premium */}
         <div className="relative flex flex-col overflow-hidden rounded-3xl bg-brand-gradient p-8 text-white shadow-brand-lg">
           <div className="absolute right-6 top-6 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-widest backdrop-blur-md">
-            Most popular
+            {t("mostPopular")}
           </div>
-          <h2 className="font-heading text-xl font-bold">Premium Tier</h2>
-          <p className="mt-1 text-sm text-white/70">The full Learning GPS experience.</p>
+          <h2 className="font-heading text-xl font-bold">{t("premiumTier")}</h2>
+          <p className="mt-1 text-sm text-white/70">{t("premiumTierDesc")}</p>
           <div className="mt-6 flex items-baseline gap-1">
-            <span className="font-heading text-5xl font-bold tracking-tight">{PRICE[billing].amount}</span>
-            <span className="text-sm text-white/70">{PRICE[billing].suffix}</span>
+            <span className="font-heading text-5xl font-bold tracking-tight">{AMOUNT[billing]}</span>
+            <span className="text-sm text-white/70">{billing === "yearly" ? t("perYear") : t("perMonth")}</span>
           </div>
           <ul className="mt-6 flex-1 space-y-3">
-            {PREMIUM_FEATURES.map((label) => (
+            {premiumFeatures.map((label) => (
               <li key={label} className="flex items-start gap-3 text-sm font-medium">
                 <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.5} aria-hidden="true" />
                 {label}
@@ -167,7 +159,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
           <div className="mt-8 space-y-3">
             {mode === "public" ? (
               <Button asChild className="w-full bg-white text-secondary hover:bg-white/90">
-                <Link href="/signup">Upgrade Now</Link>
+                <Link href="/signup">{t("upgradeNow")}</Link>
               </Button>
             ) : isPremium ? (
               <Button
@@ -180,7 +172,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
                 ) : (
                   <BadgeCheck className="h-4 w-4" />
                 )}
-                Current plan · Manage billing
+                {t("manageBilling")}
               </Button>
             ) : (
               <Button
@@ -191,10 +183,10 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
                 {pending === "checkout" ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Redirecting to checkout…
+                    {t("redirecting")}
                   </>
                 ) : (
-                  "Upgrade Now"
+                  t("upgradeNow")
                 )}
               </Button>
             )}
@@ -204,9 +196,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
                 {error}
               </p>
             )}
-            <p className="text-center text-xs text-white/70">
-              No commitment. Cancel anytime.
-            </p>
+            <p className="text-center text-xs text-white/70">{t("noCommitment")}</p>
           </div>
         </div>
       </div>
@@ -216,18 +206,15 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
       {mode === "public" && (
         <div className="mx-auto mt-20 max-w-5xl overflow-hidden rounded-3xl bg-secondary px-8 py-16 text-center text-white">
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Ready to master your path?
+            {t("readyTitle")}
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-white/70">
-            Start with one free journey. Upgrade any time for unlimited journeys
-            and the full adaptive tutor.
-          </p>
+          <p className="mx-auto mt-4 max-w-md text-white/70">{t("readyBody")}</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="bg-white text-secondary hover:bg-white/90">
-              <Link href="/signup">Create free account</Link>
+              <Link href="/signup">{t("createFreeAccount")}</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
-              <Link href="/about">Explore the platform</Link>
+              <Link href="/about">{t("explorePlatform")}</Link>
             </Button>
           </div>
         </div>
