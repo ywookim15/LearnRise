@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Loader2, CalendarRange, MoreVertical, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -30,6 +31,7 @@ const ACCENT: Record<Accent, string> = {
 };
 
 export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
+  const t = useTranslations("app.journeyCard");
   const { deleteJourney } = useApp();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -54,17 +56,17 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
           {journey.curating ? (
             <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-secondary">
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              Curating
+              {t("curating")}
             </span>
           ) : journey.isNew ? (
             <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              New journey
+              {t("newJourney")}
             </span>
           ) : null}
           <DropdownMenu>
             <DropdownMenuTrigger
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus:opacity-100"
-              aria-label="Journey options"
+              aria-label={t("options")}
             >
               <MoreVertical className="h-4 w-4" />
             </DropdownMenuTrigger>
@@ -74,7 +76,7 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
                 className="text-destructive focus:bg-destructive/10 [&_svg]:text-destructive"
               >
                 <Trash2 className="h-4 w-4" />
-                Delete journey
+                {t("deleteJourney")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -86,7 +88,7 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
 
       <div className="mt-5">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-semibold uppercase tracking-wide text-muted-foreground">Progress</span>
+          <span className="font-semibold uppercase tracking-wide text-muted-foreground">{t("progress")}</span>
           <span className="font-bold text-primary">{journey.progress}%</span>
         </div>
         <Progress value={journey.progress} className="mt-2" />
@@ -94,13 +96,13 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
 
       <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
         <CalendarRange className="h-3.5 w-3.5" />
-        {journey.completedResources}/{journey.totalResources} resources
-        {journey.estimatedTotalWeeks ? ` · ~${journey.estimatedTotalWeeks} weeks` : ""}
+        {t("resourceCount", { done: journey.completedResources, total: journey.totalResources })}
+        {journey.estimatedTotalWeeks ? ` · ${t("weeks", { count: journey.estimatedTotalWeeks })}` : ""}
       </p>
 
       <div className="mt-4 flex gap-2">
         <Button asChild variant="gradient" className="flex-1">
-          <Link href={`/journey/${journey.id}`}>Resume</Link>
+          <Link href={`/journey/${journey.id}`}>{t("resume")}</Link>
         </Button>
       </div>
 
@@ -110,17 +112,17 @@ export function JourneyCard({ journey }: { journey: UiJourneySummary }) {
             <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
               <Trash2 className="h-5 w-5" />
             </div>
-            <DialogTitle>Delete &ldquo;{journey.name}&rdquo;?</DialogTitle>
+            <DialogTitle>{t("deleteTitle", { name: journey.name })}</DialogTitle>
             <DialogDescription>
-              It moves to Archive for 30 days, so you can restore it if you change your mind.
+              {t("deleteDesc")}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
             <Button variant="ghost" onClick={() => setConfirmDelete(false)} disabled={deleting}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button variant="destructive" onClick={handleDelete} disabled={deleting}>
-              {deleting ? "Deleting…" : "Delete journey"}
+              {deleting ? t("deleting") : t("deleteJourney")}
             </Button>
           </div>
         </DialogContent>

@@ -239,5 +239,129 @@
     "ctaTitle": "Fija tu destino.",
     "ctaBody": "METIS se encarga de la ruta. Tu primer viaje es gratis.",
     "getStarted": "Comenzar"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "Menú",
+      "dashboard": "Panel",
+      "analytics": "Analíticas",
+      "archive": "Archivo",
+      "resources": "Recursos",
+      "settings": "Ajustes",
+      "upgradePlan": "Mejorar plan",
+      "upgradeDesc": "Desbloquea el tutor adaptativo y la sincronización de memoria entre rutas.",
+      "upgrade": "Mejorar",
+      "proPlan": "Plan Pro",
+      "proMember": "Eres miembro Pro"
+    },
+    "dashboard": {
+      "title": "Mis rutas de aprendizaje",
+      "subtitle": "Rutas mapeadas con precisión a través de tu panorama profesional e intelectual.",
+      "dragHint": "Arrastra una tarjeta de ruta a una carpeta para archivarla.",
+      "loadError": "No se pudieron cargar tus rutas: {error}",
+      "retry": "Reintentar",
+      "folders": "Carpetas",
+      "dropHere": "Suelta aquí para archivar",
+      "journeysWord": "rutas",
+      "folderOptions": "Opciones de carpeta",
+      "rename": "Renombrar",
+      "deleteFolder": "Eliminar carpeta",
+      "addFolder": "Añadir carpeta",
+      "folderEmpty": "Esta carpeta está vacía. Arrastra tarjetas de ruta a la carpeta para archivarlas aquí.",
+      "folderContents": "Rutas en esta carpeta. Quita una para devolverla a tu panel.",
+      "percentComplete": "{percent}% completado",
+      "resume": "Continuar",
+      "removeFromFolder": "Quitar de la carpeta",
+      "renameFolder": "Renombrar carpeta",
+      "folderName": "Nombre de la carpeta",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "journeyCard": {
+      "curating": "Curando",
+      "newJourney": "Nueva ruta",
+      "options": "Opciones de ruta",
+      "deleteJourney": "Eliminar ruta",
+      "progress": "Progreso",
+      "resourceCount": "{done}/{total} recursos",
+      "weeks": "~{count} semanas",
+      "resume": "Continuar",
+      "deleteTitle": "¿Eliminar “{name}”?",
+      "deleteDesc": "Se moverá al Archivo durante 30 días, para que puedas restaurarla si cambias de opinión.",
+      "cancel": "Cancelar",
+      "deleting": "Eliminando…"
+    },
+    "addJourney": {
+      "addJourney": "Añadir ruta",
+      "addJourneyDesc": "Inicia una nueva ruta de aprendizaje",
+      "limitTitle": "Has alcanzado el límite gratuito",
+      "limitDesc": "El plan gratuito incluye una ruta activa. Mejora a Premium para rutas ilimitadas, resúmenes con IA y el tutor adaptativo.",
+      "notNow": "Ahora no",
+      "seePremium": "Ver Premium"
+    },
+    "help": {
+      "help": "Ayuda",
+      "title": "Cómo usar METIS",
+      "subtitle": "Una guía rápida y detallada para sacar el máximo partido a tu GPS de aprendizaje.",
+      "guide": {
+        "startJourney": {
+          "title": "Inicia una ruta",
+          "body": "Toca la tarjeta punteada “Añadir ruta”, describe tu objetivo, nivel, plazo y preferencias. METIS genera una hoja de ruta mapeada."
+        },
+        "followRoadmap": {
+          "title": "Sigue la hoja de ruta",
+          "body": "Cada ruta se divide en unidades y capítulos. Expande una unidad para ver sus recursos, o haz clic en ella para la vista completa de diagrama de flujo."
+        },
+        "trackProgress": {
+          "title": "Sigue tu progreso",
+          "body": "Marca los recursos a medida que los completas. Las barras de progreso se actualizan por unidad y para toda la ruta."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "Abre el panel Ask METIS en cualquier ruta para hacer preguntas, replanificar tu horario con el Planificador o trabajar un concepto con el Tutor."
+        },
+        "keepStreak": {
+          "title": "Mantén tu racha",
+          "body": "Estudia un poco cada día. Tu contador de racha y el calendario registran la constancia en todas tus rutas."
+        },
+        "organizeFolders": {
+          "title": "Organiza con carpetas",
+          "body": "Agrupa rutas relacionadas o recursos guardados en carpetas para mantener tu panel ordenado."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "Nueva carpeta",
+      "subtitle": "Agrupa rutas o recursos. Dale un nombre a tu carpeta.",
+      "folderName": "Nombre de la carpeta",
+      "placeholder": "p. ej. Preparación de examen",
+      "cancel": "Cancelar",
+      "createFolder": "Crear carpeta"
+    },
+    "usage": {
+      "capacity": "Capacidad de IA",
+      "approxLimits": "aprox. de los límites gratuitos",
+      "thisMonth": "este mes",
+      "today": "hoy",
+      "rateLimited": "límite alcanzado",
+      "resetsIn": "se restablece en {time}"
+    },
+    "profile": {
+      "accountMenu": "Menú de cuenta",
+      "myProfile": "Mi perfil",
+      "logOut": "Cerrar sesión"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "ariaUnread": "Notificaciones, {count} sin leer",
+      "markAllRead": "Marcar todo como leído",
+      "empty": "Aún no hay notificaciones.",
+      "seeMore": "Ver más"
+    },
+    "shell": {
+      "loadingSession": "Cargando tu sesión...",
+      "openMenu": "Abrir menú",
+      "goToDashboard": "Ir al panel"
+    }
   }
 }

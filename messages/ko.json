@@ -239,5 +239,129 @@
     "ctaTitle": "목적지를 정하세요.",
     "ctaBody": "경로는 METIS가 맡습니다. 첫 여정은 무료입니다.",
     "getStarted": "시작하기"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "메뉴",
+      "dashboard": "대시보드",
+      "analytics": "분석",
+      "archive": "보관함",
+      "resources": "자료",
+      "settings": "설정",
+      "upgradePlan": "플랜 업그레이드",
+      "upgradeDesc": "적응형 튜터와 여러 학습 여정의 메모리 동기화를 잠금 해제하세요.",
+      "upgrade": "업그레이드",
+      "proPlan": "프로 플랜",
+      "proMember": "프로 회원이십니다"
+    },
+    "dashboard": {
+      "title": "나의 학습 여정",
+      "subtitle": "당신의 전문적·지적 세계를 정밀하게 매핑한 학습 경로.",
+      "dragHint": "여정 카드를 폴더 위로 드래그하여 정리하세요.",
+      "loadError": "여정을 불러오지 못했습니다: {error}",
+      "retry": "다시 시도",
+      "folders": "폴더",
+      "dropHere": "여기에 놓아 정리",
+      "journeysWord": "개 여정",
+      "folderOptions": "폴더 옵션",
+      "rename": "이름 변경",
+      "deleteFolder": "폴더 삭제",
+      "addFolder": "폴더 추가",
+      "folderEmpty": "이 폴더는 비어 있습니다. 여정 카드를 폴더 위로 드래그하여 여기에 정리하세요.",
+      "folderContents": "이 폴더의 여정입니다. 하나를 제거하면 대시보드로 다시 이동합니다.",
+      "percentComplete": "{percent}% 완료",
+      "resume": "이어서 하기",
+      "removeFromFolder": "폴더에서 제거",
+      "renameFolder": "폴더 이름 변경",
+      "folderName": "폴더 이름",
+      "cancel": "취소",
+      "save": "저장"
+    },
+    "journeyCard": {
+      "curating": "큐레이팅 중",
+      "newJourney": "새 여정",
+      "options": "여정 옵션",
+      "deleteJourney": "여정 삭제",
+      "progress": "진행률",
+      "resourceCount": "자료 {done}/{total}",
+      "weeks": "약 {count}주",
+      "resume": "이어서 하기",
+      "deleteTitle": "“{name}”을(를) 삭제할까요?",
+      "deleteDesc": "보관함으로 30일간 이동하므로, 마음이 바뀌면 복원할 수 있습니다.",
+      "cancel": "취소",
+      "deleting": "삭제 중…"
+    },
+    "addJourney": {
+      "addJourney": "여정 추가",
+      "addJourneyDesc": "새로운 학습 경로를 시작하세요",
+      "limitTitle": "무료 한도에 도달했습니다",
+      "limitDesc": "무료 플랜은 활성 여정 하나를 포함합니다. 프리미엄으로 업그레이드하여 무제한 여정, AI 요약, 적응형 튜터를 이용하세요.",
+      "notNow": "나중에",
+      "seePremium": "프리미엄 보기"
+    },
+    "help": {
+      "help": "도움말",
+      "title": "METIS 사용법",
+      "subtitle": "학습 GPS를 최대한 활용하기 위한 간단하고 자세한 안내입니다.",
+      "guide": {
+        "startJourney": {
+          "title": "여정 시작하기",
+          "body": "점선으로 된 “여정 추가” 카드를 눌러 목표, 수준, 일정, 선호도를 입력하세요. METIS가 매핑된 로드맵을 생성합니다."
+        },
+        "followRoadmap": {
+          "title": "로드맵 따라가기",
+          "body": "각 여정은 단원과 챕터로 나뉩니다. 단원을 펼쳐 자료를 확인하거나, 단원을 클릭하여 전체 플로우차트 화면을 보세요."
+        },
+        "trackProgress": {
+          "title": "진행 상황 추적",
+          "body": "완료한 자료를 체크하세요. 진행률 표시줄이 단원별로, 그리고 전체 여정에 대해 업데이트됩니다."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "어느 여정에서든 Ask METIS 패널을 열어 질문하고, 플래너로 일정을 다시 계획하거나, 튜터와 함께 개념을 익히세요."
+        },
+        "keepStreak": {
+          "title": "연속 학습 유지",
+          "body": "매일 조금씩 공부하세요. 연속 학습 카운터와 캘린더가 모든 여정에서 꾸준함을 추적합니다."
+        },
+        "organizeFolders": {
+          "title": "폴더로 정리",
+          "body": "관련된 여정이나 저장한 자료를 폴더로 묶어 대시보드를 깔끔하게 유지하세요."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "새 폴더",
+      "subtitle": "여정이나 자료를 함께 묶으세요. 폴더에 이름을 지정하세요.",
+      "folderName": "폴더 이름",
+      "placeholder": "예: 시험 준비",
+      "cancel": "취소",
+      "createFolder": "폴더 만들기"
+    },
+    "usage": {
+      "capacity": "AI 용량",
+      "approxLimits": "무료 한도 대비 대략",
+      "thisMonth": "이번 달",
+      "today": "오늘",
+      "rateLimited": "속도 제한됨",
+      "resetsIn": "{time} 후 초기화"
+    },
+    "profile": {
+      "accountMenu": "계정 메뉴",
+      "myProfile": "내 프로필",
+      "logOut": "로그아웃"
+    },
+    "notifications": {
+      "title": "알림",
+      "ariaUnread": "알림, 읽지 않음 {count}개",
+      "markAllRead": "모두 읽음 표시",
+      "empty": "아직 알림이 없습니다.",
+      "seeMore": "더 보기"
+    },
+    "shell": {
+      "loadingSession": "세션을 불러오는 중...",
+      "openMenu": "메뉴 열기",
+      "goToDashboard": "대시보드로 이동"
+    }
   }
 }

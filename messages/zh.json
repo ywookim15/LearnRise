@@ -239,5 +239,129 @@
     "ctaTitle": "设定你的目的地。",
     "ctaBody": "路线交给 METIS。你的第一段旅程免费。",
     "getStarted": "开始使用"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "菜单",
+      "dashboard": "仪表板",
+      "analytics": "分析",
+      "archive": "归档",
+      "resources": "资源",
+      "settings": "设置",
+      "upgradePlan": "升级套餐",
+      "upgradeDesc": "解锁自适应导师和多学习路径的记忆同步。",
+      "upgrade": "升级",
+      "proPlan": "专业版",
+      "proMember": "您是专业版会员"
+    },
+    "dashboard": {
+      "title": "我的学习旅程",
+      "subtitle": "在您的专业与知识版图中精准规划的学习路径。",
+      "dragHint": "将旅程卡片拖到文件夹上即可归档。",
+      "loadError": "无法加载您的旅程：{error}",
+      "retry": "重试",
+      "folders": "文件夹",
+      "dropHere": "拖放到此处归档",
+      "journeysWord": "个旅程",
+      "folderOptions": "文件夹选项",
+      "rename": "重命名",
+      "deleteFolder": "删除文件夹",
+      "addFolder": "添加文件夹",
+      "folderEmpty": "此文件夹为空。将旅程卡片拖到文件夹上即可归档到这里。",
+      "folderContents": "此文件夹中的旅程。移除某个可将其送回仪表板。",
+      "percentComplete": "完成 {percent}%",
+      "resume": "继续",
+      "removeFromFolder": "从文件夹移除",
+      "renameFolder": "重命名文件夹",
+      "folderName": "文件夹名称",
+      "cancel": "取消",
+      "save": "保存"
+    },
+    "journeyCard": {
+      "curating": "整理中",
+      "newJourney": "新旅程",
+      "options": "旅程选项",
+      "deleteJourney": "删除旅程",
+      "progress": "进度",
+      "resourceCount": "{done}/{total} 个资源",
+      "weeks": "约 {count} 周",
+      "resume": "继续",
+      "deleteTitle": "删除“{name}”？",
+      "deleteDesc": "它将移至归档 30 天，如果您改变主意可以恢复。",
+      "cancel": "取消",
+      "deleting": "删除中…"
+    },
+    "addJourney": {
+      "addJourney": "添加旅程",
+      "addJourneyDesc": "开启一条新的学习路径",
+      "limitTitle": "您已达到免费上限",
+      "limitDesc": "免费版包含一个活跃旅程。升级到高级版即可享受无限旅程、AI 摘要和自适应导师。",
+      "notNow": "暂不",
+      "seePremium": "查看高级版"
+    },
+    "help": {
+      "help": "帮助",
+      "title": "如何使用 METIS",
+      "subtitle": "一份快速而深入的指南，助您充分利用学习 GPS。",
+      "guide": {
+        "startJourney": {
+          "title": "开启旅程",
+          "body": "点击虚线的“添加旅程”卡片，描述您的目标、水平、时间安排和偏好。METIS 会生成一份规划好的路线图。"
+        },
+        "followRoadmap": {
+          "title": "跟随路线图",
+          "body": "每个旅程分为单元和章节。展开单元查看其资源，或点击单元进入完整的流程图视图。"
+        },
+        "trackProgress": {
+          "title": "跟踪进度",
+          "body": "完成资源后将其勾选。进度条会按单元及整个旅程进行更新。"
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "在任何旅程中打开 Ask METIS 面板即可提问、用规划器重新安排日程，或与导师一起攻克某个概念。"
+        },
+        "keepStreak": {
+          "title": "保持连续学习",
+          "body": "每天学一点。连续学习计数器和日历会记录您在所有旅程中的坚持。"
+        },
+        "organizeFolders": {
+          "title": "用文件夹整理",
+          "body": "将相关旅程或已保存的资源归入文件夹，让仪表板保持整洁。"
+        }
+      }
+    },
+    "addFolder": {
+      "title": "新建文件夹",
+      "subtitle": "将旅程或资源归到一起。为您的文件夹命名。",
+      "folderName": "文件夹名称",
+      "placeholder": "例如：备考",
+      "cancel": "取消",
+      "createFolder": "创建文件夹"
+    },
+    "usage": {
+      "capacity": "AI 容量",
+      "approxLimits": "约为免费额度",
+      "thisMonth": "本月",
+      "today": "今天",
+      "rateLimited": "已限流",
+      "resetsIn": "{time} 后重置"
+    },
+    "profile": {
+      "accountMenu": "账户菜单",
+      "myProfile": "我的资料",
+      "logOut": "退出登录"
+    },
+    "notifications": {
+      "title": "通知",
+      "ariaUnread": "通知，{count} 条未读",
+      "markAllRead": "全部标记为已读",
+      "empty": "暂无通知。",
+      "seeMore": "查看更多"
+    },
+    "shell": {
+      "loadingSession": "正在加载您的会话...",
+      "openMenu": "打开菜单",
+      "goToDashboard": "前往仪表板"
+    }
   }
 }

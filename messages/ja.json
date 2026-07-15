@@ -239,5 +239,129 @@
     "ctaTitle": "目的地を定めましょう。",
     "ctaBody": "経路は METIS が引き受けます。最初の学習は無料です。",
     "getStarted": "始める"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "メニュー",
+      "dashboard": "ダッシュボード",
+      "analytics": "分析",
+      "archive": "アーカイブ",
+      "resources": "リソース",
+      "settings": "設定",
+      "upgradePlan": "プランをアップグレード",
+      "upgradeDesc": "適応型チューターと複数の学習ジャーニーのメモリ同期を解放します。",
+      "upgrade": "アップグレード",
+      "proPlan": "Proプラン",
+      "proMember": "あなたはProメンバーです"
+    },
+    "dashboard": {
+      "title": "私の学習ジャーニー",
+      "subtitle": "あなたの専門的・知的な領域を精密にマッピングした学習パス。",
+      "dragHint": "ジャーニーカードをフォルダにドラッグして整理しましょう。",
+      "loadError": "ジャーニーを読み込めませんでした：{error}",
+      "retry": "再試行",
+      "folders": "フォルダ",
+      "dropHere": "ここにドロップして整理",
+      "journeysWord": "件のジャーニー",
+      "folderOptions": "フォルダのオプション",
+      "rename": "名前を変更",
+      "deleteFolder": "フォルダを削除",
+      "addFolder": "フォルダを追加",
+      "folderEmpty": "このフォルダは空です。ジャーニーカードをフォルダにドラッグしてここに整理しましょう。",
+      "folderContents": "このフォルダ内のジャーニーです。1つ削除するとダッシュボードに戻ります。",
+      "percentComplete": "{percent}% 完了",
+      "resume": "再開",
+      "removeFromFolder": "フォルダから削除",
+      "renameFolder": "フォルダの名前を変更",
+      "folderName": "フォルダ名",
+      "cancel": "キャンセル",
+      "save": "保存"
+    },
+    "journeyCard": {
+      "curating": "キュレーション中",
+      "newJourney": "新しいジャーニー",
+      "options": "ジャーニーのオプション",
+      "deleteJourney": "ジャーニーを削除",
+      "progress": "進捗",
+      "resourceCount": "リソース {done}/{total}",
+      "weeks": "約 {count} 週間",
+      "resume": "再開",
+      "deleteTitle": "“{name}”を削除しますか？",
+      "deleteDesc": "30日間アーカイブに移動するので、気が変わったら復元できます。",
+      "cancel": "キャンセル",
+      "deleting": "削除中…"
+    },
+    "addJourney": {
+      "addJourney": "ジャーニーを追加",
+      "addJourneyDesc": "新しい学習パスを始める",
+      "limitTitle": "無料枠の上限に達しました",
+      "limitDesc": "無料プランにはアクティブなジャーニーが1つ含まれます。プレミアムにアップグレードすると、無制限のジャーニー、AI要約、適応型チューターが利用できます。",
+      "notNow": "後で",
+      "seePremium": "プレミアムを見る"
+    },
+    "help": {
+      "help": "ヘルプ",
+      "title": "METISの使い方",
+      "subtitle": "学習GPSを最大限に活用するための簡潔で詳しいガイドです。",
+      "guide": {
+        "startJourney": {
+          "title": "ジャーニーを始める",
+          "body": "破線の“ジャーニーを追加”カードをタップし、目標、レベル、期間、好みを入力します。METISがマッピングされたロードマップを生成します。"
+        },
+        "followRoadmap": {
+          "title": "ロードマップに従う",
+          "body": "各ジャーニーはユニットとチャプターに分かれています。ユニットを展開してリソースを確認するか、ユニットをクリックして完全なフローチャート表示を見ましょう。"
+        },
+        "trackProgress": {
+          "title": "進捗を記録する",
+          "body": "完了したリソースにチェックを入れましょう。進捗バーはユニットごと、そしてジャーニー全体で更新されます。"
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "どのジャーニーでもAsk METISパネルを開いて質問したり、プランナーでスケジュールを再計画したり、チューターと一緒に概念を学んだりできます。"
+        },
+        "keepStreak": {
+          "title": "連続学習を維持する",
+          "body": "毎日少しずつ学びましょう。連続学習カウンターとカレンダーが、すべてのジャーニーでの継続を記録します。"
+        },
+        "organizeFolders": {
+          "title": "フォルダで整理する",
+          "body": "関連するジャーニーや保存したリソースをフォルダにまとめて、ダッシュボードを整理整頓しましょう。"
+        }
+      }
+    },
+    "addFolder": {
+      "title": "新しいフォルダ",
+      "subtitle": "ジャーニーやリソースをまとめましょう。フォルダに名前を付けてください。",
+      "folderName": "フォルダ名",
+      "placeholder": "例：試験対策",
+      "cancel": "キャンセル",
+      "createFolder": "フォルダを作成"
+    },
+    "usage": {
+      "capacity": "AI キャパシティ",
+      "approxLimits": "無料枠に対するおおよその割合",
+      "thisMonth": "今月",
+      "today": "今日",
+      "rateLimited": "レート制限中",
+      "resetsIn": "{time} 後にリセット"
+    },
+    "profile": {
+      "accountMenu": "アカウントメニュー",
+      "myProfile": "マイプロフィール",
+      "logOut": "ログアウト"
+    },
+    "notifications": {
+      "title": "通知",
+      "ariaUnread": "通知、未読 {count} 件",
+      "markAllRead": "すべて既読にする",
+      "empty": "まだ通知はありません。",
+      "seeMore": "もっと見る"
+    },
+    "shell": {
+      "loadingSession": "セッションを読み込み中...",
+      "openMenu": "メニューを開く",
+      "goToDashboard": "ダッシュボードへ移動"
+    }
   }
 }

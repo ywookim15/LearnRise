@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { FolderPlus } from "lucide-react";
 import {
   Dialog,
@@ -23,6 +24,7 @@ export function AddFolderDialog({
   onOpenChange: (open: boolean) => void;
   onCreate: (name: string) => void;
 }) {
+  const t = useTranslations("app.addFolder");
   const [name, setName] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
@@ -40,28 +42,28 @@ export function AddFolderDialog({
           <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <FolderPlus className="h-5 w-5" />
           </div>
-          <DialogTitle>New folder</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Group journeys or resources together. Give your folder a name.
+            {t("subtitle")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="folder-name">Folder name</Label>
+            <Label htmlFor="folder-name">{t("folderName")}</Label>
             <Input
               id="folder-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Exam prep"
+              placeholder={t("placeholder")}
               autoFocus
             />
           </div>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" disabled={!name.trim()}>
-              Create folder
+              {t("createFolder")}
             </Button>
           </div>
         </form>

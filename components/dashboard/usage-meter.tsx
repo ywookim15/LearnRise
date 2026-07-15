@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Gauge, AlertTriangle } from "lucide-react";
 import { useUsage, formatResetIn, type UsageProviderStat } from "@/lib/data/use-usage";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
  * (the API reports available:false), so it's safe to mount unconditionally.
  */
 export function UsageMeter() {
+  const t = useTranslations("app.usage");
   const { available, providers } = useUsage();
 
   if (!available || !providers || providers.length === 0) return null;
@@ -20,10 +22,10 @@ export function UsageMeter() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           <Gauge className="h-3.5 w-3.5" />
-          AI capacity
+          {t("capacity")}
         </div>
         <span className="text-[11px] text-muted-foreground">
-          approx. of free-tier limits
+          {t("approxLimits")}
         </span>
       </div>
 
@@ -37,6 +39,7 @@ export function UsageMeter() {
 }
 
 function ProviderBar({ stat }: { stat: UsageProviderStat }) {
+  const t = useTranslations("app.usage");
   const danger = stat.rateLimited || stat.pct >= 90;
   const warn = !danger && stat.pct >= 70;
   const barColor = danger ? "bg-destructive" : warn ? "bg-amber-500" : "bg-primary";
@@ -59,16 +62,16 @@ function ProviderBar({ stat }: { stat: UsageProviderStat }) {
 
       <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
         <span>
-          {stat.used}/{stat.cap} {stat.window === "monthly" ? "this month" : "today"}
+          {stat.used}/{stat.cap} {stat.window === "monthly" ? t("thisMonth") : t("today")}
         </span>
         {stat.rateLimited ? (
           <span className="flex items-center gap-1 font-medium text-destructive">
             <AlertTriangle className="h-3 w-3" />
-            rate-limited
+            {t("rateLimited")}
             {stat.retryAfterSec ? ` · ~${formatResetIn(stat.retryAfterSec * 1000)}` : ""}
           </span>
         ) : (
-          <span>resets in {formatResetIn(stat.resetsInMs)}</span>
+          <span>{t("resetsIn", { time: formatResetIn(stat.resetsInMs) })}</span>
         )}
       </div>
     </div>

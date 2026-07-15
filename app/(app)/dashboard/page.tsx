@@ -35,6 +35,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 import { useApp } from "@/lib/context/app-context";
 import type { DashboardFolder } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ import { cn } from "@/lib/utils";
 const DND_KEY = "text/metis-journey-id";
 
 export default function DashboardPage() {
+  const t = useTranslations("app.dashboard");
   const {
     journeys,
     journeysLoading,
@@ -105,11 +107,10 @@ export default function DashboardPage() {
   return (
     <AppPage>
       <div>
-        <h1 className="text-4xl font-bold tracking-tight">My Learning Journeys</h1>
+        <h1 className="text-4xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-2 max-w-md text-muted-foreground">
-          Precision-mapped pathways across your professional and intellectual
-          landscape.
-          {folders.length > 0 && " Drag a journey card onto a folder to file it."}
+          {t("subtitle")}
+          {folders.length > 0 && ` ${t("dragHint")}`}
         </p>
       </div>
 
@@ -120,10 +121,10 @@ export default function DashboardPage() {
       {journeysError ? (
         <div className="mt-8 flex flex-col items-center gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-8 text-center">
           <AlertCircle className="h-8 w-8 text-destructive" />
-          <p className="text-sm text-destructive">Couldn&apos;t load your journeys: {journeysError}</p>
+          <p className="text-sm text-destructive">{t("loadError", { error: journeysError })}</p>
           <Button variant="outline" size="sm" onClick={() => refreshJourneys()}>
             <RefreshCw className="h-4 w-4" />
-            Retry
+            {t("retry")}
           </Button>
         </div>
       ) : (
@@ -156,7 +157,7 @@ export default function DashboardPage() {
       {folders.length > 0 && (
         <div className="mt-10">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Folders
+            {t("folders")}
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {folders.map((folder) => (
@@ -179,7 +180,7 @@ export default function DashboardPage() {
                 {dragOverFolder === folder.id && (
                   <div className="animate-fade-in pointer-events-none absolute inset-0 flex items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-primary/60 bg-primary text-xs font-semibold text-primary-foreground">
                     <FolderPlus className="h-4 w-4" />
-                    Drop here to file
+                    {t("dropHere")}
                   </div>
                 )}
                 <button
@@ -192,14 +193,13 @@ export default function DashboardPage() {
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold">{folder.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {folder.journeyIds.length}{" "}
-                      {folder.journeyIds.length === 1 ? "journey" : "journeys"}
+                      {folder.journeyIds.length} {t("journeysWord")}
                     </p>
                   </div>
                 </button>
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    aria-label="Folder options"
+                    aria-label={t("folderOptions")}
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus:opacity-100"
                   >
                     <MoreVertical className="h-4 w-4" />
@@ -207,14 +207,14 @@ export default function DashboardPage() {
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onSelect={() => setRenameTarget(folder)}>
                       <Pencil className="h-4 w-4" />
-                      Rename
+                      {t("rename")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onSelect={() => deleteFolder(folder.id)}
                       className="text-destructive focus:bg-destructive/10 [&_svg]:text-destructive"
                     >
                       <Trash2 className="h-4 w-4" />
-                      Delete folder
+                      {t("deleteFolder")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -233,7 +233,7 @@ export default function DashboardPage() {
           onClick={() => setFolderDialogOpen(true)}
         >
           <FolderPlus className="h-4 w-4" />
-          Add Folder
+          {t("addFolder")}
         </Button>
       </div>
 
@@ -252,9 +252,7 @@ export default function DashboardPage() {
             </div>
             <DialogTitle>{openFolder?.name}</DialogTitle>
             <DialogDescription>
-              {journeysInOpenFolder.length === 0
-                ? "This folder is empty. Drag journey cards onto the folder to file them here."
-                : "Journeys in this folder. Remove one to send it back to your dashboard."}
+              {journeysInOpenFolder.length === 0 ? t("folderEmpty") : t("folderContents")}
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-[50vh] space-y-2 overflow-y-auto scrollbar-slim">
@@ -265,14 +263,14 @@ export default function DashboardPage() {
               >
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold">{j.name}</p>
-                  <p className="text-xs text-muted-foreground">{j.progress}% complete</p>
+                  <p className="text-xs text-muted-foreground">{t("percentComplete", { percent: j.progress })}</p>
                 </div>
                 <Button asChild size="sm" variant="outline">
-                  <Link href={`/journey/${j.id}`}>Resume</Link>
+                  <Link href={`/journey/${j.id}`}>{t("resume")}</Link>
                 </Button>
                 <button
                   onClick={() => openFolder && removeJourneyFromFolder(openFolder.id, j.id)}
-                  aria-label="Remove from folder"
+                  aria-label={t("removeFromFolder")}
                   className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
                 >
                   <X className="h-4 w-4" />
@@ -305,6 +303,7 @@ function RenameFolderDialog({
   onOpenChange: (open: boolean) => void;
   onRename: (name: string) => void;
 }) {
+  const t = useTranslations("app.dashboard");
   const [name, setName] = useState("");
   useEffect(() => {
     if (folder) setName(folder.name);
@@ -317,7 +316,7 @@ function RenameFolderDialog({
           <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <Pencil className="h-5 w-5" />
           </div>
-          <DialogTitle>Rename folder</DialogTitle>
+          <DialogTitle>{t("renameFolder")}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -327,7 +326,7 @@ function RenameFolderDialog({
           className="space-y-4"
         >
           <div className="space-y-2">
-            <Label htmlFor="rename-folder">Folder name</Label>
+            <Label htmlFor="rename-folder">{t("folderName")}</Label>
             <Input
               id="rename-folder"
               value={name}
@@ -337,10 +336,10 @@ function RenameFolderDialog({
           </div>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" disabled={!name.trim()}>
-              Save
+              {t("save")}
             </Button>
           </div>
         </form>

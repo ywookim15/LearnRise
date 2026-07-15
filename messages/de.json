@@ -239,5 +239,129 @@
     "ctaTitle": "Lege dein Ziel fest.",
     "ctaBody": "METIS kümmert sich um die Route. Deine erste Reise ist kostenlos.",
     "getStarted": "Loslegen"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "Menü",
+      "dashboard": "Dashboard",
+      "analytics": "Analysen",
+      "archive": "Archiv",
+      "resources": "Ressourcen",
+      "settings": "Einstellungen",
+      "upgradePlan": "Tarif upgraden",
+      "upgradeDesc": "Schalte den adaptiven Tutor und die Speichersynchronisierung über mehrere Lernpfade frei.",
+      "upgrade": "Upgrade",
+      "proPlan": "Pro-Tarif",
+      "proMember": "Du bist Pro-Mitglied"
+    },
+    "dashboard": {
+      "title": "Meine Lernpfade",
+      "subtitle": "Präzise kartierte Pfade durch deine berufliche und intellektuelle Landschaft.",
+      "dragHint": "Ziehe eine Lernpfad-Karte auf einen Ordner, um sie abzulegen.",
+      "loadError": "Deine Lernpfade konnten nicht geladen werden: {error}",
+      "retry": "Erneut versuchen",
+      "folders": "Ordner",
+      "dropHere": "Zum Ablegen hier fallen lassen",
+      "journeysWord": "Lernpfade",
+      "folderOptions": "Ordneroptionen",
+      "rename": "Umbenennen",
+      "deleteFolder": "Ordner löschen",
+      "addFolder": "Ordner hinzufügen",
+      "folderEmpty": "Dieser Ordner ist leer. Ziehe Lernpfad-Karten auf den Ordner, um sie hier abzulegen.",
+      "folderContents": "Lernpfade in diesem Ordner. Entferne einen, um ihn zurück auf dein Dashboard zu senden.",
+      "percentComplete": "{percent}% abgeschlossen",
+      "resume": "Fortsetzen",
+      "removeFromFolder": "Aus Ordner entfernen",
+      "renameFolder": "Ordner umbenennen",
+      "folderName": "Ordnername",
+      "cancel": "Abbrechen",
+      "save": "Speichern"
+    },
+    "journeyCard": {
+      "curating": "Kuratierung läuft",
+      "newJourney": "Neuer Lernpfad",
+      "options": "Lernpfad-Optionen",
+      "deleteJourney": "Lernpfad löschen",
+      "progress": "Fortschritt",
+      "resourceCount": "{done}/{total} Ressourcen",
+      "weeks": "~{count} Wochen",
+      "resume": "Fortsetzen",
+      "deleteTitle": "„{name}“ löschen?",
+      "deleteDesc": "Er wird für 30 Tage ins Archiv verschoben, sodass du ihn wiederherstellen kannst, falls du deine Meinung änderst.",
+      "cancel": "Abbrechen",
+      "deleting": "Wird gelöscht…"
+    },
+    "addJourney": {
+      "addJourney": "Lernpfad hinzufügen",
+      "addJourneyDesc": "Starte einen neuen Lernpfad",
+      "limitTitle": "Du hast das kostenlose Limit erreicht",
+      "limitDesc": "Der kostenlose Tarif umfasst einen aktiven Lernpfad. Upgrade auf Premium für unbegrenzte Lernpfade, KI-Zusammenfassungen und den adaptiven Tutor.",
+      "notNow": "Nicht jetzt",
+      "seePremium": "Premium ansehen"
+    },
+    "help": {
+      "help": "Hilfe",
+      "title": "So verwendest du METIS",
+      "subtitle": "Eine kurze, ausführliche Anleitung, um das Beste aus deinem Lern-GPS herauszuholen.",
+      "guide": {
+        "startJourney": {
+          "title": "Lernpfad starten",
+          "body": "Tippe auf die gestrichelte „Lernpfad hinzufügen“-Karte und beschreibe dein Ziel, Niveau, Zeitrahmen und deine Vorlieben. METIS erstellt eine kartierte Roadmap."
+        },
+        "followRoadmap": {
+          "title": "Der Roadmap folgen",
+          "body": "Jeder Lernpfad ist in Einheiten und Kapitel unterteilt. Erweitere eine Einheit, um ihre Ressourcen zu sehen, oder klicke sie an für die vollständige Flussdiagramm-Ansicht."
+        },
+        "trackProgress": {
+          "title": "Fortschritt verfolgen",
+          "body": "Hake Ressourcen ab, sobald du sie abgeschlossen hast. Die Fortschrittsbalken aktualisieren sich pro Einheit und für den gesamten Lernpfad."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "Öffne das Ask-METIS-Panel in einem beliebigen Lernpfad, um Fragen zu stellen, deinen Zeitplan mit dem Planer neu zu planen oder ein Konzept mit dem Tutor durchzuarbeiten."
+        },
+        "keepStreak": {
+          "title": "Deine Serie halten",
+          "body": "Lerne jeden Tag ein wenig. Dein Serienzähler und Kalender verfolgen deine Beständigkeit über alle Lernpfade hinweg."
+        },
+        "organizeFolders": {
+          "title": "Mit Ordnern organisieren",
+          "body": "Gruppiere verwandte Lernpfade oder gespeicherte Ressourcen in Ordnern, um dein Dashboard aufgeräumt zu halten."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "Neuer Ordner",
+      "subtitle": "Fasse Lernpfade oder Ressourcen zusammen. Gib deinem Ordner einen Namen.",
+      "folderName": "Ordnername",
+      "placeholder": "z. B. Prüfungsvorbereitung",
+      "cancel": "Abbrechen",
+      "createFolder": "Ordner erstellen"
+    },
+    "usage": {
+      "capacity": "KI-Kapazität",
+      "approxLimits": "ca. der kostenlosen Limits",
+      "thisMonth": "diesen Monat",
+      "today": "heute",
+      "rateLimited": "Rate begrenzt",
+      "resetsIn": "Zurücksetzung in {time}"
+    },
+    "profile": {
+      "accountMenu": "Kontomenü",
+      "myProfile": "Mein Profil",
+      "logOut": "Abmelden"
+    },
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "ariaUnread": "Benachrichtigungen, {count} ungelesen",
+      "markAllRead": "Alle als gelesen markieren",
+      "empty": "Noch keine Benachrichtigungen.",
+      "seeMore": "Mehr anzeigen"
+    },
+    "shell": {
+      "loadingSession": "Deine Sitzung wird geladen...",
+      "openMenu": "Menü öffnen",
+      "goToDashboard": "Zum Dashboard"
+    }
   }
 }

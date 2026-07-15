@@ -239,5 +239,129 @@
     "ctaTitle": "Fixez votre destination.",
     "ctaBody": "METIS s'occupe de l'itinéraire. Votre premier parcours est gratuit.",
     "getStarted": "Commencer"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "Menu",
+      "dashboard": "Tableau de bord",
+      "analytics": "Analyses",
+      "archive": "Archives",
+      "resources": "Ressources",
+      "settings": "Paramètres",
+      "upgradePlan": "Améliorer l'offre",
+      "upgradeDesc": "Débloquez le tuteur adaptatif et la synchronisation de mémoire entre parcours.",
+      "upgrade": "Améliorer",
+      "proPlan": "Offre Pro",
+      "proMember": "Vous êtes membre Pro"
+    },
+    "dashboard": {
+      "title": "Mes parcours d'apprentissage",
+      "subtitle": "Des parcours cartographiés avec précision à travers votre univers professionnel et intellectuel.",
+      "dragHint": "Glissez une carte de parcours sur un dossier pour la classer.",
+      "loadError": "Impossible de charger vos parcours : {error}",
+      "retry": "Réessayer",
+      "folders": "Dossiers",
+      "dropHere": "Déposez ici pour classer",
+      "journeysWord": "parcours",
+      "folderOptions": "Options du dossier",
+      "rename": "Renommer",
+      "deleteFolder": "Supprimer le dossier",
+      "addFolder": "Ajouter un dossier",
+      "folderEmpty": "Ce dossier est vide. Glissez des cartes de parcours sur le dossier pour les classer ici.",
+      "folderContents": "Parcours dans ce dossier. Retirez-en un pour le renvoyer vers votre tableau de bord.",
+      "percentComplete": "{percent}% terminé",
+      "resume": "Reprendre",
+      "removeFromFolder": "Retirer du dossier",
+      "renameFolder": "Renommer le dossier",
+      "folderName": "Nom du dossier",
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    },
+    "journeyCard": {
+      "curating": "Curation en cours",
+      "newJourney": "Nouveau parcours",
+      "options": "Options du parcours",
+      "deleteJourney": "Supprimer le parcours",
+      "progress": "Progression",
+      "resourceCount": "{done}/{total} ressources",
+      "weeks": "~{count} semaines",
+      "resume": "Reprendre",
+      "deleteTitle": "Supprimer “{name}” ?",
+      "deleteDesc": "Il est déplacé vers les Archives pendant 30 jours, vous pouvez donc le restaurer si vous changez d'avis.",
+      "cancel": "Annuler",
+      "deleting": "Suppression…"
+    },
+    "addJourney": {
+      "addJourney": "Ajouter un parcours",
+      "addJourneyDesc": "Lancez un nouveau parcours d'apprentissage",
+      "limitTitle": "Vous avez atteint la limite gratuite",
+      "limitDesc": "L'offre gratuite inclut un parcours actif. Passez à Premium pour des parcours illimités, des résumés par IA et le tuteur adaptatif.",
+      "notNow": "Pas maintenant",
+      "seePremium": "Voir Premium"
+    },
+    "help": {
+      "help": "Aide",
+      "title": "Comment utiliser METIS",
+      "subtitle": "Un guide rapide et approfondi pour tirer le meilleur parti de votre GPS d'apprentissage.",
+      "guide": {
+        "startJourney": {
+          "title": "Démarrer un parcours",
+          "body": "Appuyez sur la carte en pointillés “Ajouter un parcours”, décrivez votre objectif, votre niveau, votre calendrier et vos préférences. METIS génère une feuille de route cartographiée."
+        },
+        "followRoadmap": {
+          "title": "Suivre la feuille de route",
+          "body": "Chaque parcours est divisé en unités et chapitres. Développez une unité pour voir ses ressources, ou cliquez dessus pour la vue complète en organigramme."
+        },
+        "trackProgress": {
+          "title": "Suivre la progression",
+          "body": "Cochez les ressources au fur et à mesure. Les barres de progression se mettent à jour par unité et pour l'ensemble du parcours."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "Ouvrez le panneau Ask METIS sur n'importe quel parcours pour poser des questions, replanifier votre emploi du temps avec le Planificateur ou approfondir un concept avec le Tuteur."
+        },
+        "keepStreak": {
+          "title": "Maintenir votre série",
+          "body": "Étudiez un peu chaque jour. Votre compteur de série et le calendrier suivent votre régularité sur tous vos parcours."
+        },
+        "organizeFolders": {
+          "title": "Organiser avec des dossiers",
+          "body": "Regroupez les parcours associés ou les ressources enregistrées dans des dossiers pour garder votre tableau de bord ordonné."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "Nouveau dossier",
+      "subtitle": "Regroupez des parcours ou des ressources. Donnez un nom à votre dossier.",
+      "folderName": "Nom du dossier",
+      "placeholder": "ex. Préparation d'examen",
+      "cancel": "Annuler",
+      "createFolder": "Créer le dossier"
+    },
+    "usage": {
+      "capacity": "Capacité IA",
+      "approxLimits": "env. des limites gratuites",
+      "thisMonth": "ce mois-ci",
+      "today": "aujourd'hui",
+      "rateLimited": "débit limité",
+      "resetsIn": "réinitialisation dans {time}"
+    },
+    "profile": {
+      "accountMenu": "Menu du compte",
+      "myProfile": "Mon profil",
+      "logOut": "Déconnexion"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "ariaUnread": "Notifications, {count} non lues",
+      "markAllRead": "Tout marquer comme lu",
+      "empty": "Aucune notification pour le moment.",
+      "seeMore": "Voir plus"
+    },
+    "shell": {
+      "loadingSession": "Chargement de votre session...",
+      "openMenu": "Ouvrir le menu",
+      "goToDashboard": "Aller au tableau de bord"
+    }
   }
 }

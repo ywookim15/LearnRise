@@ -239,5 +239,129 @@
     "ctaTitle": "Set your destination.",
     "ctaBody": "METIS will handle the route. Your first journey is free.",
     "getStarted": "Get started"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "Menu",
+      "dashboard": "Dashboard",
+      "analytics": "Analytics",
+      "archive": "Archive",
+      "resources": "Resources",
+      "settings": "Settings",
+      "upgradePlan": "Upgrade Plan",
+      "upgradeDesc": "Unlock adaptive tutor and multi-journey memory sync.",
+      "upgrade": "Upgrade",
+      "proPlan": "Pro Plan",
+      "proMember": "You're a Pro member"
+    },
+    "dashboard": {
+      "title": "My Learning Journeys",
+      "subtitle": "Precision-mapped pathways across your professional and intellectual landscape.",
+      "dragHint": "Drag a journey card onto a folder to file it.",
+      "loadError": "Couldn't load your journeys: {error}",
+      "retry": "Retry",
+      "folders": "Folders",
+      "dropHere": "Drop here to file",
+      "journeysWord": "journeys",
+      "folderOptions": "Folder options",
+      "rename": "Rename",
+      "deleteFolder": "Delete folder",
+      "addFolder": "Add Folder",
+      "folderEmpty": "This folder is empty. Drag journey cards onto the folder to file them here.",
+      "folderContents": "Journeys in this folder. Remove one to send it back to your dashboard.",
+      "percentComplete": "{percent}% complete",
+      "resume": "Resume",
+      "removeFromFolder": "Remove from folder",
+      "renameFolder": "Rename folder",
+      "folderName": "Folder name",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "journeyCard": {
+      "curating": "Curating",
+      "newJourney": "New journey",
+      "options": "Journey options",
+      "deleteJourney": "Delete journey",
+      "progress": "Progress",
+      "resourceCount": "{done}/{total} resources",
+      "weeks": "~{count} weeks",
+      "resume": "Resume",
+      "deleteTitle": "Delete “{name}”?",
+      "deleteDesc": "It moves to Archive for 30 days, so you can restore it if you change your mind.",
+      "cancel": "Cancel",
+      "deleting": "Deleting…"
+    },
+    "addJourney": {
+      "addJourney": "Add Journey",
+      "addJourneyDesc": "Initialize a new learning path",
+      "limitTitle": "You've hit the free limit",
+      "limitDesc": "The free tier includes one active journey. Upgrade to Premium for unlimited journeys, AI summarizing, and the adaptive tutor.",
+      "notNow": "Not now",
+      "seePremium": "See Premium"
+    },
+    "help": {
+      "help": "Help",
+      "title": "How to use METIS",
+      "subtitle": "A quick in-depth guide to getting the most out of your learning GPS.",
+      "guide": {
+        "startJourney": {
+          "title": "Start a journey",
+          "body": "Tap the dashed “Add Journey” card, describe your goal, level, timeline, and preferences. METIS generates a mapped roadmap."
+        },
+        "followRoadmap": {
+          "title": "Follow the roadmap",
+          "body": "Each journey is split into units and chapters. Expand a unit to see its resources, or click into a unit for the full flowchart view."
+        },
+        "trackProgress": {
+          "title": "Track progress",
+          "body": "Check off resources as you complete them. Progress bars update per unit and for the whole journey."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "Open the Ask METIS panel on any journey to ask questions, re-plan your schedule with the Planner, or work through a concept with the Tutor."
+        },
+        "keepStreak": {
+          "title": "Keep your streak",
+          "body": "Study a little every day. Your streak counter and calendar track consistency across all journeys."
+        },
+        "organizeFolders": {
+          "title": "Organize with folders",
+          "body": "Group related journeys or saved resources into folders to keep your dashboard tidy."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "New folder",
+      "subtitle": "Group journeys or resources together. Give your folder a name.",
+      "folderName": "Folder name",
+      "placeholder": "e.g. Exam prep",
+      "cancel": "Cancel",
+      "createFolder": "Create folder"
+    },
+    "usage": {
+      "capacity": "AI capacity",
+      "approxLimits": "approx. of free-tier limits",
+      "thisMonth": "this month",
+      "today": "today",
+      "rateLimited": "rate-limited",
+      "resetsIn": "resets in {time}"
+    },
+    "profile": {
+      "accountMenu": "Account menu",
+      "myProfile": "My Profile",
+      "logOut": "Log Out"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "ariaUnread": "Notifications, {count} unread",
+      "markAllRead": "Mark all read",
+      "empty": "No notifications yet.",
+      "seeMore": "See more"
+    },
+    "shell": {
+      "loadingSession": "Loading your session...",
+      "openMenu": "Open menu",
+      "goToDashboard": "Go to dashboard"
+    }
   }
 }

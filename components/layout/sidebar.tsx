@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown, Zap } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutGrid, matchPrefixes: ["/dashboard", "/journey"] },
-  { href: "/analytics", label: "Analytics", icon: LineChart, matchPrefixes: ["/analytics"] },
-  { href: "/archive", label: "Archive", icon: Archive, matchPrefixes: ["/archive"] },
-  { href: "/resources", label: "Resources", icon: FolderClosed, matchPrefixes: ["/resources"] },
-];
+  { href: "/dashboard", key: "dashboard", icon: LayoutGrid, matchPrefixes: ["/dashboard", "/journey"] },
+  { href: "/analytics", key: "analytics", icon: LineChart, matchPrefixes: ["/analytics"] },
+  { href: "/archive", key: "archive", icon: Archive, matchPrefixes: ["/archive"] },
+  { href: "/resources", key: "resources", icon: FolderClosed, matchPrefixes: ["/resources"] },
+] as const;
 
 export function Sidebar({
   className,
@@ -22,6 +23,7 @@ export function Sidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const t = useTranslations("app.sidebar");
   const { isPremium } = useApp();
 
   return (
@@ -34,7 +36,7 @@ export function Sidebar({
 
       <nav className="flex flex-1 flex-col gap-1 px-3">
         <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground/70">
-          Menu
+          {t("menu")}
         </p>
         {NAV.map((item) => {
           const active = item.matchPrefixes.some((p) => pathname.startsWith(p));
@@ -52,7 +54,7 @@ export function Sidebar({
               )}
             >
               <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-              {item.label}
+              {t(item.key)}
             </Link>
           );
         })}
@@ -70,7 +72,7 @@ export function Sidebar({
           )}
         >
           <Settings className="h-[18px] w-[18px]" aria-hidden="true" />
-          Settings
+          {t("settings")}
         </Link>
 
         {isPremium ? (
@@ -79,8 +81,8 @@ export function Sidebar({
               <Crown className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-foreground">Pro Plan</p>
-              <p className="text-xs text-muted-foreground">You&apos;re a Pro member</p>
+              <p className="text-sm font-semibold text-foreground">{t("proPlan")}</p>
+              <p className="text-xs text-muted-foreground">{t("proMember")}</p>
             </div>
           </div>
         ) : (
@@ -91,13 +93,13 @@ export function Sidebar({
           >
             <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
               <Zap className="h-4 w-4" aria-hidden="true" />
-              Upgrade Plan
+              {t("upgradePlan")}
             </p>
             <p className="mt-1 text-xs leading-snug text-white/80">
-              Unlock adaptive tutor and multi-journey memory sync.
+              {t("upgradeDesc")}
             </p>
             <span className="mt-3 flex min-h-9 items-center justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-secondary">
-              Upgrade
+              {t("upgrade")}
             </span>
           </Link>
         )}

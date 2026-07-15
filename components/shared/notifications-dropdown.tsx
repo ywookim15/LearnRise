@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Bell } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
 
 export function NotificationsDropdown() {
+  const t = useTranslations("app.notifications");
   const { notifications, unreadCount, markAllRead } = useApp();
   const recent = notifications.slice(0, 5);
 
@@ -14,7 +16,7 @@ export function NotificationsDropdown() {
     <Popover>
       <PopoverTrigger
         className="relative flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        aria-label={unreadCount > 0 ? `Notifications, ${unreadCount} unread` : "Notifications"}
+        aria-label={unreadCount > 0 ? t("ariaUnread", { count: unreadCount }) : t("title")}
       >
         <Bell className="h-5 w-5" aria-hidden="true" />
         {unreadCount > 0 && (
@@ -25,18 +27,18 @@ export function NotificationsDropdown() {
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[22rem] p-0">
         <div className="flex items-center justify-between border-b border-border px-4 py-3">
-          <p className="text-sm font-semibold">Notifications</p>
+          <p className="text-sm font-semibold">{t("title")}</p>
           <button
             onClick={markAllRead}
             className="text-xs font-medium text-primary hover:underline"
           >
-            Mark all read
+            {t("markAllRead")}
           </button>
         </div>
         <div className="max-h-[20rem] divide-y divide-border overflow-y-auto scrollbar-slim">
           {recent.length === 0 && (
             <p className="px-4 py-8 text-center text-sm text-muted-foreground">
-              No notifications yet.
+              {t("empty")}
             </p>
           )}
           {recent.map((n) => (
@@ -60,7 +62,7 @@ export function NotificationsDropdown() {
             href="/notifications"
             className="flex items-center justify-center rounded-xl px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-muted"
           >
-            See more
+            {t("seeMore")}
           </Link>
         </div>
       </PopoverContent>

@@ -239,5 +239,129 @@
     "ctaTitle": "Defina o seu destino.",
     "ctaBody": "O METIS cuida da rota. A sua primeira jornada é grátis.",
     "getStarted": "Começar"
+  },
+  "app": {
+    "sidebar": {
+      "menu": "Menu",
+      "dashboard": "Painel",
+      "analytics": "Análises",
+      "archive": "Arquivo",
+      "resources": "Recursos",
+      "settings": "Configurações",
+      "upgradePlan": "Fazer upgrade do plano",
+      "upgradeDesc": "Desbloqueie o tutor adaptativo e a sincronização de memória entre jornadas.",
+      "upgrade": "Fazer upgrade",
+      "proPlan": "Plano Pro",
+      "proMember": "Você é membro Pro"
+    },
+    "dashboard": {
+      "title": "Minhas jornadas de aprendizado",
+      "subtitle": "Caminhos mapeados com precisão pelo seu panorama profissional e intelectual.",
+      "dragHint": "Arraste um cartão de jornada para uma pasta para arquivá-lo.",
+      "loadError": "Não foi possível carregar suas jornadas: {error}",
+      "retry": "Tentar novamente",
+      "folders": "Pastas",
+      "dropHere": "Solte aqui para arquivar",
+      "journeysWord": "jornadas",
+      "folderOptions": "Opções da pasta",
+      "rename": "Renomear",
+      "deleteFolder": "Excluir pasta",
+      "addFolder": "Adicionar pasta",
+      "folderEmpty": "Esta pasta está vazia. Arraste cartões de jornada para a pasta para arquivá-los aqui.",
+      "folderContents": "Jornadas nesta pasta. Remova uma para enviá-la de volta ao seu painel.",
+      "percentComplete": "{percent}% concluído",
+      "resume": "Continuar",
+      "removeFromFolder": "Remover da pasta",
+      "renameFolder": "Renomear pasta",
+      "folderName": "Nome da pasta",
+      "cancel": "Cancelar",
+      "save": "Salvar"
+    },
+    "journeyCard": {
+      "curating": "Curando",
+      "newJourney": "Nova jornada",
+      "options": "Opções da jornada",
+      "deleteJourney": "Excluir jornada",
+      "progress": "Progresso",
+      "resourceCount": "{done}/{total} recursos",
+      "weeks": "~{count} semanas",
+      "resume": "Continuar",
+      "deleteTitle": "Excluir “{name}”?",
+      "deleteDesc": "Ela vai para o Arquivo por 30 dias, então você pode restaurá-la se mudar de ideia.",
+      "cancel": "Cancelar",
+      "deleting": "Excluindo…"
+    },
+    "addJourney": {
+      "addJourney": "Adicionar jornada",
+      "addJourneyDesc": "Inicie um novo caminho de aprendizado",
+      "limitTitle": "Você atingiu o limite gratuito",
+      "limitDesc": "O plano gratuito inclui uma jornada ativa. Faça upgrade para o Premium e tenha jornadas ilimitadas, resumos com IA e o tutor adaptativo.",
+      "notNow": "Agora não",
+      "seePremium": "Ver Premium"
+    },
+    "help": {
+      "help": "Ajuda",
+      "title": "Como usar o METIS",
+      "subtitle": "Um guia rápido e detalhado para aproveitar ao máximo seu GPS de aprendizado.",
+      "guide": {
+        "startJourney": {
+          "title": "Inicie uma jornada",
+          "body": "Toque no cartão tracejado “Adicionar jornada”, descreva seu objetivo, nível, prazo e preferências. O METIS gera um roteiro mapeado."
+        },
+        "followRoadmap": {
+          "title": "Siga o roteiro",
+          "body": "Cada jornada é dividida em unidades e capítulos. Expanda uma unidade para ver seus recursos, ou clique nela para a visualização completa em fluxograma."
+        },
+        "trackProgress": {
+          "title": "Acompanhe o progresso",
+          "body": "Marque os recursos conforme os conclui. As barras de progresso são atualizadas por unidade e para toda a jornada."
+        },
+        "askMetis": {
+          "title": "Ask METIS",
+          "body": "Abra o painel Ask METIS em qualquer jornada para fazer perguntas, replanejar seu cronograma com o Planejador ou trabalhar um conceito com o Tutor."
+        },
+        "keepStreak": {
+          "title": "Mantenha sua sequência",
+          "body": "Estude um pouco todos os dias. Seu contador de sequência e o calendário registram a constância em todas as jornadas."
+        },
+        "organizeFolders": {
+          "title": "Organize com pastas",
+          "body": "Agrupe jornadas relacionadas ou recursos salvos em pastas para manter seu painel organizado."
+        }
+      }
+    },
+    "addFolder": {
+      "title": "Nova pasta",
+      "subtitle": "Agrupe jornadas ou recursos. Dê um nome à sua pasta.",
+      "folderName": "Nome da pasta",
+      "placeholder": "ex.: Preparação para prova",
+      "cancel": "Cancelar",
+      "createFolder": "Criar pasta"
+    },
+    "usage": {
+      "capacity": "Capacidade de IA",
+      "approxLimits": "aprox. dos limites gratuitos",
+      "thisMonth": "este mês",
+      "today": "hoje",
+      "rateLimited": "limite atingido",
+      "resetsIn": "reinicia em {time}"
+    },
+    "profile": {
+      "accountMenu": "Menu da conta",
+      "myProfile": "Meu perfil",
+      "logOut": "Sair"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "ariaUnread": "Notificações, {count} não lidas",
+      "markAllRead": "Marcar todas como lidas",
+      "empty": "Ainda não há notificações.",
+      "seeMore": "Ver mais"
+    },
+    "shell": {
+      "loadingSession": "Carregando sua sessão...",
+      "openMenu": "Abrir menu",
+      "goToDashboard": "Ir para o painel"
+    }
   }
 }
