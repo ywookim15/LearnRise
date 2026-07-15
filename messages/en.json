@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "You're signed in with your new password.",
     "passwordUpdatedBody": "All set. Your password has been changed.",
     "goToDashboard": "Go to Dashboard"
+  },
+  "contact": {
+    "eyebrow": "We'd love to hear from you",
+    "title": "Get in touch",
+    "subtitle": "Questions about your roadmap, feedback on METIS, or just want to say hello? Drop us a line.",
+    "sentTitle": "Message sent!",
+    "sentBody": "Thanks for reaching out, we'll get back to you at the email you provided.",
+    "sendAnother": "Send another",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "yourEmail": "Your email",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help?",
+    "sendMessage": "Send message",
+    "sending": "Sending…",
+    "error": "Couldn't send your message. Please try again."
   }
 }

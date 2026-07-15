@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "新しいパスワードでログインしています。",
     "passwordUpdatedBody": "完了しました。パスワードが変更されました。",
     "goToDashboard": "ダッシュボードへ"
+  },
+  "contact": {
+    "eyebrow": "ぜひお聞かせください",
+    "title": "お問い合わせ",
+    "subtitle": "ロードマップに関する質問、METIS へのご感想、ちょっとしたご挨拶でも。お気軽にご連絡ください。",
+    "sentTitle": "メッセージを送信しました！",
+    "sentBody": "ご連絡ありがとうございます。ご入力いただいたメールアドレスにご返信します。",
+    "sendAnother": "別のメッセージを送る",
+    "firstName": "名",
+    "lastName": "姓",
+    "yourEmail": "メールアドレス",
+    "messageLabel": "メッセージ",
+    "messagePlaceholder": "どのようなご用件ですか？",
+    "sendMessage": "メッセージを送信",
+    "sending": "送信中…",
+    "error": "メッセージを送信できませんでした。もう一度お試しください。"
   }
 }

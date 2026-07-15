@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "새 비밀번호로 로그인되었습니다.",
     "passwordUpdatedBody": "완료되었습니다. 비밀번호가 변경되었습니다.",
     "goToDashboard": "대시보드로 이동"
+  },
+  "contact": {
+    "eyebrow": "여러분의 이야기를 듣고 싶어요",
+    "title": "문의하기",
+    "subtitle": "로드맵에 대한 질문, METIS에 대한 피드백, 그냥 인사라도 좋아요. 편하게 남겨 주세요.",
+    "sentTitle": "메시지를 보냈어요!",
+    "sentBody": "연락 주셔서 감사합니다. 남겨 주신 이메일로 답변드리겠습니다.",
+    "sendAnother": "다른 메시지 보내기",
+    "firstName": "이름",
+    "lastName": "성",
+    "yourEmail": "이메일",
+    "messageLabel": "메시지",
+    "messagePlaceholder": "무엇을 도와드릴까요?",
+    "sendMessage": "메시지 보내기",
+    "sending": "보내는 중…",
+    "error": "메시지를 보내지 못했습니다. 다시 시도해 주세요."
   }
 }

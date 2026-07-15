@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "你已使用新密码登录。",
     "passwordUpdatedBody": "全部完成。你的密码已更改。",
     "goToDashboard": "前往仪表盘"
+  },
+  "contact": {
+    "eyebrow": "期待收到你的来信",
+    "title": "联系我们",
+    "subtitle": "对你的路线图有疑问、对 METIS 有反馈，或只是想打个招呼？给我们留言吧。",
+    "sentTitle": "消息已发送！",
+    "sentBody": "感谢你的联系，我们会通过你提供的邮箱回复你。",
+    "sendAnother": "再发一条",
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "yourEmail": "你的邮箱",
+    "messageLabel": "消息",
+    "messagePlaceholder": "我们能帮你什么？",
+    "sendMessage": "发送消息",
+    "sending": "正在发送…",
+    "error": "消息发送失败。请重试。"
   }
 }

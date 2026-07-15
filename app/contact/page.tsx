@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Mail, Instagram, Youtube, CheckCircle2, AlertCircle } from "lucide-react";
 import { MarketingShell } from "@/components/layout/marketing-shell";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 export default function ContactPage() {
+  const t = useTranslations("contact");
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,11 +36,11 @@ export default function ContactPage() {
         }),
       });
       const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.error || "Couldn't send your message. Please try again.");
+      if (!res.ok) throw new Error(json.error || t("error"));
       setSubmitted(true);
       form.reset();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't send your message. Please try again.");
+      setError(err instanceof Error ? err.message : t("error"));
     } finally {
       setSending(false);
     }
@@ -49,14 +51,13 @@ export default function ContactPage() {
       <section className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 md:grid-cols-2">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            We&apos;d love to hear from you
+            {t("eyebrow")}
           </p>
           <h1 className="mt-4 font-serif text-4xl leading-tight tracking-tight sm:text-5xl">
-            Get in touch
+            {t("title")}
           </h1>
           <p className="mt-4 max-w-md text-muted-foreground">
-            Questions about your roadmap, feedback on METIS, or just want
-            to say hello? Drop us a line.
+            {t("subtitle")}
           </p>
 
           <div className="mt-10 space-y-5">
@@ -85,13 +86,12 @@ export default function ContactPage() {
           {submitted ? (
             <div className="flex h-full flex-col items-center justify-center py-10 text-center">
               <CheckCircle2 className="h-14 w-14 text-primary" />
-              <h2 className="mt-4 text-xl font-semibold">Message sent!</h2>
+              <h2 className="mt-4 text-xl font-semibold">{t("sentTitle")}</h2>
               <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-                Thanks for reaching out, we&apos;ll get back to you at the email
-                you provided.
+                {t("sentBody")}
               </p>
               <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
-                Send another
+                {t("sendAnother")}
               </Button>
             </div>
           ) : (
@@ -104,21 +104,21 @@ export default function ContactPage() {
               )}
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First name</Label>
+                  <Label htmlFor="firstName">{t("firstName")}</Label>
                   <Input id="firstName" name="firstName" placeholder="Jane" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last name</Label>
+                  <Label htmlFor="lastName">{t("lastName")}</Label>
                   <Input id="lastName" name="lastName" placeholder="Doe" required />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Your email</Label>
+                <Label htmlFor="email">{t("yourEmail")}</Label>
                 <Input id="email" name="email" type="email" placeholder="you@example.com" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea id="message" name="message" placeholder="How can we help?" className="min-h-[130px]" required />
+                <Label htmlFor="message">{t("messageLabel")}</Label>
+                <Textarea id="message" name="message" placeholder={t("messagePlaceholder")} className="min-h-[130px]" required />
               </div>
               {/* Honeypot: hidden from real users (off-screen, not display:none —
                   some bots skip display:none fields), left empty by humans. */}
@@ -127,7 +127,7 @@ export default function ContactPage() {
                 <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
               </div>
               <Button type="submit" className="w-full" disabled={sending}>
-                {sending ? "Sending…" : "Send message"}
+                {sending ? t("sending") : t("sendMessage")}
               </Button>
             </form>
           )}

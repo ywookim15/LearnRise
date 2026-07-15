@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "Vous êtes connecté avec votre nouveau mot de passe.",
     "passwordUpdatedBody": "C'est fait. Votre mot de passe a été modifié.",
     "goToDashboard": "Aller au tableau de bord"
+  },
+  "contact": {
+    "eyebrow": "Nous serions ravis de vous lire",
+    "title": "Contactez-nous",
+    "subtitle": "Des questions sur votre parcours, un retour sur METIS ou juste envie de dire bonjour ? Écrivez-nous.",
+    "sentTitle": "Message envoyé !",
+    "sentBody": "Merci de nous avoir écrit, nous vous répondrons à l'adresse que vous avez indiquée.",
+    "sendAnother": "Envoyer un autre",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "yourEmail": "Votre e-mail",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+    "sendMessage": "Envoyer le message",
+    "sending": "Envoi…",
+    "error": "Impossible d'envoyer votre message. Veuillez réessayer."
   }
 }

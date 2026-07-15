@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "Você está conectado com a sua nova senha.",
     "passwordUpdatedBody": "Tudo certo. A sua senha foi alterada.",
     "goToDashboard": "Ir para o painel"
+  },
+  "contact": {
+    "eyebrow": "Adoraríamos ouvir você",
+    "title": "Fale conosco",
+    "subtitle": "Dúvidas sobre o seu roteiro, feedback sobre o METIS ou só quer dar um oi? Escreva para nós.",
+    "sentTitle": "Mensagem enviada!",
+    "sentBody": "Obrigado por entrar em contato, responderemos no e-mail que você informou.",
+    "sendAnother": "Enviar outra",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "yourEmail": "Seu e-mail",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Como podemos ajudar?",
+    "sendMessage": "Enviar mensagem",
+    "sending": "Enviando…",
+    "error": "Não foi possível enviar a sua mensagem. Tente novamente."
   }
 }

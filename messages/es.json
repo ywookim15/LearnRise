@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "Has iniciado sesión con tu nueva contraseña.",
     "passwordUpdatedBody": "Todo listo. Tu contraseña se ha cambiado.",
     "goToDashboard": "Ir al panel"
+  },
+  "contact": {
+    "eyebrow": "Nos encantaría saber de ti",
+    "title": "Ponte en contacto",
+    "subtitle": "¿Preguntas sobre tu ruta, comentarios sobre METIS o solo quieres saludar? Escríbenos.",
+    "sentTitle": "¡Mensaje enviado!",
+    "sentBody": "Gracias por escribirnos, te responderemos al correo que indicaste.",
+    "sendAnother": "Enviar otro",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "yourEmail": "Tu correo",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "¿En qué podemos ayudarte?",
+    "sendMessage": "Enviar mensaje",
+    "sending": "Enviando…",
+    "error": "No se pudo enviar tu mensaje. Inténtalo de nuevo."
   }
 }

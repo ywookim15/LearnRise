@@ -135,5 +135,21 @@
     "passwordUpdatedSubtitle": "Du bist mit deinem neuen Passwort angemeldet.",
     "passwordUpdatedBody": "Alles erledigt. Dein Passwort wurde geändert.",
     "goToDashboard": "Zum Dashboard"
+  },
+  "contact": {
+    "eyebrow": "Wir freuen uns, von dir zu hören",
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Fragen zu deiner Roadmap, Feedback zu METIS oder einfach nur Hallo sagen? Schreib uns.",
+    "sentTitle": "Nachricht gesendet!",
+    "sentBody": "Danke für deine Nachricht, wir melden uns bei der angegebenen E-Mail-Adresse.",
+    "sendAnother": "Weitere senden",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "yourEmail": "Deine E-Mail",
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Wie können wir helfen?",
+    "sendMessage": "Nachricht senden",
+    "sending": "Senden…",
+    "error": "Deine Nachricht konnte nicht gesendet werden. Bitte versuche es erneut."
   }
 }
