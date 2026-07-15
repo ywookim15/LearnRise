@@ -217,5 +217,27 @@
       "row8Free": "Ninguna",
       "row8Pro": "7 días gratis"
     }
+  },
+  "about": {
+    "eyebrow": "Acerca de METIS",
+    "title": "Aprender no debería empezar por perderse.",
+    "intro": "METIS es un GPS de aprendizaje con IA: dile qué quieres aprender y crea una ruta para llegar allí. Luego ajusta esa ruta cada vez que te retrasas o avanzas más rápido.",
+    "statText": "de todos los estudiantes que empiezan a aprender en línea nunca terminan.",
+    "para1": "Decides ponerte con un tema, abres un buscador y te ahogas. De inmediato te ves con cuarenta pestañas, tres listas contradictorias de “mejores recursos” y ni idea del orden en que deberías verlo todo. Empiezas a preguntarte si el problema eres tú, porque parece que todos los demás lo entienden y tú no.",
+    "para2": "Pero lo más difícil nunca fue el material. Era la ruta.",
+    "para3": "METIS es ese mapa. Fija un destino y traza una ruta precisa desde donde estás hasta donde quieres llegar.",
+    "whatItIsTitle": "Qué es",
+    "whatItIsBody": "METIS es un creador de rutas con IA para aprender cualquier cosa. Describes tu objetivo, tu nivel actual, tu plazo y cómo te gusta aprender. METIS arma un viaje de aprendizaje: unidades, capítulos y recursos seleccionados. A medida que marcas cosas, hablas con tu tutor y ajustas tu ritmo, la ruta se recalcula en torno a ti.",
+    "howItWorksTitle": "Cómo funciona",
+    "step1": "Tú das los datos: qué quieres aprender, desde dónde partes y tus limitaciones.",
+    "step2": "METIS crea una ruta de unidades y capítulos, cada uno respaldado por recursos filtrados de alta calidad.",
+    "step3": "Aprendes: marca recursos, mantén tus rachas y pregunta al tutor cuando te atasques.",
+    "step4": "METIS se adapta: el ritmo, el orden y las recomendaciones cambian según lo que revela tu progreso.",
+    "whyItWorksTitle": "Por qué funciona",
+    "why1": "La estructura elimina el coste de planificar, así tu energía va a aprender, no a decidir qué mirar a continuación.",
+    "why2": "El plan no es fijo. La mayoría de los planes de estudio se rompen en cuanto te retrasas o avanzas más rápido de lo previsto, y vuelves a adivinar. METIS se mueve contigo: si te cuesta un concepto, se ajusta antes de que te quedes más atrás; si vas rápido, se salta adelante en lugar de hacerte perder el tiempo.",
+    "ctaTitle": "Fija tu destino.",
+    "ctaBody": "METIS se encarga de la ruta. Tu primer viaje es gratis.",
+    "getStarted": "Comenzar"
   }
 }

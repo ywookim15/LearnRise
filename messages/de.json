@@ -217,5 +217,27 @@
       "row8Free": "Keine",
       "row8Pro": "7 Tage kostenlos"
     }
+  },
+  "about": {
+    "eyebrow": "Über METIS",
+    "title": "Lernen sollte nicht damit beginnen, sich zu verirren.",
+    "intro": "METIS ist ein KI-gestütztes Lern-GPS: Sag ihm, was du lernen willst, und es baut eine Roadmap, die dich dorthin bringt. Dann passt es diese Roadmap jedes Mal an, wenn du zurückfällst oder schneller vorankommst.",
+    "statText": "aller Lernenden, die mit Online-Lernen beginnen, schließen es nie ab.",
+    "para1": "Du nimmst dir ein Thema vor, öffnest eine Suchmaschine und gehst unter. Sofort wirst du von vierzig Tabs, drei widersprüchlichen „beste Ressourcen“-Listen und keiner Ahnung, in welcher Reihenfolge das alles gehört, überrollt. Du fängst an, dich zu fragen, ob du das Problem bist, weil alle anderen es scheinbar sofort verstehen, nur du nicht.",
+    "para2": "Aber das Schwierigste war nie der Stoff. Es war die Roadmap.",
+    "para3": "METIS ist diese Karte. Lege ein Ziel fest, und es zeichnet eine präzise Route von dort, wo du bist, bis dorthin, wo du hinwillst.",
+    "whatItIsTitle": "Was es ist",
+    "whatItIsBody": "METIS ist ein KI-gestützter Roadmap-Builder, um alles zu lernen. Du beschreibst dein Ziel, dein aktuelles Niveau, deinen Zeitrahmen und wie du gerne lernst. METIS stellt eine Lernreise zusammen: Einheiten, Kapitel und kuratierte Ressourcen. Während du Dinge abhakst, mit deinem Tutor sprichst und dein Tempo anpasst, plant sich die Route um dich herum neu.",
+    "howItWorksTitle": "Wie es funktioniert",
+    "step1": "Du machst die Angaben: was du lernen willst, wo du startest und deine Rahmenbedingungen.",
+    "step2": "METIS erstellt eine Roadmap aus Einheiten und Kapiteln, jede gestützt auf hochwertige, gefilterte Ressourcen.",
+    "step3": "Du lernst: hake Ressourcen ab, halte deine Serie und frage den Tutor, wenn du feststeckst.",
+    "step4": "METIS passt sich an: Tempo, Reihenfolge und Empfehlungen verschieben sich, während dein Fortschritt zeigt, was du brauchst.",
+    "whyItWorksTitle": "Warum es funktioniert",
+    "why1": "Struktur nimmt den Aufwand des Planens, sodass deine Energie ins Lernen fließt und nicht in die Entscheidung, was du als Nächstes ansiehst.",
+    "why2": "Der Plan ist nicht in Stein gemeißelt. Die meisten Lernpläne brechen in dem Moment zusammen, in dem du zurückfällst oder schneller vorankommst als erwartet, und schon rätst du wieder. METIS bewegt sich mit dir: Bei einem kniffligen Konzept passt es an, bevor du weiter zurückfällst; kommst du schnell voran, springt es vor, statt deine Zeit zu verschwenden.",
+    "ctaTitle": "Lege dein Ziel fest.",
+    "ctaBody": "METIS kümmert sich um die Route. Deine erste Reise ist kostenlos.",
+    "getStarted": "Loslegen"
   }
 }

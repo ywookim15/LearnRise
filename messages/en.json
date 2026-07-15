@@ -217,5 +217,27 @@
       "row8Free": "None",
       "row8Pro": "7 days free"
     }
+  },
+  "about": {
+    "eyebrow": "About METIS",
+    "title": "Learning shouldn't start with getting lost.",
+    "intro": "METIS is an AI-powered learning GPS: tell it what you want to learn, and it builds a roadmap to get you there. Then it adjusts that roadmap every time you fall behind or move ahead.",
+    "statText": "of all learners who pick up online learning never finish.",
+    "para1": "You decide to pick up a subject, open a search engine, and drown. Immediately, you're swarmed with forty tabs, three contradictory “best resources” lists, and no idea what order any of it should go in. You start wondering if you're the problem, since everyone else seems to just get it and you don't.",
+    "para2": "But the hardest part was never the material. It was the roadmap.",
+    "para3": "METIS is that map. Set a destination, and it plots a precise route from where you are to where you want to be.",
+    "whatItIsTitle": "What it is",
+    "whatItIsBody": "METIS is an AI-powered roadmap builder for learning anything. You describe your goal, your current level, your timeline, and how you like to learn. METIS assembles a learning journey: units, chapters, and curated resources. As you check things off, chat with your tutor, and adjust your pace, the route re-plans around you.",
+    "howItWorksTitle": "How it works",
+    "step1": "You give inputs: what you want to learn, where you're starting, and your constraints.",
+    "step2": "METIS creates a roadmap of units and chapters, each backed by high-quality, filtered resources.",
+    "step3": "You learn: check off resources, track streaks, and ask the tutor when you're stuck.",
+    "step4": "METIS adapts: pacing, ordering, and recommendations shift as your progress reveals what you need.",
+    "whyItWorksTitle": "Why it works",
+    "why1": "Structure removes the tax of planning, so your energy goes into learning, not deciding what to look at next.",
+    "why2": "The plan isn't fixed. Most study plans break the moment you fall behind or move faster than expected, and then you're back to guessing. METIS moves with you: struggle on a concept and it adjusts before you fall further behind; move fast and it skips ahead instead of wasting your time.",
+    "ctaTitle": "Set your destination.",
+    "ctaBody": "METIS will handle the route. Your first journey is free.",
+    "getStarted": "Get started"
   }
 }

@@ -217,5 +217,27 @@
       "row8Free": "Aucun",
       "row8Pro": "7 jours gratuits"
     }
+  },
+  "about": {
+    "eyebrow": "À propos de METIS",
+    "title": "Apprendre ne devrait pas commencer par se perdre.",
+    "intro": "METIS est un GPS d'apprentissage propulsé par l'IA : dites-lui ce que vous voulez apprendre, et il construit un parcours pour vous y mener. Puis il ajuste ce parcours chaque fois que vous prenez du retard ou de l'avance.",
+    "statText": "des apprenants qui se lancent dans l'apprentissage en ligne ne terminent jamais.",
+    "para1": "Vous décidez de vous mettre à un sujet, vous ouvrez un moteur de recherche, et vous vous noyez. Aussitôt, vous voilà submergé par quarante onglets, trois listes contradictoires des « meilleures ressources » et aucune idée de l'ordre dans lequel aborder tout ça. Vous commencez à vous demander si le problème, c'est vous, puisque tout le monde semble comprendre du premier coup, sauf vous.",
+    "para2": "Mais le plus dur n'a jamais été la matière. C'était le parcours.",
+    "para3": "METIS est cette carte. Fixez une destination, et il trace un itinéraire précis de là où vous êtes jusqu'à là où vous voulez aller.",
+    "whatItIsTitle": "Ce que c'est",
+    "whatItIsBody": "METIS est un créateur de parcours propulsé par l'IA pour apprendre n'importe quoi. Vous décrivez votre objectif, votre niveau actuel, votre échéance et votre façon d'apprendre. METIS assemble un parcours d'apprentissage : des unités, des chapitres et des ressources sélectionnées. À mesure que vous cochez des éléments, discutez avec votre tuteur et ajustez votre rythme, l'itinéraire se recalcule autour de vous.",
+    "howItWorksTitle": "Comment ça marche",
+    "step1": "Vous donnez les informations : ce que vous voulez apprendre, votre point de départ et vos contraintes.",
+    "step2": "METIS crée un parcours d'unités et de chapitres, chacun étayé par des ressources filtrées et de qualité.",
+    "step3": "Vous apprenez : cochez les ressources, entretenez vos séries et interrogez le tuteur quand vous bloquez.",
+    "step4": "METIS s'adapte : le rythme, l'ordre et les recommandations évoluent selon ce que votre progression révèle.",
+    "whyItWorksTitle": "Pourquoi ça marche",
+    "why1": "La structure supprime le coût de la planification : votre énergie va à l'apprentissage, pas à décider quoi regarder ensuite.",
+    "why2": "Le plan n'est pas figé. La plupart des plans d'étude s'effondrent dès que vous prenez du retard ou avancez plus vite que prévu, et vous voilà à nouveau à tâtonner. METIS avance avec vous : si un concept vous bloque, il s'ajuste avant que vous ne décrochiez davantage ; si vous allez vite, il saute en avant au lieu de vous faire perdre du temps.",
+    "ctaTitle": "Fixez votre destination.",
+    "ctaBody": "METIS s'occupe de l'itinéraire. Votre premier parcours est gratuit.",
+    "getStarted": "Commencer"
   }
 }
