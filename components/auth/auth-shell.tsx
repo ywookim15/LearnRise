@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Compass, Route, MessagesSquare } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Logo } from "@/components/shared/logo";
 
 /**
@@ -16,6 +17,7 @@ export function AuthShell({
   title: string;
   subtitle: string;
 }) {
+  const t = useTranslations("auth");
   return (
     <div className="flex min-h-screen bg-background">
       {/* Brand panel */}
@@ -29,17 +31,16 @@ export function AuthShell({
           </Link>
           <div>
             <h2 className="max-w-sm font-serif text-4xl leading-tight text-white">
-              Your learning, precisely mapped.
+              {t("panelTitle")}
             </h2>
             <p className="mt-4 max-w-sm text-white/80">
-              Set a destination and METIS plots the route, resourced, ordered,
-              and adaptive.
+              {t("panelSubtitle")}
             </p>
             <ul className="mt-10 space-y-3">
               {[
-                { icon: Compass, text: "Never wonder what to study next" },
-                { icon: Route, text: "Roadmaps sequenced just for you" },
-                { icon: MessagesSquare, text: "An AI tutor that knows your path" },
+                { icon: Compass, text: t("panelFeat1") },
+                { icon: Route, text: t("panelFeat2") },
+                { icon: MessagesSquare, text: t("panelFeat3") },
               ].map((f) => {
                 const Icon = f.icon;
                 return (

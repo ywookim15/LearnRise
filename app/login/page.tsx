@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AlertCircle } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useTranslations("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -22,9 +24,9 @@ export default function LoginPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("error") === "auth_callback_failed") {
-      setError("That sign-in link was invalid or expired. Please try again.");
+      setError(t("linkInvalid"));
     }
-  }, []);
+  }, [t]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,7 +41,7 @@ export default function LoginPage() {
       setPending(false);
       setError(
         signInError.message === "Invalid login credentials"
-          ? "Incorrect email or password."
+          ? t("incorrectCredentials")
           : signInError.message
       );
       return;
@@ -49,7 +51,7 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthShell title="Welcome back" subtitle="Sign in to pick up where you left off.">
+    <AuthShell title={t("loginTitle")} subtitle={t("loginSubtitle")}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
           <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
@@ -58,12 +60,12 @@ export default function LoginPage() {
           </div>
         )}
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("emailLabel")}</Label>
           <Input
             id="email"
             type="email"
             autoComplete="email"
-            placeholder="you@example.com"
+            placeholder={t("emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -71,30 +73,30 @@ export default function LoginPage() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("passwordLabel")}</Label>
             <Link href="/forgot-password" className="text-xs font-medium text-primary hover:underline">
-              Forgot password?
+              {t("forgotPassword")}
             </Link>
           </div>
           <Input
             id="password"
             type="password"
             autoComplete="current-password"
-            placeholder="Your password"
+            placeholder={t("passwordPlaceholder")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
         <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Signing in…" : "Sign in"}
+          {pending ? t("signingIn") : t("signIn")}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        New to METIS?{" "}
+        {t("newToMetis")}{" "}
         <Link href="/signup" className="font-medium text-primary hover:underline">
-          Create an account
+          {t("createAccount")}
         </Link>
       </p>
     </AuthShell>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import { useApp } from "@/lib/context/app-context";
  */
 export default function ResetPasswordPage() {
   const router = useRouter();
+  const t = useTranslations("auth");
   const { isLoggedIn, authReady } = useApp();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -29,7 +31,7 @@ export default function ResetPasswordPage() {
     e.preventDefault();
     setError(null);
     if (password !== confirm) {
-      setError("Passwords don't match.");
+      setError(t("passwordsDontMatch"));
       return;
     }
     setPending(true);
@@ -45,9 +47,9 @@ export default function ResetPasswordPage() {
 
   if (!authReady) {
     return (
-      <AuthShell title="Set a new password" subtitle="Checking your reset link…">
+      <AuthShell title={t("setNewTitle")} subtitle={t("checkingSubtitle")}>
         <div className="rounded-3xl border border-border bg-card p-8 text-center text-sm text-muted-foreground shadow-card">
-          One moment…
+          {t("oneMoment")}
         </div>
       </AuthShell>
     );
@@ -57,15 +59,12 @@ export default function ResetPasswordPage() {
   // in a different browser than expected).
   if (!isLoggedIn && !done) {
     return (
-      <AuthShell title="Link expired" subtitle="This password reset link is no longer valid.">
+      <AuthShell title={t("linkExpiredTitle")} subtitle={t("linkExpiredSubtitle")}>
         <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-card">
           <AlertCircle className="mx-auto h-14 w-14 text-destructive" />
-          <p className="mt-4 text-sm text-muted-foreground">
-            Reset links are single-use and expire quickly. Request a fresh one
-            and open it right away.
-          </p>
+          <p className="mt-4 text-sm text-muted-foreground">{t("linkExpiredBody")}</p>
           <Button asChild className="mt-6 w-full">
-            <Link href="/forgot-password">Request a new link</Link>
+            <Link href="/forgot-password">{t("requestNewLink")}</Link>
           </Button>
         </div>
       </AuthShell>
@@ -74,14 +73,12 @@ export default function ResetPasswordPage() {
 
   if (done) {
     return (
-      <AuthShell title="Password updated" subtitle="You're signed in with your new password.">
+      <AuthShell title={t("passwordUpdatedTitle")} subtitle={t("passwordUpdatedSubtitle")}>
         <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-card">
           <CheckCircle2 className="mx-auto h-14 w-14 text-primary" />
-          <p className="mt-4 text-sm text-muted-foreground">
-            All set. Your password has been changed.
-          </p>
+          <p className="mt-4 text-sm text-muted-foreground">{t("passwordUpdatedBody")}</p>
           <Button className="mt-6 w-full" onClick={() => router.push("/dashboard")}>
-            Go to Dashboard
+            {t("goToDashboard")}
           </Button>
         </div>
       </AuthShell>
@@ -89,7 +86,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <AuthShell title="Set a new password" subtitle="Choose a new password for your account.">
+    <AuthShell title={t("setNewTitle")} subtitle={t("setNewSubtitle")}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
           <div className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
@@ -98,12 +95,12 @@ export default function ResetPasswordPage() {
           </div>
         )}
         <div className="space-y-2">
-          <Label htmlFor="new">New password</Label>
+          <Label htmlFor="new">{t("newPasswordLabel")}</Label>
           <Input
             id="new"
             type="password"
             autoComplete="new-password"
-            placeholder="New password (min 6 characters)"
+            placeholder={t("newPasswordPlaceholder")}
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -111,12 +108,12 @@ export default function ResetPasswordPage() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="confirm">Confirm new password</Label>
+          <Label htmlFor="confirm">{t("confirmNewLabel")}</Label>
           <Input
             id="confirm"
             type="password"
             autoComplete="new-password"
-            placeholder="Re-enter new password"
+            placeholder={t("confirmNewPlaceholder")}
             minLength={6}
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
@@ -124,7 +121,7 @@ export default function ResetPasswordPage() {
           />
         </div>
         <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Updating…" : "Update password"}
+          {pending ? t("updating") : t("updatePassword")}
         </Button>
       </form>
     </AuthShell>

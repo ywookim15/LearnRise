@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { MailCheck, AlertCircle } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { setLocaleCookie } from "@/lib/i18n/set-locale";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const t = useTranslations("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
@@ -63,7 +65,7 @@ export default function SignUpPage() {
     // Supabase returns a user with no identities when the email is already
     // registered (it doesn't error, to avoid leaking which emails exist).
     if (data.user && data.user.identities?.length === 0) {
-      setError("An account with this email already exists. Try signing in instead.");
+      setError(t("emailExists"));
       return;
     }
 
@@ -82,17 +84,14 @@ export default function SignUpPage() {
   if (verifySent) {
     return (
       <AuthShell
-        title="Verify your email"
-        subtitle={`We sent a confirmation link to ${email}.`}
+        title={t("verifyTitle")}
+        subtitle={t("verifySubtitle", { email })}
       >
         <div className="rounded-lg border border-border bg-card p-8 text-center shadow-card">
           <MailCheck className="mx-auto h-12 w-12 text-primary" aria-hidden="true" />
-          <p className="mt-4 text-sm text-muted-foreground">
-            Click the link in your inbox to activate your account, then sign in.
-            Check spam if it doesn&apos;t arrive within a minute.
-          </p>
+          <p className="mt-4 text-sm text-muted-foreground">{t("verifyBody")}</p>
           <Button className="mt-6 w-full" onClick={() => router.push("/login")}>
-            Continue to sign in
+            {t("continueToSignIn")}
           </Button>
         </div>
       </AuthShell>
@@ -100,7 +99,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <AuthShell title="Create your account" subtitle="It only takes an email and a password. Your first journey is free.">
+    <AuthShell title={t("signupTitle")} subtitle={t("signupSubtitle")}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
           <div className="flex items-start gap-2.5 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
@@ -110,17 +109,17 @@ export default function SignUpPage() {
         )}
 
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <Label htmlFor="email">{t("emailLabel")}</Label>
+          <Input id="email" type="email" autoComplete="email" placeholder={t("emailPlaceholder")} value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" autoComplete="new-password" placeholder="Create a password (min 6 characters)" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <Label htmlFor="password">{t("passwordLabel")}</Label>
+          <Input id="password" type="password" autoComplete="new-password" placeholder={t("createPasswordPlaceholder")} minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="language">Language you want to learn in</Label>
+          <Label htmlFor="language">{t("languageLabel")}</Label>
           <LanguageSelect
             id="language"
             value={language}
@@ -131,20 +130,19 @@ export default function SignUpPage() {
             disabled={pending}
           />
           <p className="text-xs text-muted-foreground">
-            METIS builds your roadmaps, finds resources, and tutors you in{" "}
-            {getLanguage(language).englishName}. You can change this later in Settings.
+            {t("languageHelp", { language: getLanguage(language).englishName })}
           </p>
         </div>
 
         <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Creating account..." : "Create account"}
+          {pending ? t("creatingAccount") : t("createAccountButton")}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
+        {t("haveAccount")}{" "}
         <Link href="/login" className="font-medium text-primary hover:underline">
-          Sign in
+          {t("signIn")}
         </Link>
       </p>
     </AuthShell>
