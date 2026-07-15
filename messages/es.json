@@ -16,5 +16,63 @@
     "rights": "© {year} METIS. Todos los derechos reservados.",
     "privacy": "Política de privacidad",
     "terms": "Términos del servicio"
+  },
+  "landing": {
+    "hero": {
+      "title": "Tu <gps>GPS</gps> de aprendizaje.",
+      "subtitle": "METIS convierte cualquier objetivo de aprendizaje en una ruta personalizada y adaptativa que se recalcula a medida que avanzas. Como Google Maps, pero para aprender.",
+      "startJourney": "Comienza tu viaje",
+      "seeHow": "Ver cómo funciona",
+      "freeTier": "Plan gratuito disponible. No se requiere tarjeta de crédito."
+    },
+    "works": {
+      "title": "Cómo funciona METIS",
+      "subtitle": "Un guiado inteligente que se adapta a tu ritmo y a tu forma de aprender.",
+      "step1Title": "Define tu objetivo",
+      "step1Body": "Decide qué quieres dominar. METIS traza el terreno y calcula la ruta óptima.",
+      "step2Title": "Sigue la ruta",
+      "step2Body": "Recursos seleccionados y de alto valor, entregados en una secuencia lógica paso a paso.",
+      "step3Title": "Recálculo adaptativo",
+      "step3Body": "¿Te cuesta un concepto? METIS te redirige a explicaciones más claras antes de que te quedes atrás."
+    },
+    "values": {
+      "mappingTitle": "Mapeo cognitivo",
+      "mappingBody": "Grafos de conocimiento dinámicos que registran exactamente qué sabes y dónde están tus lagunas.",
+      "vettedTitle": "Contenido verificado",
+      "vettedBody": "Solo recursos abiertos de alta calidad entran en tu ruta, ordenados en lugar de amontonados como enlaces.",
+      "masteryTitle": "Dominio verificado",
+      "masteryBody": "Los puntos de control confirman tu comprensión básica antes de pasar al siguiente concepto.",
+      "tutorTitle": "Tutor adaptativo",
+      "tutorBody": "Pregúntale a METIS lo que sea sobre tu ruta y repasará los conceptos contigo, en contexto."
+    },
+    "pricing": {
+      "title": "Invierte en tu dominio",
+      "subtitle": "Empieza gratis. Mejora cuando quieras viajes ilimitados y el tutor adaptativo completo.",
+      "free": "Gratis",
+      "forever": "/para siempre",
+      "freeFeat1": "1 viaje de aprendizaje activo",
+      "freeFeat2": "Ruta y recursos generados con IA",
+      "freeFeat3": "10 mensajes al día con el tutor",
+      "startFree": "Empezar gratis",
+      "premium": "Premium",
+      "perMonth": "/mes",
+      "recommended": "Recomendado",
+      "proFeat1": "Viajes activos ilimitados",
+      "proFeat2": "Chat ilimitado y recálculo adaptativo",
+      "proFeat3": "Analíticas e información de progreso",
+      "proFeat4": "Soporte prioritario",
+      "startTrial": "Comienza la prueba gratis de 7 días"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "q1": "¿Cómo funciona exactamente la adaptabilidad “GPS”?",
+      "a1": "Igual que un GPS te recalcula la ruta cuando te pasas un giro, METIS recalcula tu ruta cuando te atascas en un concepto. Encuentra la laguna y ajusta el ritmo, el orden y los recursos para que nunca te quedes bloqueado.",
+      "q2": "¿De dónde salen los recursos?",
+      "a2": "METIS selecciona recursos de toda la web abierta y de proveedores de confianza, y luego los estructura en una ruta en lugar de un montón de enlaces. Todos los recursos son gratuitos y de acceso abierto.",
+      "q3": "¿Necesito saber cómo estructurar mi aprendizaje?",
+      "a3": "No. Tú pones el objetivo y METIS pone la estructura, el ritmo y el orden. Te ahorra el tiempo de buscar recursos y decidir qué estudiar a continuación.",
+      "q4": "¿Cuánto cuesta?",
+      "a4": "Hay un plan gratuito con un viaje de aprendizaje y un plan Premium que desbloquea viajes ilimitados, analíticas y el tutor adaptativo. Consulta la página de precios para más detalles."
+    }
   }
 }

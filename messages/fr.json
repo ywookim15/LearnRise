@@ -16,5 +16,63 @@
     "rights": "© {year} METIS. Tous droits réservés.",
     "privacy": "Politique de confidentialité",
     "terms": "Conditions d'utilisation"
+  },
+  "landing": {
+    "hero": {
+      "title": "Votre <gps>GPS</gps> d'apprentissage.",
+      "subtitle": "METIS transforme n'importe quel objectif d'apprentissage en un parcours personnalisé et adaptatif qui se recalcule à mesure que vous progressez. Comme Google Maps, mais pour apprendre.",
+      "startJourney": "Commencer votre parcours",
+      "seeHow": "Voir comment ça marche",
+      "freeTier": "Offre gratuite disponible. Aucune carte bancaire requise."
+    },
+    "works": {
+      "title": "Comment fonctionne METIS",
+      "subtitle": "Un guidage intelligent qui s'adapte à votre rythme et à votre façon d'apprendre.",
+      "step1Title": "Fixez votre objectif",
+      "step1Body": "Définissez ce que vous voulez maîtriser. METIS cartographie le terrain et calcule l'itinéraire optimal.",
+      "step2Title": "Suivez le parcours",
+      "step2Body": "Des ressources triées et pertinentes, présentées dans une séquence logique, étape par étape.",
+      "step3Title": "Recalcul adaptatif",
+      "step3Body": "Un concept vous bloque ? METIS vous réoriente vers des explications plus claires avant que vous ne preniez du retard."
+    },
+    "values": {
+      "mappingTitle": "Cartographie cognitive",
+      "mappingBody": "Des graphes de connaissances dynamiques qui suivent précisément ce que vous savez et où sont vos lacunes.",
+      "vettedTitle": "Contenu vérifié",
+      "vettedBody": "Seules des ressources ouvertes de qualité entrent dans votre parcours, ordonnées plutôt qu'entassées en liens.",
+      "masteryTitle": "Maîtrise confirmée",
+      "masteryBody": "Des points de contrôle confirment votre compréhension des bases avant de passer au concept suivant.",
+      "tutorTitle": "Tuteur adaptatif",
+      "tutorBody": "Posez à METIS n'importe quelle question sur votre parcours : il décortique les concepts avec vous, en contexte."
+    },
+    "pricing": {
+      "title": "Investissez dans votre maîtrise",
+      "subtitle": "Commencez gratuitement. Passez à l'offre supérieure quand vous voulez des parcours illimités et le tuteur adaptatif complet.",
+      "free": "Gratuit",
+      "forever": "/à vie",
+      "freeFeat1": "1 parcours d'apprentissage actif",
+      "freeFeat2": "Parcours et ressources générés par IA",
+      "freeFeat3": "10 messages/jour avec le tuteur",
+      "startFree": "Commencer gratuitement",
+      "premium": "Premium",
+      "perMonth": "/mois",
+      "recommended": "Recommandé",
+      "proFeat1": "Parcours actifs illimités",
+      "proFeat2": "Chat illimité et recalcul adaptatif",
+      "proFeat3": "Analyses et suivi de progression",
+      "proFeat4": "Support prioritaire",
+      "startTrial": "Démarrer l'essai gratuit de 7 jours"
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": "Comment fonctionne exactement l'adaptabilité « GPS » ?",
+      "a1": "Tout comme un GPS recalcule votre itinéraire quand vous manquez un virage, METIS recalcule votre parcours quand vous butez sur un concept. Il repère la lacune, puis ajuste le rythme, l'ordre et les ressources pour que vous ne restiez jamais bloqué.",
+      "q2": "D'où viennent les ressources ?",
+      "a2": "METIS sélectionne des ressources sur tout le web ouvert et auprès de fournisseurs de confiance, puis les structure en un parcours plutôt qu'un tas de liens. Toutes les ressources sont gratuites et en accès libre.",
+      "q3": "Dois-je savoir structurer mon apprentissage ?",
+      "a3": "Non. Vous apportez l'objectif, et METIS apporte la structure, le rythme et l'ordre. Il vous épargne le temps de chercher des ressources et de décider quoi étudier ensuite.",
+      "q4": "Combien ça coûte ?",
+      "a4": "Il existe une offre gratuite avec un parcours d'apprentissage, et une offre Premium qui débloque des parcours illimités, des analyses et le tuteur adaptatif. Consultez la page des tarifs pour plus de détails."
+    }
   }
 }

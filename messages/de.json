@@ -16,5 +16,63 @@
     "rights": "© {year} METIS. Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen"
+  },
+  "landing": {
+    "hero": {
+      "title": "Dein Lern-<gps>GPS</gps>.",
+      "subtitle": "METIS verwandelt jedes Lernziel in eine personalisierte, adaptive Roadmap, die sich mit deinem Fortschritt neu berechnet. Wie Google Maps, aber fürs Lernen.",
+      "startJourney": "Deine Reise beginnen",
+      "seeHow": "So funktioniert's",
+      "freeTier": "Kostenloser Tarif verfügbar. Keine Kreditkarte nötig."
+    },
+    "works": {
+      "title": "Wie METIS funktioniert",
+      "subtitle": "Intelligente Wegführung, die sich deinem Tempo und deiner Lernweise anpasst.",
+      "step1Title": "Ziel festlegen",
+      "step1Body": "Lege fest, was du meistern willst. METIS vermisst das Terrain und berechnet die optimale Route.",
+      "step2Title": "Dem Weg folgen",
+      "step2Body": "Kuratierte, hochwertige Ressourcen in einer logischen, Schritt-für-Schritt-Reihenfolge.",
+      "step3Title": "Adaptive Neuberechnung",
+      "step3Body": "Ein Konzept bereitet dir Mühe? METIS leitet dich zu klareren Erklärungen um, bevor du den Anschluss verlierst."
+    },
+    "values": {
+      "mappingTitle": "Kognitive Kartierung",
+      "mappingBody": "Dynamische Wissensgraphen, die genau erfassen, was du weißt und wo deine Lücken sind.",
+      "vettedTitle": "Geprüfte Inhalte",
+      "vettedBody": "Nur hochwertige, offene Ressourcen kommen in deinen Weg – geordnet statt als Linksammlung.",
+      "masteryTitle": "Bestätigte Beherrschung",
+      "masteryBody": "Prüfpunkte bestätigen dein Grundverständnis, bevor du zum nächsten Konzept weitergehst.",
+      "tutorTitle": "Adaptiver Tutor",
+      "tutorBody": "Frag METIS alles zu deinem Weg – es arbeitet die Konzepte im Kontext gemeinsam mit dir durch."
+    },
+    "pricing": {
+      "title": "Investiere in deine Meisterschaft",
+      "subtitle": "Kostenlos starten. Upgrade, wenn du unbegrenzte Reisen und den vollständigen adaptiven Tutor willst.",
+      "free": "Kostenlos",
+      "forever": "/für immer",
+      "freeFeat1": "1 aktive Lernreise",
+      "freeFeat2": "KI-generierte Roadmap und Ressourcen",
+      "freeFeat3": "10 Nachrichten/Tag mit dem Tutor",
+      "startFree": "Kostenlos starten",
+      "premium": "Premium",
+      "perMonth": "/Monat",
+      "recommended": "Empfohlen",
+      "proFeat1": "Unbegrenzte aktive Reisen",
+      "proFeat2": "Unbegrenzter Chat und adaptive Neuberechnung",
+      "proFeat3": "Analysen und Fortschrittseinblicke",
+      "proFeat4": "Priorisierter Support",
+      "startTrial": "7-tägige kostenlose Testphase starten"
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "q1": "Wie funktioniert die „GPS“-Anpassung genau?",
+      "a1": "So wie ein GPS die Route neu berechnet, wenn du eine Abzweigung verpasst, berechnet METIS deine Roadmap neu, wenn du an einem Konzept hängst. Es findet die Lücke und passt Tempo, Reihenfolge und Ressourcen an, damit du nie feststeckst.",
+      "q2": "Woher stammen die Ressourcen?",
+      "a2": "METIS kuratiert Ressourcen aus dem gesamten offenen Web und von vertrauenswürdigen Anbietern und strukturiert sie zu einem Weg statt zu einem Haufen Links. Alle Ressourcen sind kostenlos und frei zugänglich.",
+      "q3": "Muss ich wissen, wie man sein Lernen strukturiert?",
+      "a3": "Nein. Du bringst das Ziel, METIS bringt Struktur, Tempo und Reihenfolge. Es erspart dir die Zeit, Ressourcen zu suchen und zu entscheiden, was als Nächstes dran ist.",
+      "q4": "Was kostet es?",
+      "a4": "Es gibt einen kostenlosen Tarif mit einer Lernreise und einen Premium-Tarif, der unbegrenzte Reisen, Analysen und den adaptiven Tutor freischaltet. Details findest du auf der Preisseite."
+    }
   }
 }
