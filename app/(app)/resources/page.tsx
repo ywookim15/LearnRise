@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Folder as FolderIcon,
   FolderPlus,
@@ -34,7 +35,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AddFolderDialog } from "@/components/dashboard/add-folder-dialog";
-import { ResourceTypeIcon, resourceTypeLabel } from "@/components/shared/icon";
+import { ResourceTypeIcon } from "@/components/shared/icon";
 import { useResourceLibrary } from "@/lib/data/use-resource-library";
 import {
   createResourceFolder,
@@ -51,6 +52,8 @@ import { cn } from "@/lib/utils";
 const DND_KEY = "text/metis-resource-id";
 
 export default function ResourcesPage() {
+  const t = useTranslations("app.resources");
+  const tr = useTranslations("app.resource");
   const { resources, folders, loading, error, refresh } = useResourceLibrary();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);
@@ -105,10 +108,10 @@ export default function ResourcesPage() {
     <AppPage>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">My Resources</h1>
+          <h1 className="text-4xl font-bold tracking-tight">{t("title")}</h1>
           <p className="mt-2 max-w-md text-muted-foreground">
-            Everything you&apos;ve saved from your journeys, in one hub.
-            {folders.length > 0 && " Drag a resource onto a folder to file it."}
+            {t("subtitle")}
+            {folders.length > 0 && ` ${t("dragHint")}`}
           </p>
         </div>
       </div>
@@ -116,10 +119,10 @@ export default function ResourcesPage() {
       {error ? (
         <div className="mt-8 flex flex-col items-center gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-8 text-center">
           <AlertCircle className="h-8 w-8 text-destructive" />
-          <p className="text-sm text-destructive">Couldn&apos;t load your resources: {error}</p>
+          <p className="text-sm text-destructive">{t("loadError", { error })}</p>
           <Button variant="outline" size="sm" onClick={() => refresh()}>
             <RefreshCw className="h-4 w-4" />
-            Retry
+            {t("retry")}
           </Button>
         </div>
       ) : loading ? (
@@ -131,7 +134,7 @@ export default function ResourcesPage() {
           {/* Folders */}
           <div className="mt-8">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Folders
+              {t("folders")}
             </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {folders.map((folder) => (
@@ -161,13 +164,13 @@ export default function ResourcesPage() {
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold">{folder.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        {folder.count} {folder.count === 1 ? "item" : "items"}
+                        {t("items", { count: folder.count })}
                       </p>
                     </div>
                   </button>
                   <DropdownMenu>
                     <DropdownMenuTrigger
-                      aria-label="Folder options"
+                      aria-label={t("folderOptions")}
                       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100 focus:opacity-100"
                     >
                       <MoreVertical className="h-4 w-4" />
@@ -175,14 +178,14 @@ export default function ResourcesPage() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onSelect={() => setRenameTarget(folder)}>
                         <Pencil className="h-4 w-4" />
-                        Rename
+                        {t("rename")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onSelect={() => void deleteResourceFolder(folder.id).then(refresh)}
                         className="text-destructive focus:bg-destructive/10 [&_svg]:text-destructive"
                       >
                         <Trash2 className="h-4 w-4" />
-                        Delete folder
+                        {t("deleteFolder")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -195,7 +198,7 @@ export default function ResourcesPage() {
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <FolderPlus className="h-5 w-5" />
                 </span>
-                <span className="text-sm font-semibold">New folder</span>
+                <span className="text-sm font-semibold">{t("newFolder")}</span>
               </button>
             </div>
           </div>
@@ -203,15 +206,14 @@ export default function ResourcesPage() {
           {/* Saved resources (unfiled) */}
           <div className="mt-10">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Saved resources
+              {t("savedResources")}
             </h2>
             {unfiled.length === 0 && (
               <div className="mt-4 flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
                 <Bookmark className="h-8 w-8 text-muted-foreground" />
-                <p className="text-sm font-medium">No saved resources yet</p>
+                <p className="text-sm font-medium">{t("noSavedTitle")}</p>
                 <p className="max-w-sm text-xs text-muted-foreground">
-                  Bookmark resources from your journeys (the bookmark icon on any resource row)
-                  and they&apos;ll collect here.
+                  {t("noSavedBody")}
                 </p>
               </div>
             )}
@@ -231,7 +233,7 @@ export default function ResourcesPage() {
           onClick={() => setDialogOpen(true)}
         >
           <FolderPlus className="h-4 w-4" />
-          Add Folder
+          {t("addFolder")}
         </Button>
       </div>
 
@@ -246,9 +248,7 @@ export default function ResourcesPage() {
             </div>
             <DialogTitle>{openFolder?.name}</DialogTitle>
             <DialogDescription>
-              {resourcesInOpenFolder.length === 0
-                ? "This folder is empty. Drag saved resources onto the folder to file them here."
-                : "Resources in this folder. Remove one to send it back to your saved list."}
+              {resourcesInOpenFolder.length === 0 ? t("folderEmpty") : t("folderContents")}
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-[50vh] space-y-2 overflow-y-auto scrollbar-slim">
@@ -263,7 +263,7 @@ export default function ResourcesPage() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold">{res.title}</p>
                   <p className="truncate text-xs text-muted-foreground">
-                    {resourceTypeLabel[res.type]} · {res.source}
+                    {tr(`type.${res.type}`)} · {res.source}
                   </p>
                 </div>
                 <Button asChild size="sm" variant="outline">
@@ -273,7 +273,7 @@ export default function ResourcesPage() {
                 </Button>
                 <button
                   onClick={() => void handleRemoveFromFolder(res.id)}
-                  aria-label="Remove from folder"
+                  aria-label={t("removeFromFolder")}
                   className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
                 >
                   <X className="h-4 w-4" />
@@ -307,6 +307,8 @@ function SavedResourceCard({
   resource: UiSavedResource;
   onUnsave: () => void;
 }) {
+  const t = useTranslations("app.resources");
+  const tr = useTranslations("app.resource");
   return (
     <div
       draggable
@@ -319,7 +321,7 @@ function SavedResourceCard({
         </span>
         <button
           onClick={onUnsave}
-          aria-label="Remove from saved resources"
+          aria-label={t("removeSaved")}
           className="flex h-8 w-8 items-center justify-center rounded-lg text-primary opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
         >
           <Bookmark className="h-4 w-4 fill-current" />
@@ -334,7 +336,7 @@ function SavedResourceCard({
         {resource.title}
       </a>
       <p className="mt-1 text-xs text-muted-foreground">
-        {resourceTypeLabel[resource.type]} · {resource.source}
+        {tr(`type.${resource.type}`)} · {resource.source}
       </p>
       <div className="mt-4 pt-1">
         <Badge variant="muted">{resource.savedFrom}</Badge>
@@ -352,6 +354,7 @@ function RenameFolderDialog({
   onOpenChange: (open: boolean) => void;
   onRename: (name: string) => void;
 }) {
+  const t = useTranslations("app.resources");
   const [name, setName] = useState("");
   useEffect(() => {
     if (folder) setName(folder.name);
@@ -364,7 +367,7 @@ function RenameFolderDialog({
           <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <Pencil className="h-5 w-5" />
           </div>
-          <DialogTitle>Rename folder</DialogTitle>
+          <DialogTitle>{t("renameFolder")}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -374,7 +377,7 @@ function RenameFolderDialog({
           className="space-y-4"
         >
           <div className="space-y-2">
-            <Label htmlFor="rename-resource-folder">Folder name</Label>
+            <Label htmlFor="rename-resource-folder">{t("folderName")}</Label>
             <Input
               id="rename-resource-folder"
               value={name}
@@ -384,10 +387,10 @@ function RenameFolderDialog({
           </div>
           <div className="flex justify-end gap-2">
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" disabled={!name.trim()}>
-              Save
+              {t("save")}
             </Button>
           </div>
         </form>

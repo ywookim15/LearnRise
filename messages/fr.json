@@ -497,6 +497,95 @@
       "familiar": "Familier",
       "curating": "curation…",
       "gap": "lacune"
+    },
+    "proGate": {
+      "upgradeToPro": "Passer à Pro"
+    },
+    "analytics": {
+      "title": "Analyses de {name}",
+      "subtitle": "Votre élan d'apprentissage sur tous vos parcours.",
+      "tabs": {
+        "overview": "Vue d'ensemble",
+        "journey": "Par parcours",
+        "trends": "Tendances"
+      },
+      "freeTitle": "Réservé à l'offre Pro",
+      "freeSubtitle": "Les analyses et les informations de progression sont une fonctionnalité Pro. Passez à Pro pour débloquer les séries, les tendances et les détails par parcours.",
+      "emptyTitle": "Pas encore d'analyses",
+      "emptyBody": "Au fur et à mesure que vous étudiez et terminez des ressources, vos séries, tendances et détails par parcours apparaîtront ici.",
+      "overview": {
+        "journeysInProgress": "Parcours en cours",
+        "journeysCompleted": "Parcours terminés",
+        "currentStreak": "Série actuelle",
+        "days": "{count, plural, one {# jour} other {# jours}}",
+        "longest": "La plus longue : {value}",
+        "resourcesCompleted": "Ressources terminées",
+        "overallPct": "{pct}% au total",
+        "chaptersThisWeek": "Chapitres terminés cette semaine",
+        "chaptersThisMonth": "Chapitres terminés ce mois-ci",
+        "notShownLabel": "Pas encore affiché :",
+        "notShownBody": "le temps d'étude total et l'historique de chat par message ne sont suivis nulle part dans l'app aujourd'hui, il n'y a pas de journal de session/durée, et la table de mémoire du chat stocke un résumé compressé par parcours plutôt qu'un historique horodaté. Tout ce qui précède est calculé à partir de données réelles de complétion, non estimées."
+      },
+      "journey": {
+        "noJourneys": "Pas encore de parcours",
+        "resources": "{done}/{total} ressources",
+        "progressOverTime": "Progression dans le temps",
+        "cumulative": "Ressources terminées cumulées",
+        "noCompletions": "Aucune complétion pour ce parcours pour l'instant.",
+        "perWeek": "Ressources terminées par semaine",
+        "noWeekly": "Pas encore d'activité hebdomadaire.",
+        "typesConsumed": "Types de ressources consommés",
+        "noTypes": "Aucune ressource terminée pour l'instant."
+      },
+      "trends": {
+        "activeDays": "Jours actifs sur les 30 derniers",
+        "completed30": "Ressources terminées ces 30 derniers jours",
+        "consistency": "Régularité d'étude, 30 derniers jours",
+        "consistencySub": "Ressources terminées par jour, sur tous les parcours"
+      }
+    },
+    "archive": {
+      "title": "Archives",
+      "subtitle": "Parcours que vous avez terminés ou supprimés.",
+      "completedHeading": "Parcours d'apprentissage terminés",
+      "completedEmpty": "Pas encore de parcours terminés. Terminez un parcours et il sera archivé ici.",
+      "completedBadge": "Terminé",
+      "resourceCount": "{count, plural, one {# ressource} other {# ressources}}",
+      "viewJourney": "Voir le parcours",
+      "deletedHeading": "Parcours d'apprentissage supprimés",
+      "deletedInfo": "Les parcours supprimés peuvent être restaurés à tout moment avant leur suppression définitive.",
+      "trashEmpty": "Rien dans la corbeille.",
+      "purgedIn": "supprimé dans {count, plural, one {# jour} other {# jours}}",
+      "restore": "Restaurer",
+      "deletePermanently": "Supprimer définitivement",
+      "purgeTitle": "Supprimer définitivement ?",
+      "purgeDesc": "« {name} » sera définitivement supprimé, ainsi que toutes ses unités, chapitres et ressources. C'est irréversible.",
+      "cancel": "Annuler"
+    },
+    "resources": {
+      "title": "Mes ressources",
+      "subtitle": "Tout ce que vous avez enregistré de vos parcours, en un seul endroit.",
+      "dragHint": "Glissez une ressource sur un dossier pour la classer.",
+      "loadError": "Impossible de charger vos ressources : {error}",
+      "retry": "Réessayer",
+      "folders": "Dossiers",
+      "items": "{count, plural, one {# élément} other {# éléments}}",
+      "folderOptions": "Options du dossier",
+      "rename": "Renommer",
+      "deleteFolder": "Supprimer le dossier",
+      "newFolder": "Nouveau dossier",
+      "savedResources": "Ressources enregistrées",
+      "noSavedTitle": "Pas encore de ressources enregistrées",
+      "noSavedBody": "Ajoutez des ressources de vos parcours en favori (l'icône de marque-page sur n'importe quelle ligne de ressource) et elles se rassembleront ici.",
+      "addFolder": "Ajouter un dossier",
+      "folderEmpty": "Ce dossier est vide. Glissez des ressources enregistrées sur le dossier pour les classer ici.",
+      "folderContents": "Ressources dans ce dossier. Retirez-en une pour la renvoyer vers votre liste d'enregistrées.",
+      "removeFromFolder": "Retirer du dossier",
+      "removeSaved": "Retirer des ressources enregistrées",
+      "renameFolder": "Renommer le dossier",
+      "folderName": "Nom du dossier",
+      "cancel": "Annuler",
+      "save": "Enregistrer"
     }
   },
   "settings": {

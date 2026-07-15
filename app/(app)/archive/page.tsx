@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { RotateCcw, Trash2, Clock, CheckCircle2, Info, Loader2 } from "lucide-react";
 import { AppPage } from "@/components/layout/app-page";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ import {
 } from "@/lib/data/journeys";
 
 export default function ArchivePage() {
+  const t = useTranslations("app.archive");
   const [completed, setCompleted] = useState<UiCompletedJourney[]>([]);
   const [deleted, setDeleted] = useState<UiDeletedJourney[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,9 +71,9 @@ export default function ArchivePage() {
 
   return (
     <AppPage>
-      <h1 className="text-4xl font-bold tracking-tight">Archive</h1>
+      <h1 className="text-4xl font-bold tracking-tight">{t("title")}</h1>
       <p className="mt-2 text-muted-foreground">
-        Journeys you&apos;ve completed or removed.
+        {t("subtitle")}
       </p>
 
       {loading ? (
@@ -84,11 +86,11 @@ export default function ArchivePage() {
           <section className="mt-8">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-              <h2 className="text-lg font-semibold">Completed Learning Journeys</h2>
+              <h2 className="text-lg font-semibold">{t("completedHeading")}</h2>
             </div>
             {completed.length === 0 && (
               <p className="mt-4 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
-                No completed journeys yet. Finish a journey and it&apos;ll be archived here.
+                {t("completedEmpty")}
               </p>
             )}
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -101,16 +103,16 @@ export default function ArchivePage() {
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
                       <JourneyIcon name={j.icon} className="h-5 w-5" />
                     </span>
-                    <Badge variant="success">Completed</Badge>
+                    <Badge variant="success">{t("completedBadge")}</Badge>
                   </div>
                   <h3 className="mt-4 text-base font-semibold leading-snug">{j.name}</h3>
                   <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{j.description}</p>
                   <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                     <Clock className="h-3.5 w-3.5" />
-                    {j.completedOn} · {j.resourceCount} resources
+                    {j.completedOn} · {t("resourceCount", { count: j.resourceCount })}
                   </div>
                   <Button asChild variant="outline" size="sm" className="mt-4">
-                    <Link href={`/journey/${j.id}`}>View journey</Link>
+                    <Link href={`/journey/${j.id}`}>{t("viewJourney")}</Link>
                   </Button>
                 </div>
               ))}
@@ -121,16 +123,16 @@ export default function ArchivePage() {
           <section className="mt-12">
             <div className="flex items-center gap-2">
               <Trash2 className="h-5 w-5 text-muted-foreground" />
-              <h2 className="text-lg font-semibold">Deleted Learning Journeys</h2>
+              <h2 className="text-lg font-semibold">{t("deletedHeading")}</h2>
             </div>
             <div className="mt-2 flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-4 py-2.5 text-xs text-muted-foreground">
               <Info className="h-4 w-4 shrink-0" />
-              Deleted journeys can be restored any time before they&apos;re permanently deleted.
+              {t("deletedInfo")}
             </div>
 
             {deleted.length === 0 ? (
               <p className="mt-6 rounded-2xl border border-dashed border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
-                Nothing in the trash.
+                {t("trashEmpty")}
               </p>
             ) : (
               <div className="mt-4 space-y-3">
@@ -147,7 +149,7 @@ export default function ArchivePage() {
                         <h3 className="truncate text-sm font-semibold">{j.name}</h3>
                         <p className="truncate text-xs text-muted-foreground">{j.description}</p>
                         <p className="mt-0.5 text-xs text-destructive">
-                          {j.deletedOn} · purged in {j.daysUntilPurge} days
+                          {j.deletedOn} · {t("purgedIn", { count: j.daysUntilPurge })}
                         </p>
                       </div>
                     </div>
@@ -159,7 +161,7 @@ export default function ArchivePage() {
                         disabled={busyId === j.id}
                       >
                         <RotateCcw className="h-4 w-4" />
-                        Restore
+                        {t("restore")}
                       </Button>
                       <Button
                         variant="ghost"
@@ -169,7 +171,7 @@ export default function ArchivePage() {
                         disabled={busyId === j.id}
                       >
                         <Trash2 className="h-4 w-4" />
-                        Delete Permanently
+                        {t("deletePermanently")}
                       </Button>
                     </div>
                   </div>
@@ -187,18 +189,17 @@ export default function ArchivePage() {
             <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
               <Trash2 className="h-5 w-5" />
             </div>
-            <DialogTitle>Delete permanently?</DialogTitle>
+            <DialogTitle>{t("purgeTitle")}</DialogTitle>
             <DialogDescription>
-              &ldquo;{toPurge?.name}&rdquo; will be permanently deleted, along with all of its
-              units, chapters, and resources. This can&apos;t be undone.
+              {t("purgeDesc", { name: toPurge?.name ?? "" })}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
             <Button variant="ghost" onClick={() => setToPurge(null)} disabled={!!busyId}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button variant="destructive" onClick={purge} disabled={!!busyId}>
-              Delete Permanently
+              {t("deletePermanently")}
             </Button>
           </div>
         </DialogContent>

@@ -497,6 +497,95 @@
       "familiar": "Familiar",
       "curating": "curating…",
       "gap": "gap"
+    },
+    "proGate": {
+      "upgradeToPro": "Upgrade to Pro"
+    },
+    "analytics": {
+      "title": "{name}'s Analytics",
+      "subtitle": "Your learning momentum across all journeys.",
+      "tabs": {
+        "overview": "Overview",
+        "journey": "Per-journey",
+        "trends": "Trends"
+      },
+      "freeTitle": "Pro plan use only",
+      "freeSubtitle": "Analytics & progress insights are a Pro feature. Upgrade to unlock streaks, trends, and per-journey breakdowns.",
+      "emptyTitle": "No analytics yet",
+      "emptyBody": "As you study and complete resources, your streaks, trends, and per-journey breakdown will appear here.",
+      "overview": {
+        "journeysInProgress": "Journeys in progress",
+        "journeysCompleted": "Journeys completed",
+        "currentStreak": "Current streak",
+        "days": "{count, plural, one {# day} other {# days}}",
+        "longest": "Longest: {value}",
+        "resourcesCompleted": "Resources completed",
+        "overallPct": "{pct}% overall",
+        "chaptersThisWeek": "Chapters completed this week",
+        "chaptersThisMonth": "Chapters completed this month",
+        "notShownLabel": "Not shown yet:",
+        "notShownBody": "total study time and per-message chat history aren't tracked anywhere in the app today, there's no session/duration log, and the chat memory table stores one compressed summary per journey rather than a timestamped history. Everything above is computed from real completion data instead of estimated."
+      },
+      "journey": {
+        "noJourneys": "No journeys yet",
+        "resources": "{done}/{total} resources",
+        "progressOverTime": "Progress over time",
+        "cumulative": "Cumulative resources completed",
+        "noCompletions": "No completions yet for this journey.",
+        "perWeek": "Resources completed per week",
+        "noWeekly": "No weekly activity yet.",
+        "typesConsumed": "Resource types consumed",
+        "noTypes": "No resources completed yet."
+      },
+      "trends": {
+        "activeDays": "Active days in the last 30",
+        "completed30": "Resources completed in the last 30 days",
+        "consistency": "Study consistency, last 30 days",
+        "consistencySub": "Resources completed per day, across all journeys"
+      }
+    },
+    "archive": {
+      "title": "Archive",
+      "subtitle": "Journeys you've completed or removed.",
+      "completedHeading": "Completed Learning Journeys",
+      "completedEmpty": "No completed journeys yet. Finish a journey and it'll be archived here.",
+      "completedBadge": "Completed",
+      "resourceCount": "{count, plural, one {# resource} other {# resources}}",
+      "viewJourney": "View journey",
+      "deletedHeading": "Deleted Learning Journeys",
+      "deletedInfo": "Deleted journeys can be restored any time before they're permanently deleted.",
+      "trashEmpty": "Nothing in the trash.",
+      "purgedIn": "purged in {count, plural, one {# day} other {# days}}",
+      "restore": "Restore",
+      "deletePermanently": "Delete Permanently",
+      "purgeTitle": "Delete permanently?",
+      "purgeDesc": "“{name}” will be permanently deleted, along with all of its units, chapters, and resources. This can't be undone.",
+      "cancel": "Cancel"
+    },
+    "resources": {
+      "title": "My Resources",
+      "subtitle": "Everything you've saved from your journeys, in one hub.",
+      "dragHint": "Drag a resource onto a folder to file it.",
+      "loadError": "Couldn't load your resources: {error}",
+      "retry": "Retry",
+      "folders": "Folders",
+      "items": "{count, plural, one {# item} other {# items}}",
+      "folderOptions": "Folder options",
+      "rename": "Rename",
+      "deleteFolder": "Delete folder",
+      "newFolder": "New folder",
+      "savedResources": "Saved resources",
+      "noSavedTitle": "No saved resources yet",
+      "noSavedBody": "Bookmark resources from your journeys (the bookmark icon on any resource row) and they'll collect here.",
+      "addFolder": "Add Folder",
+      "folderEmpty": "This folder is empty. Drag saved resources onto the folder to file them here.",
+      "folderContents": "Resources in this folder. Remove one to send it back to your saved list.",
+      "removeFromFolder": "Remove from folder",
+      "removeSaved": "Remove from saved resources",
+      "renameFolder": "Rename folder",
+      "folderName": "Folder name",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   },
   "settings": {

@@ -497,6 +497,95 @@
       "familiar": "Me suena",
       "curating": "curando…",
       "gap": "laguna"
+    },
+    "proGate": {
+      "upgradeToPro": "Mejorar a Pro"
+    },
+    "analytics": {
+      "title": "Analíticas de {name}",
+      "subtitle": "Tu impulso de aprendizaje en todas tus rutas.",
+      "tabs": {
+        "overview": "Resumen",
+        "journey": "Por ruta",
+        "trends": "Tendencias"
+      },
+      "freeTitle": "Solo para el plan Pro",
+      "freeSubtitle": "Las analíticas y los datos de progreso son una función Pro. Mejora para desbloquear rachas, tendencias y desgloses por ruta.",
+      "emptyTitle": "Aún no hay analíticas",
+      "emptyBody": "A medida que estudies y completes recursos, tus rachas, tendencias y desglose por ruta aparecerán aquí.",
+      "overview": {
+        "journeysInProgress": "Rutas en curso",
+        "journeysCompleted": "Rutas completadas",
+        "currentStreak": "Racha actual",
+        "days": "{count, plural, one {# día} other {# días}}",
+        "longest": "Más larga: {value}",
+        "resourcesCompleted": "Recursos completados",
+        "overallPct": "{pct}% en total",
+        "chaptersThisWeek": "Capítulos completados esta semana",
+        "chaptersThisMonth": "Capítulos completados este mes",
+        "notShownLabel": "Aún no se muestra:",
+        "notShownBody": "el tiempo total de estudio y el historial de chat por mensaje no se registran en ninguna parte de la app hoy, no hay un registro de sesión/duración, y la tabla de memoria del chat almacena un resumen comprimido por ruta en lugar de un historial con marcas de tiempo. Todo lo anterior se calcula a partir de datos reales de finalización, no estimados."
+      },
+      "journey": {
+        "noJourneys": "Aún no hay rutas",
+        "resources": "{done}/{total} recursos",
+        "progressOverTime": "Progreso a lo largo del tiempo",
+        "cumulative": "Recursos completados acumulados",
+        "noCompletions": "Aún no hay finalizaciones en esta ruta.",
+        "perWeek": "Recursos completados por semana",
+        "noWeekly": "Aún no hay actividad semanal.",
+        "typesConsumed": "Tipos de recursos consumidos",
+        "noTypes": "Aún no se han completado recursos."
+      },
+      "trends": {
+        "activeDays": "Días activos en los últimos 30",
+        "completed30": "Recursos completados en los últimos 30 días",
+        "consistency": "Constancia de estudio, últimos 30 días",
+        "consistencySub": "Recursos completados por día, en todas las rutas"
+      }
+    },
+    "archive": {
+      "title": "Archivo",
+      "subtitle": "Rutas que has completado o eliminado.",
+      "completedHeading": "Rutas de aprendizaje completadas",
+      "completedEmpty": "Aún no hay rutas completadas. Termina una ruta y se archivará aquí.",
+      "completedBadge": "Completada",
+      "resourceCount": "{count, plural, one {# recurso} other {# recursos}}",
+      "viewJourney": "Ver ruta",
+      "deletedHeading": "Rutas de aprendizaje eliminadas",
+      "deletedInfo": "Las rutas eliminadas pueden restaurarse en cualquier momento antes de eliminarse permanentemente.",
+      "trashEmpty": "No hay nada en la papelera.",
+      "purgedIn": "se eliminará en {count, plural, one {# día} other {# días}}",
+      "restore": "Restaurar",
+      "deletePermanently": "Eliminar permanentemente",
+      "purgeTitle": "¿Eliminar permanentemente?",
+      "purgeDesc": "“{name}” se eliminará permanentemente, junto con todas sus unidades, capítulos y recursos. Esto no se puede deshacer.",
+      "cancel": "Cancelar"
+    },
+    "resources": {
+      "title": "Mis recursos",
+      "subtitle": "Todo lo que has guardado de tus rutas, en un solo lugar.",
+      "dragHint": "Arrastra un recurso a una carpeta para archivarlo.",
+      "loadError": "No se pudieron cargar tus recursos: {error}",
+      "retry": "Reintentar",
+      "folders": "Carpetas",
+      "items": "{count, plural, one {# elemento} other {# elementos}}",
+      "folderOptions": "Opciones de carpeta",
+      "rename": "Renombrar",
+      "deleteFolder": "Eliminar carpeta",
+      "newFolder": "Nueva carpeta",
+      "savedResources": "Recursos guardados",
+      "noSavedTitle": "Aún no hay recursos guardados",
+      "noSavedBody": "Guarda recursos de tus rutas (el icono de marcador en cualquier fila de recurso) y se reunirán aquí.",
+      "addFolder": "Añadir carpeta",
+      "folderEmpty": "Esta carpeta está vacía. Arrastra recursos guardados a la carpeta para archivarlos aquí.",
+      "folderContents": "Recursos en esta carpeta. Quita uno para devolverlo a tu lista de guardados.",
+      "removeFromFolder": "Quitar de la carpeta",
+      "removeSaved": "Quitar de recursos guardados",
+      "renameFolder": "Renombrar carpeta",
+      "folderName": "Nombre de la carpeta",
+      "cancel": "Cancelar",
+      "save": "Guardar"
     }
   },
   "settings": {

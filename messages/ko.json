@@ -497,6 +497,95 @@
       "familiar": "익숙해요",
       "curating": "큐레이팅 중…",
       "gap": "공백"
+    },
+    "proGate": {
+      "upgradeToPro": "Pro로 업그레이드"
+    },
+    "analytics": {
+      "title": "{name}님의 분석",
+      "subtitle": "모든 여정에 걸친 당신의 학습 흐름.",
+      "tabs": {
+        "overview": "개요",
+        "journey": "여정별",
+        "trends": "추세"
+      },
+      "freeTitle": "Pro 플랜 전용",
+      "freeSubtitle": "분석 및 진행 인사이트는 Pro 기능입니다. 업그레이드하여 연속 학습, 추세, 여정별 분석을 잠금 해제하세요.",
+      "emptyTitle": "아직 분석 데이터가 없습니다",
+      "emptyBody": "학습하고 자료를 완료하면 연속 학습, 추세, 여정별 분석이 여기에 표시됩니다.",
+      "overview": {
+        "journeysInProgress": "진행 중인 여정",
+        "journeysCompleted": "완료한 여정",
+        "currentStreak": "현재 연속 학습",
+        "days": "{count}일",
+        "longest": "최장: {value}",
+        "resourcesCompleted": "완료한 자료",
+        "overallPct": "전체 {pct}%",
+        "chaptersThisWeek": "이번 주 완료한 챕터",
+        "chaptersThisMonth": "이번 달 완료한 챕터",
+        "notShownLabel": "아직 표시되지 않음:",
+        "notShownBody": "총 학습 시간과 메시지별 채팅 기록은 현재 앱 어디에도 기록되지 않으며, 세션/시간 로그가 없고, 채팅 메모리 테이블은 타임스탬프가 있는 기록 대신 여정마다 하나의 압축 요약을 저장합니다. 위의 모든 항목은 추정이 아닌 실제 완료 데이터로 계산됩니다."
+      },
+      "journey": {
+        "noJourneys": "아직 여정이 없습니다",
+        "resources": "자료 {done}/{total}",
+        "progressOverTime": "시간에 따른 진행",
+        "cumulative": "누적 완료 자료",
+        "noCompletions": "이 여정에서 완료한 항목이 아직 없습니다.",
+        "perWeek": "주별 완료 자료",
+        "noWeekly": "아직 주간 활동이 없습니다.",
+        "typesConsumed": "이용한 자료 유형",
+        "noTypes": "아직 완료한 자료가 없습니다."
+      },
+      "trends": {
+        "activeDays": "최근 30일 중 활동한 날",
+        "completed30": "최근 30일간 완료한 자료",
+        "consistency": "학습 꾸준함, 최근 30일",
+        "consistencySub": "모든 여정에 걸친 일별 완료 자료"
+      }
+    },
+    "archive": {
+      "title": "보관함",
+      "subtitle": "완료했거나 삭제한 여정입니다.",
+      "completedHeading": "완료한 학습 여정",
+      "completedEmpty": "아직 완료한 여정이 없습니다. 여정을 끝내면 여기에 보관됩니다.",
+      "completedBadge": "완료",
+      "resourceCount": "자료 {count}개",
+      "viewJourney": "여정 보기",
+      "deletedHeading": "삭제된 학습 여정",
+      "deletedInfo": "삭제된 여정은 영구 삭제되기 전에 언제든지 복원할 수 있습니다.",
+      "trashEmpty": "휴지통이 비어 있습니다.",
+      "purgedIn": "{count}일 후 영구 삭제",
+      "restore": "복원",
+      "deletePermanently": "영구 삭제",
+      "purgeTitle": "영구적으로 삭제할까요?",
+      "purgeDesc": "“{name}”이(가) 모든 단원, 챕터, 자료와 함께 영구적으로 삭제됩니다. 되돌릴 수 없습니다.",
+      "cancel": "취소"
+    },
+    "resources": {
+      "title": "내 자료",
+      "subtitle": "여정에서 저장한 모든 것을 한곳에.",
+      "dragHint": "자료를 폴더 위로 드래그하여 정리하세요.",
+      "loadError": "자료를 불러오지 못했습니다: {error}",
+      "retry": "다시 시도",
+      "folders": "폴더",
+      "items": "{count}개 항목",
+      "folderOptions": "폴더 옵션",
+      "rename": "이름 변경",
+      "deleteFolder": "폴더 삭제",
+      "newFolder": "새 폴더",
+      "savedResources": "저장한 자료",
+      "noSavedTitle": "아직 저장한 자료가 없습니다",
+      "noSavedBody": "여정에서 자료를 북마크하면(자료 행의 북마크 아이콘) 여기에 모입니다.",
+      "addFolder": "폴더 추가",
+      "folderEmpty": "이 폴더는 비어 있습니다. 저장한 자료를 폴더 위로 드래그하여 여기에 정리하세요.",
+      "folderContents": "이 폴더의 자료입니다. 하나를 제거하면 저장 목록으로 다시 이동합니다.",
+      "removeFromFolder": "폴더에서 제거",
+      "removeSaved": "저장한 자료에서 제거",
+      "renameFolder": "폴더 이름 변경",
+      "folderName": "폴더 이름",
+      "cancel": "취소",
+      "save": "저장"
     }
   },
   "settings": {

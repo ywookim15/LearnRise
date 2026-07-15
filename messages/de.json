@@ -497,6 +497,95 @@
       "familiar": "Vertraut",
       "curating": "kuratiere…",
       "gap": "Lücke"
+    },
+    "proGate": {
+      "upgradeToPro": "Auf Pro upgraden"
+    },
+    "analytics": {
+      "title": "Analysen von {name}",
+      "subtitle": "Dein Lern-Momentum über alle Lernpfade hinweg.",
+      "tabs": {
+        "overview": "Überblick",
+        "journey": "Pro Lernpfad",
+        "trends": "Trends"
+      },
+      "freeTitle": "Nur für den Pro-Tarif",
+      "freeSubtitle": "Analysen und Fortschritts-Einblicke sind eine Pro-Funktion. Upgrade, um Serien, Trends und Aufschlüsselungen pro Lernpfad freizuschalten.",
+      "emptyTitle": "Noch keine Analysen",
+      "emptyBody": "Während du lernst und Ressourcen abschließt, erscheinen hier deine Serien, Trends und die Aufschlüsselung pro Lernpfad.",
+      "overview": {
+        "journeysInProgress": "Laufende Lernpfade",
+        "journeysCompleted": "Abgeschlossene Lernpfade",
+        "currentStreak": "Aktuelle Serie",
+        "days": "{count, plural, one {# Tag} other {# Tage}}",
+        "longest": "Längste: {value}",
+        "resourcesCompleted": "Abgeschlossene Ressourcen",
+        "overallPct": "{pct}% insgesamt",
+        "chaptersThisWeek": "Diese Woche abgeschlossene Kapitel",
+        "chaptersThisMonth": "Diesen Monat abgeschlossene Kapitel",
+        "notShownLabel": "Noch nicht angezeigt:",
+        "notShownBody": "Die gesamte Lernzeit und der Chat-Verlauf pro Nachricht werden derzeit nirgends in der App erfasst, es gibt kein Sitzungs-/Dauer-Protokoll, und die Chat-Speichertabelle speichert eine komprimierte Zusammenfassung pro Lernpfad statt eines zeitgestempelten Verlaufs. Alles oben wird aus echten Abschlussdaten berechnet, nicht geschätzt."
+      },
+      "journey": {
+        "noJourneys": "Noch keine Lernpfade",
+        "resources": "{done}/{total} Ressourcen",
+        "progressOverTime": "Fortschritt im Zeitverlauf",
+        "cumulative": "Kumulierte abgeschlossene Ressourcen",
+        "noCompletions": "Für diesen Lernpfad noch keine Abschlüsse.",
+        "perWeek": "Abgeschlossene Ressourcen pro Woche",
+        "noWeekly": "Noch keine wöchentliche Aktivität.",
+        "typesConsumed": "Genutzte Ressourcentypen",
+        "noTypes": "Noch keine Ressourcen abgeschlossen."
+      },
+      "trends": {
+        "activeDays": "Aktive Tage in den letzten 30",
+        "completed30": "Abgeschlossene Ressourcen in den letzten 30 Tagen",
+        "consistency": "Lern-Konstanz, letzte 30 Tage",
+        "consistencySub": "Abgeschlossene Ressourcen pro Tag, über alle Lernpfade"
+      }
+    },
+    "archive": {
+      "title": "Archiv",
+      "subtitle": "Lernpfade, die du abgeschlossen oder entfernt hast.",
+      "completedHeading": "Abgeschlossene Lernpfade",
+      "completedEmpty": "Noch keine abgeschlossenen Lernpfade. Schließe einen Lernpfad ab und er wird hier archiviert.",
+      "completedBadge": "Abgeschlossen",
+      "resourceCount": "{count, plural, one {# Ressource} other {# Ressourcen}}",
+      "viewJourney": "Lernpfad ansehen",
+      "deletedHeading": "Gelöschte Lernpfade",
+      "deletedInfo": "Gelöschte Lernpfade können jederzeit wiederhergestellt werden, bevor sie endgültig gelöscht werden.",
+      "trashEmpty": "Nichts im Papierkorb.",
+      "purgedIn": "endgültig gelöscht in {count, plural, one {# Tag} other {# Tagen}}",
+      "restore": "Wiederherstellen",
+      "deletePermanently": "Endgültig löschen",
+      "purgeTitle": "Endgültig löschen?",
+      "purgeDesc": "„{name}“ wird endgültig gelöscht, samt aller Einheiten, Kapitel und Ressourcen. Das kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen"
+    },
+    "resources": {
+      "title": "Meine Ressourcen",
+      "subtitle": "Alles, was du aus deinen Lernpfaden gespeichert hast, an einem Ort.",
+      "dragHint": "Ziehe eine Ressource auf einen Ordner, um sie abzulegen.",
+      "loadError": "Deine Ressourcen konnten nicht geladen werden: {error}",
+      "retry": "Erneut versuchen",
+      "folders": "Ordner",
+      "items": "{count, plural, one {# Element} other {# Elemente}}",
+      "folderOptions": "Ordneroptionen",
+      "rename": "Umbenennen",
+      "deleteFolder": "Ordner löschen",
+      "newFolder": "Neuer Ordner",
+      "savedResources": "Gespeicherte Ressourcen",
+      "noSavedTitle": "Noch keine gespeicherten Ressourcen",
+      "noSavedBody": "Setze Ressourcen aus deinen Lernpfaden als Lesezeichen (das Lesezeichen-Symbol in jeder Ressourcenzeile), und sie sammeln sich hier.",
+      "addFolder": "Ordner hinzufügen",
+      "folderEmpty": "Dieser Ordner ist leer. Ziehe gespeicherte Ressourcen auf den Ordner, um sie hier abzulegen.",
+      "folderContents": "Ressourcen in diesem Ordner. Entferne eine, um sie zurück in deine Speicherliste zu senden.",
+      "removeFromFolder": "Aus Ordner entfernen",
+      "removeSaved": "Aus gespeicherten Ressourcen entfernen",
+      "renameFolder": "Ordner umbenennen",
+      "folderName": "Ordnername",
+      "cancel": "Abbrechen",
+      "save": "Speichern"
     }
   },
   "settings": {

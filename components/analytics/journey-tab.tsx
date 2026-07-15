@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Loader2, Inbox } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -14,7 +15,7 @@ import {
   Tooltip,
 } from "recharts";
 import { Progress } from "@/components/ui/progress";
-import { ResourceTypeIcon, resourceTypeLabel } from "@/components/shared/icon";
+import { ResourceTypeIcon } from "@/components/shared/icon";
 import {
   listAnalyticsJourneys,
   getPerJourneyAnalytics,
@@ -23,6 +24,8 @@ import {
 } from "@/lib/data/analytics";
 
 export function JourneyTab() {
+  const t = useTranslations("app.analytics.journey");
+  const tr = useTranslations("app.resource");
   const [journeys, setJourneys] = useState<JourneyOption[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
   const [data, setData] = useState<PerJourneyAnalytics | null>(null);
@@ -60,7 +63,7 @@ export function JourneyTab() {
     return (
       <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card/40 p-12 text-center">
         <Inbox className="h-8 w-8 text-muted-foreground" />
-        <p className="text-sm font-medium">No journeys yet</p>
+        <p className="text-sm font-medium">{t("noJourneys")}</p>
       </div>
     );
   }
@@ -89,7 +92,7 @@ export function JourneyTab() {
             <div className="flex items-center justify-between text-sm">
               <span className="font-semibold">{data.journeyName}</span>
               <span className="font-bold text-primary">
-                {data.completedResources}/{data.totalResources} resources
+                {t("resources", { done: data.completedResources, total: data.totalResources })}
               </span>
             </div>
             <Progress
@@ -99,10 +102,10 @@ export function JourneyTab() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-            <p className="text-sm font-semibold">Progress over time</p>
-            <p className="text-xs text-muted-foreground">Cumulative resources completed</p>
+            <p className="text-sm font-semibold">{t("progressOverTime")}</p>
+            <p className="text-xs text-muted-foreground">{t("cumulative")}</p>
             {data.progressHistory.length === 0 ? (
-              <EmptyChart label="No completions yet for this journey." />
+              <EmptyChart label={t("noCompletions")} />
             ) : (
               <div className="mt-4 h-56 w-full">
                 <ResponsiveContainer width="100%" height="100%">
@@ -126,9 +129,9 @@ export function JourneyTab() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-              <p className="text-sm font-semibold">Resources completed per week</p>
+              <p className="text-sm font-semibold">{t("perWeek")}</p>
               {data.resourcesPerWeek.length === 0 ? (
-                <EmptyChart label="No weekly activity yet." />
+                <EmptyChart label={t("noWeekly")} />
               ) : (
                 <div className="mt-4 h-48 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -145,18 +148,18 @@ export function JourneyTab() {
             </div>
 
             <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-              <p className="text-sm font-semibold">Resource types consumed</p>
+              <p className="text-sm font-semibold">{t("typesConsumed")}</p>
               {data.resourceTypeBreakdown.length === 0 ? (
-                <EmptyChart label="No resources completed yet." />
+                <EmptyChart label={t("noTypes")} />
               ) : (
                 <div className="mt-4 space-y-3">
-                  {data.resourceTypeBreakdown.map((t) => (
-                    <div key={t.type} className="flex items-center gap-3">
+                  {data.resourceTypeBreakdown.map((rt) => (
+                    <div key={rt.type} className="flex items-center gap-3">
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                        <ResourceTypeIcon type={t.type} className="h-4 w-4" />
+                        <ResourceTypeIcon type={rt.type} className="h-4 w-4" />
                       </span>
-                      <span className="flex-1 text-sm">{resourceTypeLabel[t.type]}</span>
-                      <span className="text-sm font-semibold">{t.count}</span>
+                      <span className="flex-1 text-sm">{tr(`type.${rt.type}`)}</span>
+                      <span className="text-sm font-semibold">{rt.count}</span>
                     </div>
                   ))}
                 </div>

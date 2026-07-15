@@ -497,6 +497,95 @@
       "familiar": "なんとなく",
       "curating": "キュレーション中…",
       "gap": "ギャップ"
+    },
+    "proGate": {
+      "upgradeToPro": "Pro にアップグレード"
+    },
+    "analytics": {
+      "title": "{name} の分析",
+      "subtitle": "すべてのジャーニーにわたるあなたの学習の勢い。",
+      "tabs": {
+        "overview": "概要",
+        "journey": "ジャーニー別",
+        "trends": "トレンド"
+      },
+      "freeTitle": "Pro プラン専用",
+      "freeSubtitle": "分析と進捗インサイトは Pro 機能です。アップグレードして連続学習、トレンド、ジャーニー別の内訳を解放しましょう。",
+      "emptyTitle": "まだ分析がありません",
+      "emptyBody": "学習してリソースを完了すると、連続学習、トレンド、ジャーニー別の内訳がここに表示されます。",
+      "overview": {
+        "journeysInProgress": "進行中のジャーニー",
+        "journeysCompleted": "完了したジャーニー",
+        "currentStreak": "現在の連続日数",
+        "days": "{count} 日",
+        "longest": "最長: {value}",
+        "resourcesCompleted": "完了したリソース",
+        "overallPct": "全体 {pct}%",
+        "chaptersThisWeek": "今週完了したチャプター",
+        "chaptersThisMonth": "今月完了したチャプター",
+        "notShownLabel": "まだ表示されません:",
+        "notShownBody": "総学習時間とメッセージ単位のチャット履歴は現在アプリのどこにも記録されておらず、セッション/時間のログはなく、チャットメモリテーブルはタイムスタンプ付き履歴ではなくジャーニーごとに1つの圧縮された要約を保存します。上記のすべては推定ではなく実際の完了データから算出されています。"
+      },
+      "journey": {
+        "noJourneys": "まだジャーニーがありません",
+        "resources": "リソース {done}/{total}",
+        "progressOverTime": "時間ごとの進捗",
+        "cumulative": "累計完了リソース",
+        "noCompletions": "このジャーニーではまだ完了がありません。",
+        "perWeek": "週ごとの完了リソース",
+        "noWeekly": "まだ週間のアクティビティがありません。",
+        "typesConsumed": "利用したリソースの種類",
+        "noTypes": "まだリソースを完了していません。"
+      },
+      "trends": {
+        "activeDays": "直近30日のアクティブ日数",
+        "completed30": "直近30日で完了したリソース",
+        "consistency": "学習の継続性、直近30日",
+        "consistencySub": "すべてのジャーニーにわたる1日あたりの完了リソース"
+      }
+    },
+    "archive": {
+      "title": "アーカイブ",
+      "subtitle": "完了または削除したジャーニー。",
+      "completedHeading": "完了した学習ジャーニー",
+      "completedEmpty": "完了したジャーニーはまだありません。ジャーニーを終えるとここにアーカイブされます。",
+      "completedBadge": "完了",
+      "resourceCount": "リソース {count} 件",
+      "viewJourney": "ジャーニーを見る",
+      "deletedHeading": "削除した学習ジャーニー",
+      "deletedInfo": "削除したジャーニーは、完全に削除される前ならいつでも復元できます。",
+      "trashEmpty": "ゴミ箱は空です。",
+      "purgedIn": "{count} 日後に完全削除",
+      "restore": "復元",
+      "deletePermanently": "完全に削除",
+      "purgeTitle": "完全に削除しますか？",
+      "purgeDesc": "「{name}」は、すべてのユニット、チャプター、リソースとともに完全に削除されます。元に戻せません。",
+      "cancel": "キャンセル"
+    },
+    "resources": {
+      "title": "マイリソース",
+      "subtitle": "ジャーニーから保存したすべてを、一つの場所に。",
+      "dragHint": "リソースをフォルダにドラッグして整理しましょう。",
+      "loadError": "リソースを読み込めませんでした：{error}",
+      "retry": "再試行",
+      "folders": "フォルダ",
+      "items": "{count} 件",
+      "folderOptions": "フォルダのオプション",
+      "rename": "名前を変更",
+      "deleteFolder": "フォルダを削除",
+      "newFolder": "新しいフォルダ",
+      "savedResources": "保存したリソース",
+      "noSavedTitle": "まだ保存したリソースがありません",
+      "noSavedBody": "ジャーニーでリソースをブックマーク（各リソース行のブックマークアイコン）すると、ここに集まります。",
+      "addFolder": "フォルダを追加",
+      "folderEmpty": "このフォルダは空です。保存したリソースをフォルダにドラッグしてここに整理しましょう。",
+      "folderContents": "このフォルダ内のリソースです。1つ削除すると保存リストに戻ります。",
+      "removeFromFolder": "フォルダから削除",
+      "removeSaved": "保存したリソースから削除",
+      "renameFolder": "フォルダの名前を変更",
+      "folderName": "フォルダ名",
+      "cancel": "キャンセル",
+      "save": "保存"
     }
   },
   "settings": {

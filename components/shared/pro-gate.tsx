@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,7 @@ export function ProGate({
   className?: string;
   contentClassName?: string;
 }) {
+  const t = useTranslations("app.proGate");
   if (!active) return <>{children}</>;
 
   return (
@@ -44,7 +46,7 @@ export function ProGate({
         </p>
         {subtitle && <p className="max-w-xs text-sm text-muted-foreground">{subtitle}</p>}
         <Button asChild variant="gradient" className="mt-1">
-          <Link href="/upgrade">Upgrade to Pro</Link>
+          <Link href="/upgrade">{t("upgradeToPro")}</Link>
         </Button>
       </div>
     </div>

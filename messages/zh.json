@@ -497,6 +497,95 @@
       "familiar": "熟悉",
       "curating": "整理中…",
       "gap": "空缺"
+    },
+    "proGate": {
+      "upgradeToPro": "升级到 Pro"
+    },
+    "analytics": {
+      "title": "{name} 的分析",
+      "subtitle": "你在所有旅程中的学习势头。",
+      "tabs": {
+        "overview": "概览",
+        "journey": "按旅程",
+        "trends": "趋势"
+      },
+      "freeTitle": "仅限 Pro 套餐",
+      "freeSubtitle": "分析与进度洞察是 Pro 功能。升级即可解锁连续学习、趋势和按旅程细分。",
+      "emptyTitle": "暂无分析",
+      "emptyBody": "随着你学习并完成资源，你的连续学习、趋势和按旅程细分将显示在这里。",
+      "overview": {
+        "journeysInProgress": "进行中的旅程",
+        "journeysCompleted": "已完成的旅程",
+        "currentStreak": "当前连续天数",
+        "days": "{count} 天",
+        "longest": "最长：{value}",
+        "resourcesCompleted": "已完成的资源",
+        "overallPct": "总体 {pct}%",
+        "chaptersThisWeek": "本周完成的章节",
+        "chaptersThisMonth": "本月完成的章节",
+        "notShownLabel": "暂未显示：",
+        "notShownBody": "目前应用中任何地方都不会跟踪总学习时间和逐条聊天记录，没有会话/时长日志，聊天记忆表为每个旅程存储一份压缩摘要，而非带时间戳的历史记录。以上所有内容均根据真实的完成数据计算，而非估算。"
+      },
+      "journey": {
+        "noJourneys": "暂无旅程",
+        "resources": "{done}/{total} 个资源",
+        "progressOverTime": "随时间的进度",
+        "cumulative": "累计完成的资源",
+        "noCompletions": "此旅程尚无完成记录。",
+        "perWeek": "每周完成的资源",
+        "noWeekly": "暂无每周活动。",
+        "typesConsumed": "已消费的资源类型",
+        "noTypes": "尚未完成任何资源。"
+      },
+      "trends": {
+        "activeDays": "最近 30 天的活跃天数",
+        "completed30": "最近 30 天完成的资源",
+        "consistency": "学习坚持度，最近 30 天",
+        "consistencySub": "每天完成的资源，涵盖所有旅程"
+      }
+    },
+    "archive": {
+      "title": "归档",
+      "subtitle": "你已完成或移除的旅程。",
+      "completedHeading": "已完成的学习旅程",
+      "completedEmpty": "暂无已完成的旅程。完成一个旅程后，它会归档到这里。",
+      "completedBadge": "已完成",
+      "resourceCount": "{count} 个资源",
+      "viewJourney": "查看旅程",
+      "deletedHeading": "已删除的学习旅程",
+      "deletedInfo": "已删除的旅程在被永久删除之前可随时恢复。",
+      "trashEmpty": "回收站为空。",
+      "purgedIn": "{count} 天后永久删除",
+      "restore": "恢复",
+      "deletePermanently": "永久删除",
+      "purgeTitle": "永久删除？",
+      "purgeDesc": "“{name}”将连同其所有单元、章节和资源一起被永久删除。此操作无法撤销。",
+      "cancel": "取消"
+    },
+    "resources": {
+      "title": "我的资源",
+      "subtitle": "你从旅程中保存的一切，尽在一处。",
+      "dragHint": "将资源拖到文件夹上即可归档。",
+      "loadError": "无法加载你的资源：{error}",
+      "retry": "重试",
+      "folders": "文件夹",
+      "items": "{count} 项",
+      "folderOptions": "文件夹选项",
+      "rename": "重命名",
+      "deleteFolder": "删除文件夹",
+      "newFolder": "新建文件夹",
+      "savedResources": "已保存的资源",
+      "noSavedTitle": "暂无已保存的资源",
+      "noSavedBody": "在旅程中收藏资源（任意资源行上的书签图标），它们会汇集在这里。",
+      "addFolder": "添加文件夹",
+      "folderEmpty": "此文件夹为空。将已保存的资源拖到文件夹上即可归档到这里。",
+      "folderContents": "此文件夹中的资源。移除某个可将其送回你的已保存列表。",
+      "removeFromFolder": "从文件夹移除",
+      "removeSaved": "从已保存资源中移除",
+      "renameFolder": "重命名文件夹",
+      "folderName": "文件夹名称",
+      "cancel": "取消",
+      "save": "保存"
     }
   },
   "settings": {

@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Loader2, Flame, BookOpen, CheckCircle2, CalendarDays, Info } from "lucide-react";
 import { getOverviewAnalytics, type OverviewAnalytics } from "@/lib/data/analytics";
 
 export function OverviewTab() {
+  const t = useTranslations("app.analytics.overview");
   const [data, setData] = useState<OverviewAnalytics | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,37 +37,37 @@ export function OverviewTab() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           icon={<BookOpen className="h-5 w-5" />}
-          label="Journeys in progress"
+          label={t("journeysInProgress")}
           value={String(data.journeysInProgress)}
         />
         <StatCard
           icon={<CheckCircle2 className="h-5 w-5" />}
-          label="Journeys completed"
+          label={t("journeysCompleted")}
           value={String(data.journeysCompleted)}
         />
         <StatCard
           icon={<Flame className="h-5 w-5" />}
-          label="Current streak"
-          value={`${data.currentStreakDays} ${data.currentStreakDays === 1 ? "day" : "days"}`}
-          sub={`Longest: ${data.longestStreakDays} ${data.longestStreakDays === 1 ? "day" : "days"}`}
+          label={t("currentStreak")}
+          value={t("days", { count: data.currentStreakDays })}
+          sub={t("longest", { value: t("days", { count: data.longestStreakDays }) })}
         />
         <StatCard
           icon={<CalendarDays className="h-5 w-5" />}
-          label="Resources completed"
+          label={t("resourcesCompleted")}
           value={`${data.totalResourcesCompleted}/${data.totalResources}`}
-          sub={`${pct}% overall`}
+          sub={t("overallPct", { pct })}
         />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <StatCard
           icon={<CheckCircle2 className="h-5 w-5" />}
-          label="Chapters completed this week"
+          label={t("chaptersThisWeek")}
           value={String(data.chaptersCompletedThisWeek)}
         />
         <StatCard
           icon={<CheckCircle2 className="h-5 w-5" />}
-          label="Chapters completed this month"
+          label={t("chaptersThisMonth")}
           value={String(data.chaptersCompletedThisMonth)}
         />
       </div>
@@ -73,12 +75,8 @@ export function OverviewTab() {
       <div className="flex items-start gap-2.5 rounded-2xl border border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground">
         <Info className="mt-0.5 h-4 w-4 shrink-0" />
         <p>
-          <span className="font-medium text-foreground">Not shown yet: </span>
-          total study time and per-message chat history aren&apos;t tracked anywhere
-          in the app today, there&apos;s no session/duration log, and the chat
-          memory table stores one compressed summary per journey rather than a
-          timestamped history. Everything above is computed from real
-          completion data instead of estimated.
+          <span className="font-medium text-foreground">{t("notShownLabel")} </span>
+          {t("notShownBody")}
         </p>
       </div>
     </div>

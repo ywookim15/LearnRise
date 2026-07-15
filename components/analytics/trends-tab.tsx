@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { getTrendAnalytics, type TrendPoint } from "@/lib/data/analytics";
 
 export function TrendsTab() {
+  const t = useTranslations("app.analytics.trends");
   const [data, setData] = useState<TrendPoint[] | null>(null);
 
   useEffect(() => {
@@ -33,20 +35,20 @@ export function TrendsTab() {
         <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
           <p className="text-2xl font-bold tracking-tight">{activeDays}/30</p>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Active days in the last 30
+            {t("activeDays")}
           </p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
           <p className="text-2xl font-bold tracking-tight">{totalCompletions}</p>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Resources completed in the last 30 days
+            {t("completed30")}
           </p>
         </div>
       </div>
 
       <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
-        <p className="text-sm font-semibold">Study consistency, last 30 days</p>
-        <p className="text-xs text-muted-foreground">Resources completed per day, across all journeys</p>
+        <p className="text-sm font-semibold">{t("consistency")}</p>
+        <p className="text-xs text-muted-foreground">{t("consistencySub")}</p>
         <div className="mt-4 h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
