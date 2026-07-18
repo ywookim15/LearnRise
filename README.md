@@ -1,6 +1,6 @@
-# METIS — Your Learning GPS
+# LearnRise — Your Learning GPS
 
-METIS is an AI-powered adaptive learning-roadmap product for high school and college
+LearnRise is an AI-powered adaptive learning-roadmap product for high school and college
 students. A student describes a goal ("Ace the AP Biology genetics unit," "Get through
 system design for interviews"), and METIS researches a real reference syllabus,
 generates a structured roadmap (units → chapters → learning objectives), curates and
