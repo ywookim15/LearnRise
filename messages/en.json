@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "Menu",
       "dashboard": "Dashboard",
-      "analytics": "Analytics",
       "archive": "Archive",
       "resources": "Resources",
       "settings": "Settings",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Upgrade to Pro"
-    },
-    "analytics": {
-      "title": "{name}'s Analytics",
-      "subtitle": "Your learning momentum across all journeys.",
-      "tabs": {
-        "overview": "Overview",
-        "journey": "Per-journey",
-        "trends": "Trends"
-      },
-      "freeTitle": "Pro plan use only",
-      "freeSubtitle": "Analytics & progress insights are a Pro feature. Upgrade to unlock streaks, trends, and per-journey breakdowns.",
-      "emptyTitle": "No analytics yet",
-      "emptyBody": "As you study and complete resources, your streaks, trends, and per-journey breakdown will appear here.",
-      "overview": {
-        "journeysInProgress": "Journeys in progress",
-        "journeysCompleted": "Journeys completed",
-        "currentStreak": "Current streak",
-        "days": "{count, plural, one {# day} other {# days}}",
-        "longest": "Longest: {value}",
-        "resourcesCompleted": "Resources completed",
-        "overallPct": "{pct}% overall",
-        "chaptersThisWeek": "Chapters completed this week",
-        "chaptersThisMonth": "Chapters completed this month",
-        "notShownLabel": "Not shown yet:",
-        "notShownBody": "total study time and per-message chat history aren't tracked anywhere in the app today, there's no session/duration log, and the chat memory table stores one compressed summary per journey rather than a timestamped history. Everything above is computed from real completion data instead of estimated."
-      },
-      "journey": {
-        "noJourneys": "No journeys yet",
-        "resources": "{done}/{total} resources",
-        "progressOverTime": "Progress over time",
-        "cumulative": "Cumulative resources completed",
-        "noCompletions": "No completions yet for this journey.",
-        "perWeek": "Resources completed per week",
-        "noWeekly": "No weekly activity yet.",
-        "typesConsumed": "Resource types consumed",
-        "noTypes": "No resources completed yet."
-      },
-      "trends": {
-        "activeDays": "Active days in the last 30",
-        "completed30": "Resources completed in the last 30 days",
-        "consistency": "Study consistency, last 30 days",
-        "consistencySub": "Resources completed per day, across all journeys"
-      }
     },
     "archive": {
       "title": "Archive",

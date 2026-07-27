@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "菜单",
       "dashboard": "仪表板",
-      "analytics": "分析",
       "archive": "归档",
       "resources": "资源",
       "settings": "设置",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "升级到 Pro"
-    },
-    "analytics": {
-      "title": "{name} 的分析",
-      "subtitle": "你在所有旅程中的学习势头。",
-      "tabs": {
-        "overview": "概览",
-        "journey": "按旅程",
-        "trends": "趋势"
-      },
-      "freeTitle": "仅限 Pro 套餐",
-      "freeSubtitle": "分析与进度洞察是 Pro 功能。升级即可解锁连续学习、趋势和按旅程细分。",
-      "emptyTitle": "暂无分析",
-      "emptyBody": "随着你学习并完成资源，你的连续学习、趋势和按旅程细分将显示在这里。",
-      "overview": {
-        "journeysInProgress": "进行中的旅程",
-        "journeysCompleted": "已完成的旅程",
-        "currentStreak": "当前连续天数",
-        "days": "{count} 天",
-        "longest": "最长：{value}",
-        "resourcesCompleted": "已完成的资源",
-        "overallPct": "总体 {pct}%",
-        "chaptersThisWeek": "本周完成的章节",
-        "chaptersThisMonth": "本月完成的章节",
-        "notShownLabel": "暂未显示：",
-        "notShownBody": "目前应用中任何地方都不会跟踪总学习时间和逐条聊天记录，没有会话/时长日志，聊天记忆表为每个旅程存储一份压缩摘要，而非带时间戳的历史记录。以上所有内容均根据真实的完成数据计算，而非估算。"
-      },
-      "journey": {
-        "noJourneys": "暂无旅程",
-        "resources": "{done}/{total} 个资源",
-        "progressOverTime": "随时间的进度",
-        "cumulative": "累计完成的资源",
-        "noCompletions": "此旅程尚无完成记录。",
-        "perWeek": "每周完成的资源",
-        "noWeekly": "暂无每周活动。",
-        "typesConsumed": "已消费的资源类型",
-        "noTypes": "尚未完成任何资源。"
-      },
-      "trends": {
-        "activeDays": "最近 30 天的活跃天数",
-        "completed30": "最近 30 天完成的资源",
-        "consistency": "学习坚持度，最近 30 天",
-        "consistencySub": "每天完成的资源，涵盖所有旅程"
-      }
     },
     "archive": {
       "title": "归档",

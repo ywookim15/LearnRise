@@ -243,17 +243,33 @@ ${languageDirective(inputs.language)}
 
 Call save_roadmap once with the revised remaining roadmap.`;
 
-  const raw = await callStructuredWithFallback<unknown>(
-    {
-      provider: LLM.planner.provider,
-      model: LLM.planner.model,
-      prompt,
-      tool: SAVE_ROADMAP,
-      temperature: 0.4,
-    },
-    LLM.planner.fallback
-  );
-  return validateRoadmap(raw, inputs.goal);
+  const maxValidationAttempts = 2;
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= maxValidationAttempts; attempt++) {
+    const raw = await callStructuredWithFallback<unknown>(
+      {
+        provider: LLM.planner.provider,
+        model: LLM.planner.model,
+        prompt,
+        tool: SAVE_ROADMAP,
+        temperature: 0.4,
+      },
+      LLM.planner.fallback
+    );
+    try {
+      return validateRoadmap(raw, inputs.goal);
+    } catch (err) {
+      lastError = err;
+      console.error(
+        `[planner] replan validateRoadmap failed on attempt ${attempt}/${maxValidationAttempts}:`,
+        err,
+        "raw:",
+        JSON.stringify(raw).slice(0, 2000)
+      );
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Planner failed to produce a valid roadmap");
 }
 
 const ADJUST_CHAPTER_TOOL: StructuredTool = {
@@ -335,26 +351,51 @@ Call adjust_chapter_objective once with the revised objective for THIS chapter o
   return { learningObjective, difficultyNote };
 }
 
-/** Stage 2 entry point: syllabus reference + Gemini function call -> roadmap. */
+/**
+ * Stage 2 entry point: syllabus reference + Gemini function call -> roadmap.
+ *
+ * validateRoadmap() runs OUTSIDE callStructured's own retry loop, so a call
+ * that technically succeeds (Gemini invokes save_roadmap) but returns
+ * degenerate content (no units, or units with no chapters) previously had
+ * zero retries — one bad structured-output response permanently failed
+ * journey creation even though the API call itself was fine. Retry the whole
+ * generate+validate cycle a couple of times before giving up.
+ */
 export async function generateRoadmap(inputs: PlannerInputs): Promise<RoadmapOutput> {
   // Sub-step 1: one reference-syllabus search. A failure here degrades
   // gracefully (the Planner falls back to curriculum conventions).
   const syllabusRef = await findReferenceSyllabus(inputs.goal);
 
-  const raw = await callStructuredWithFallback<unknown>(
-    {
-      provider: LLM.planner.provider,
-      model: LLM.planner.model,
-      prompt: buildPlannerPrompt(inputs, syllabusRef),
-      tool: SAVE_ROADMAP,
-      temperature: 0.4,
-      // Interactive path: fail fast on the primary (Gemini) so we reach the
-      // fallback quickly and the whole request stays well under the timeout.
-      maxAttempts: 2,
-      maxRetryWaitMs: 5_000,
-    },
-    LLM.planner.fallback
-  );
+  const maxValidationAttempts = 2;
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= maxValidationAttempts; attempt++) {
+    const raw = await callStructuredWithFallback<unknown>(
+      {
+        provider: LLM.planner.provider,
+        model: LLM.planner.model,
+        prompt: buildPlannerPrompt(inputs, syllabusRef),
+        tool: SAVE_ROADMAP,
+        temperature: 0.4,
+        // Interactive path: fail fast on the primary (Gemini) so we reach the
+        // fallback quickly and the whole request stays well under the timeout.
+        maxAttempts: 2,
+        maxRetryWaitMs: 5_000,
+      },
+      LLM.planner.fallback
+    );
 
-  return validateRoadmap(raw, inputs.goal);
+    try {
+      return validateRoadmap(raw, inputs.goal);
+    } catch (err) {
+      lastError = err;
+      console.error(
+        `[planner] validateRoadmap failed on attempt ${attempt}/${maxValidationAttempts}:`,
+        err,
+        "raw:",
+        JSON.stringify(raw).slice(0, 2000)
+      );
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Planner failed to produce a valid roadmap");
 }

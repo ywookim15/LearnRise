@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "Menú",
       "dashboard": "Panel",
-      "analytics": "Analíticas",
       "archive": "Archivo",
       "resources": "Recursos",
       "settings": "Ajustes",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Mejorar a Pro"
-    },
-    "analytics": {
-      "title": "Analíticas de {name}",
-      "subtitle": "Tu impulso de aprendizaje en todas tus rutas.",
-      "tabs": {
-        "overview": "Resumen",
-        "journey": "Por ruta",
-        "trends": "Tendencias"
-      },
-      "freeTitle": "Solo para el plan Pro",
-      "freeSubtitle": "Las analíticas y los datos de progreso son una función Pro. Mejora para desbloquear rachas, tendencias y desgloses por ruta.",
-      "emptyTitle": "Aún no hay analíticas",
-      "emptyBody": "A medida que estudies y completes recursos, tus rachas, tendencias y desglose por ruta aparecerán aquí.",
-      "overview": {
-        "journeysInProgress": "Rutas en curso",
-        "journeysCompleted": "Rutas completadas",
-        "currentStreak": "Racha actual",
-        "days": "{count, plural, one {# día} other {# días}}",
-        "longest": "Más larga: {value}",
-        "resourcesCompleted": "Recursos completados",
-        "overallPct": "{pct}% en total",
-        "chaptersThisWeek": "Capítulos completados esta semana",
-        "chaptersThisMonth": "Capítulos completados este mes",
-        "notShownLabel": "Aún no se muestra:",
-        "notShownBody": "el tiempo total de estudio y el historial de chat por mensaje no se registran en ninguna parte de la app hoy, no hay un registro de sesión/duración, y la tabla de memoria del chat almacena un resumen comprimido por ruta en lugar de un historial con marcas de tiempo. Todo lo anterior se calcula a partir de datos reales de finalización, no estimados."
-      },
-      "journey": {
-        "noJourneys": "Aún no hay rutas",
-        "resources": "{done}/{total} recursos",
-        "progressOverTime": "Progreso a lo largo del tiempo",
-        "cumulative": "Recursos completados acumulados",
-        "noCompletions": "Aún no hay finalizaciones en esta ruta.",
-        "perWeek": "Recursos completados por semana",
-        "noWeekly": "Aún no hay actividad semanal.",
-        "typesConsumed": "Tipos de recursos consumidos",
-        "noTypes": "Aún no se han completado recursos."
-      },
-      "trends": {
-        "activeDays": "Días activos en los últimos 30",
-        "completed30": "Recursos completados en los últimos 30 días",
-        "consistency": "Constancia de estudio, últimos 30 días",
-        "consistencySub": "Recursos completados por día, en todas las rutas"
-      }
     },
     "archive": {
       "title": "Archivo",

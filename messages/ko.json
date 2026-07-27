@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "메뉴",
       "dashboard": "대시보드",
-      "analytics": "분석",
       "archive": "보관함",
       "resources": "자료",
       "settings": "설정",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Pro로 업그레이드"
-    },
-    "analytics": {
-      "title": "{name}님의 분석",
-      "subtitle": "모든 여정에 걸친 당신의 학습 흐름.",
-      "tabs": {
-        "overview": "개요",
-        "journey": "여정별",
-        "trends": "추세"
-      },
-      "freeTitle": "Pro 플랜 전용",
-      "freeSubtitle": "분석 및 진행 인사이트는 Pro 기능입니다. 업그레이드하여 연속 학습, 추세, 여정별 분석을 잠금 해제하세요.",
-      "emptyTitle": "아직 분석 데이터가 없습니다",
-      "emptyBody": "학습하고 자료를 완료하면 연속 학습, 추세, 여정별 분석이 여기에 표시됩니다.",
-      "overview": {
-        "journeysInProgress": "진행 중인 여정",
-        "journeysCompleted": "완료한 여정",
-        "currentStreak": "현재 연속 학습",
-        "days": "{count}일",
-        "longest": "최장: {value}",
-        "resourcesCompleted": "완료한 자료",
-        "overallPct": "전체 {pct}%",
-        "chaptersThisWeek": "이번 주 완료한 챕터",
-        "chaptersThisMonth": "이번 달 완료한 챕터",
-        "notShownLabel": "아직 표시되지 않음:",
-        "notShownBody": "총 학습 시간과 메시지별 채팅 기록은 현재 앱 어디에도 기록되지 않으며, 세션/시간 로그가 없고, 채팅 메모리 테이블은 타임스탬프가 있는 기록 대신 여정마다 하나의 압축 요약을 저장합니다. 위의 모든 항목은 추정이 아닌 실제 완료 데이터로 계산됩니다."
-      },
-      "journey": {
-        "noJourneys": "아직 여정이 없습니다",
-        "resources": "자료 {done}/{total}",
-        "progressOverTime": "시간에 따른 진행",
-        "cumulative": "누적 완료 자료",
-        "noCompletions": "이 여정에서 완료한 항목이 아직 없습니다.",
-        "perWeek": "주별 완료 자료",
-        "noWeekly": "아직 주간 활동이 없습니다.",
-        "typesConsumed": "이용한 자료 유형",
-        "noTypes": "아직 완료한 자료가 없습니다."
-      },
-      "trends": {
-        "activeDays": "최근 30일 중 활동한 날",
-        "completed30": "최근 30일간 완료한 자료",
-        "consistency": "학습 꾸준함, 최근 30일",
-        "consistencySub": "모든 여정에 걸친 일별 완료 자료"
-      }
     },
     "archive": {
       "title": "보관함",

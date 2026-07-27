@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "Menü",
       "dashboard": "Dashboard",
-      "analytics": "Analysen",
       "archive": "Archiv",
       "resources": "Ressourcen",
       "settings": "Einstellungen",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Auf Pro upgraden"
-    },
-    "analytics": {
-      "title": "Analysen von {name}",
-      "subtitle": "Dein Lern-Momentum über alle Lernpfade hinweg.",
-      "tabs": {
-        "overview": "Überblick",
-        "journey": "Pro Lernpfad",
-        "trends": "Trends"
-      },
-      "freeTitle": "Nur für den Pro-Tarif",
-      "freeSubtitle": "Analysen und Fortschritts-Einblicke sind eine Pro-Funktion. Upgrade, um Serien, Trends und Aufschlüsselungen pro Lernpfad freizuschalten.",
-      "emptyTitle": "Noch keine Analysen",
-      "emptyBody": "Während du lernst und Ressourcen abschließt, erscheinen hier deine Serien, Trends und die Aufschlüsselung pro Lernpfad.",
-      "overview": {
-        "journeysInProgress": "Laufende Lernpfade",
-        "journeysCompleted": "Abgeschlossene Lernpfade",
-        "currentStreak": "Aktuelle Serie",
-        "days": "{count, plural, one {# Tag} other {# Tage}}",
-        "longest": "Längste: {value}",
-        "resourcesCompleted": "Abgeschlossene Ressourcen",
-        "overallPct": "{pct}% insgesamt",
-        "chaptersThisWeek": "Diese Woche abgeschlossene Kapitel",
-        "chaptersThisMonth": "Diesen Monat abgeschlossene Kapitel",
-        "notShownLabel": "Noch nicht angezeigt:",
-        "notShownBody": "Die gesamte Lernzeit und der Chat-Verlauf pro Nachricht werden derzeit nirgends in der App erfasst, es gibt kein Sitzungs-/Dauer-Protokoll, und die Chat-Speichertabelle speichert eine komprimierte Zusammenfassung pro Lernpfad statt eines zeitgestempelten Verlaufs. Alles oben wird aus echten Abschlussdaten berechnet, nicht geschätzt."
-      },
-      "journey": {
-        "noJourneys": "Noch keine Lernpfade",
-        "resources": "{done}/{total} Ressourcen",
-        "progressOverTime": "Fortschritt im Zeitverlauf",
-        "cumulative": "Kumulierte abgeschlossene Ressourcen",
-        "noCompletions": "Für diesen Lernpfad noch keine Abschlüsse.",
-        "perWeek": "Abgeschlossene Ressourcen pro Woche",
-        "noWeekly": "Noch keine wöchentliche Aktivität.",
-        "typesConsumed": "Genutzte Ressourcentypen",
-        "noTypes": "Noch keine Ressourcen abgeschlossen."
-      },
-      "trends": {
-        "activeDays": "Aktive Tage in den letzten 30",
-        "completed30": "Abgeschlossene Ressourcen in den letzten 30 Tagen",
-        "consistency": "Lern-Konstanz, letzte 30 Tage",
-        "consistencySub": "Abgeschlossene Ressourcen pro Tag, über alle Lernpfade"
-      }
     },
     "archive": {
       "title": "Archiv",

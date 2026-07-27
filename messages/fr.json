@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "Menu",
       "dashboard": "Tableau de bord",
-      "analytics": "Analyses",
       "archive": "Archives",
       "resources": "Ressources",
       "settings": "Paramètres",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Passer à Pro"
-    },
-    "analytics": {
-      "title": "Analyses de {name}",
-      "subtitle": "Votre élan d'apprentissage sur tous vos parcours.",
-      "tabs": {
-        "overview": "Vue d'ensemble",
-        "journey": "Par parcours",
-        "trends": "Tendances"
-      },
-      "freeTitle": "Réservé à l'offre Pro",
-      "freeSubtitle": "Les analyses et les informations de progression sont une fonctionnalité Pro. Passez à Pro pour débloquer les séries, les tendances et les détails par parcours.",
-      "emptyTitle": "Pas encore d'analyses",
-      "emptyBody": "Au fur et à mesure que vous étudiez et terminez des ressources, vos séries, tendances et détails par parcours apparaîtront ici.",
-      "overview": {
-        "journeysInProgress": "Parcours en cours",
-        "journeysCompleted": "Parcours terminés",
-        "currentStreak": "Série actuelle",
-        "days": "{count, plural, one {# jour} other {# jours}}",
-        "longest": "La plus longue : {value}",
-        "resourcesCompleted": "Ressources terminées",
-        "overallPct": "{pct}% au total",
-        "chaptersThisWeek": "Chapitres terminés cette semaine",
-        "chaptersThisMonth": "Chapitres terminés ce mois-ci",
-        "notShownLabel": "Pas encore affiché :",
-        "notShownBody": "le temps d'étude total et l'historique de chat par message ne sont suivis nulle part dans l'app aujourd'hui, il n'y a pas de journal de session/durée, et la table de mémoire du chat stocke un résumé compressé par parcours plutôt qu'un historique horodaté. Tout ce qui précède est calculé à partir de données réelles de complétion, non estimées."
-      },
-      "journey": {
-        "noJourneys": "Pas encore de parcours",
-        "resources": "{done}/{total} ressources",
-        "progressOverTime": "Progression dans le temps",
-        "cumulative": "Ressources terminées cumulées",
-        "noCompletions": "Aucune complétion pour ce parcours pour l'instant.",
-        "perWeek": "Ressources terminées par semaine",
-        "noWeekly": "Pas encore d'activité hebdomadaire.",
-        "typesConsumed": "Types de ressources consommés",
-        "noTypes": "Aucune ressource terminée pour l'instant."
-      },
-      "trends": {
-        "activeDays": "Jours actifs sur les 30 derniers",
-        "completed30": "Ressources terminées ces 30 derniers jours",
-        "consistency": "Régularité d'étude, 30 derniers jours",
-        "consistencySub": "Ressources terminées par jour, sur tous les parcours"
-      }
     },
     "archive": {
       "title": "Archives",

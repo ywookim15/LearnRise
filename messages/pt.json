@@ -114,7 +114,6 @@
     "sidebar": {
       "menu": "Menu",
       "dashboard": "Painel",
-      "analytics": "Análises",
       "archive": "Arquivo",
       "resources": "Recursos",
       "settings": "Configurações",
@@ -367,49 +366,6 @@
     },
     "proGate": {
       "upgradeToPro": "Fazer upgrade para o Pro"
-    },
-    "analytics": {
-      "title": "Análises de {name}",
-      "subtitle": "Seu ritmo de aprendizado em todas as jornadas.",
-      "tabs": {
-        "overview": "Visão geral",
-        "journey": "Por jornada",
-        "trends": "Tendências"
-      },
-      "freeTitle": "Apenas para o plano Pro",
-      "freeSubtitle": "Análises e insights de progresso são um recurso Pro. Faça upgrade para desbloquear sequências, tendências e detalhamentos por jornada.",
-      "emptyTitle": "Ainda não há análises",
-      "emptyBody": "À medida que você estuda e conclui recursos, suas sequências, tendências e detalhamento por jornada aparecerão aqui.",
-      "overview": {
-        "journeysInProgress": "Jornadas em andamento",
-        "journeysCompleted": "Jornadas concluídas",
-        "currentStreak": "Sequência atual",
-        "days": "{count, plural, one {# dia} other {# dias}}",
-        "longest": "Mais longa: {value}",
-        "resourcesCompleted": "Recursos concluídos",
-        "overallPct": "{pct}% no total",
-        "chaptersThisWeek": "Capítulos concluídos esta semana",
-        "chaptersThisMonth": "Capítulos concluídos este mês",
-        "notShownLabel": "Ainda não mostrado:",
-        "notShownBody": "o tempo total de estudo e o histórico de chat por mensagem não são rastreados em nenhum lugar do app hoje, não há registro de sessão/duração, e a tabela de memória do chat armazena um resumo compactado por jornada em vez de um histórico com data e hora. Tudo acima é calculado a partir de dados reais de conclusão, e não estimados."
-      },
-      "journey": {
-        "noJourneys": "Ainda não há jornadas",
-        "resources": "{done}/{total} recursos",
-        "progressOverTime": "Progresso ao longo do tempo",
-        "cumulative": "Recursos concluídos acumulados",
-        "noCompletions": "Ainda não há conclusões nesta jornada.",
-        "perWeek": "Recursos concluídos por semana",
-        "noWeekly": "Ainda não há atividade semanal.",
-        "typesConsumed": "Tipos de recursos consumidos",
-        "noTypes": "Ainda não há recursos concluídos."
-      },
-      "trends": {
-        "activeDays": "Dias ativos nos últimos 30",
-        "completed30": "Recursos concluídos nos últimos 30 dias",
-        "consistency": "Consistência de estudo, últimos 30 dias",
-        "consistencySub": "Recursos concluídos por dia, em todas as jornadas"
-      }
     },
     "archive": {
       "title": "Arquivo",

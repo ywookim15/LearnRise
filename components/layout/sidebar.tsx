@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown } from "lucide-react";
+import { LayoutGrid, Archive, FolderClosed, Settings, Crown } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/dashboard", key: "dashboard", icon: LayoutGrid, matchPrefixes: ["/dashboard", "/journey"] },
-  { href: "/analytics", key: "analytics", icon: LineChart, matchPrefixes: ["/analytics"] },
   { href: "/archive", key: "archive", icon: Archive, matchPrefixes: ["/archive"] },
   { href: "/resources", key: "resources", icon: FolderClosed, matchPrefixes: ["/resources"] },
 ] as const;
