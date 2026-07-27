@@ -67,9 +67,11 @@ function parseRateLimit(err: unknown): { isRateLimit: boolean; retryAfterSec: nu
 /**
  * Detect an error that retrying will never fix — a denied/suspended API
  * project (403 PERMISSION_DENIED, as thrown by @google/genai's ApiError), an
- * invalid key, or a missing key env var. Retrying these just burns the
- * request's time budget for nothing, so callStructured skips its remaining
- * attempts and callStructuredWithFallback moves to the fallback immediately.
+ * account with no payment method / exhausted paid quota (402 Payment
+ * Required, seen from Cerebras), an invalid key, or a missing key env var.
+ * Retrying these just burns the request's time budget for nothing, so
+ * callStructured skips its remaining attempts and callStructuredWithFallback
+ * moves to the fallback immediately.
  */
 function isPermanentAuthError(err: unknown): boolean {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +81,10 @@ function isPermanentAuthError(err: unknown): boolean {
   return (
     status === 403 ||
     status === 401 ||
-    /PERMISSION_DENIED|permission denied|invalid api key|unauthorized|missing.*api.?key/i.test(msg)
+    status === 402 ||
+    /PERMISSION_DENIED|permission denied|invalid api key|unauthorized|missing.*api.?key|payment required|insufficient.*(credit|balance|quota)/i.test(
+      msg
+    )
   );
 }
 

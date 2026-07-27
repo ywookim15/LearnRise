@@ -12,30 +12,37 @@ export interface AgentModel {
 // Per-call-site provider/model. Each is independently overridable via env, so
 // the allocation can be retuned in Vercel without a code change.
 //
-//   Planner  -> Cerebras          (TEMPORARY primary — see note below)
-//   Curator  -> Cerebras          (high volume; big free daily quota)
+// TEMPORARY PROVIDER OUTAGE NOTE (both re-check before flipping defaults back):
+//   - Gemini:   the API project is denied access (403 PERMISSION_DENIED),
+//               a Google-side account issue.
+//   - Cerebras: the account is returning 402 Payment Required.
+// Both Planner and Curator were originally on Gemini/Cerebras respectively;
+// with both down, everything routes through Groq for now. Cerebras is kept
+// as each call site's fallback (harmless — isPermanentAuthError in
+// lib/server/llm/index.ts makes a still-broken fallback fail fast) so
+// recovery is automatic once its billing is fixed, no redeploy required.
+//
+//   Planner  -> Groq Llama 3.3 70B (low volume; needs the stronger model)
+//   Curator  -> Groq Llama 3.1 8B  (high volume; kept off the 70B bucket
+//                                    Planner/Chief share)
 //   Chief    -> Groq Llama 3.3 70B (chat quality)
 //   Memory   -> Groq Llama 3.1 8B  (separate model = separate daily bucket)
 export const LLM: Record<"planner" | "curator" | "chief" | "memory", AgentModel> = {
   planner: {
-    // TEMPORARY: Gemini's API project is currently denied access (403
-    // PERMISSION_DENIED on Google's side, not fixable here) — defaulting
-    // straight to Cerebras so journey creation keeps working. Once the
-    // Gemini project is restored, set LLM_PLANNER_PROVIDER=gemini and
-    // LLM_PLANNER_MODEL=gemini-2.5-flash (or flip the defaults back here) to
-    // switch back to it as the quality-preferred primary.
-    provider: (process.env.LLM_PLANNER_PROVIDER as Provider) ?? "cerebras",
-    model: process.env.LLM_PLANNER_MODEL ?? "gpt-oss-120b",
+    provider: (process.env.LLM_PLANNER_PROVIDER as Provider) ?? "groq",
+    model: process.env.LLM_PLANNER_MODEL ?? "llama-3.3-70b-versatile",
     fallback: {
-      provider: (process.env.LLM_PLANNER_FALLBACK_PROVIDER as Provider) ?? "groq",
-      model: process.env.LLM_PLANNER_FALLBACK_MODEL ?? "llama-3.3-70b-versatile",
+      provider: (process.env.LLM_PLANNER_FALLBACK_PROVIDER as Provider) ?? "cerebras",
+      model: process.env.LLM_PLANNER_FALLBACK_MODEL ?? "gpt-oss-120b",
     },
   },
   curator: {
-    provider: (process.env.LLM_CURATOR_PROVIDER as Provider) ?? "cerebras",
-    // gpt-oss-120b: Cerebras's flagship free model (big daily quota, strong
-    // tool use). Verified forced tool-calling. Override via LLM_CURATOR_MODEL.
-    model: process.env.LLM_CURATOR_MODEL ?? "gpt-oss-120b",
+    provider: (process.env.LLM_CURATOR_PROVIDER as Provider) ?? "groq",
+    model: process.env.LLM_CURATOR_MODEL ?? "llama-3.1-8b-instant",
+    fallback: {
+      provider: (process.env.LLM_CURATOR_FALLBACK_PROVIDER as Provider) ?? "cerebras",
+      model: process.env.LLM_CURATOR_FALLBACK_MODEL ?? "gpt-oss-120b",
+    },
   },
   chief: {
     provider: (process.env.LLM_CHIEF_PROVIDER as Provider) ?? "groq",

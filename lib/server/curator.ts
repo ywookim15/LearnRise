@@ -25,7 +25,7 @@ import "server-only";
 // -----------------------------------------------------------------------------
 
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { callStructured, LLM, type StructuredTool } from "@/lib/server/llm";
+import { callStructuredWithFallback, LLM, type StructuredTool } from "@/lib/server/llm";
 import { tavilySearch, type TavilyResult } from "@/lib/server/tavily";
 import { getYoutubeTimestamps } from "@/lib/server/youtube";
 import { getLanguage } from "@/lib/i18n/languages";
@@ -227,13 +227,14 @@ async function selectResources(
 
   // ---- ONE merged call: read the candidates' content, judge, dedupe, and
   //      select the best 1-3 with justifications (was two Gemini calls). ----
-  const judgeOut = await callStructured<{
+  const judgeOut = await callStructuredWithFallback<{
     none_usable?: boolean;
     resources?: Array<{ candidate_index?: unknown; resource_type?: unknown; why_this_fits?: unknown }>;
-  }>({
-    provider: LLM.curator.provider,
-    model: LLM.curator.model,
-    prompt: `You are the LearnRise Resource Curator selecting study resources for one chapter.
+  }>(
+    {
+      provider: LLM.curator.provider,
+      model: LLM.curator.model,
+      prompt: `You are the LearnRise Resource Curator selecting study resources for one chapter.
 
 Journey goal: ${ctx.goal}
 Student's self-reported level: ${ctx.currentLevel || "not specified"}
@@ -268,9 +269,11 @@ ${pool
     CONTENT: ${contents[i]}`;
   })
   .join("\n\n")}`,
-    tool: SELECT_TOOL,
-    temperature: 0.2,
-  });
+      tool: SELECT_TOOL,
+      temperature: 0.2,
+    },
+    LLM.curator.fallback
+  );
 
   if (judgeOut.none_usable || !judgeOut.resources?.length) return [];
 
