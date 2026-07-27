@@ -12,19 +12,23 @@ export interface AgentModel {
 // Per-call-site provider/model. Each is independently overridable via env, so
 // the allocation can be retuned in Vercel without a code change.
 //
-//   Planner  -> Gemini 2.5 Flash  (low volume, best quality)
+//   Planner  -> Cerebras          (TEMPORARY primary — see note below)
 //   Curator  -> Cerebras          (high volume; big free daily quota)
 //   Chief    -> Groq Llama 3.3 70B (chat quality)
 //   Memory   -> Groq Llama 3.1 8B  (separate model = separate daily bucket)
 export const LLM: Record<"planner" | "curator" | "chief" | "memory", AgentModel> = {
   planner: {
-    provider: (process.env.LLM_PLANNER_PROVIDER as Provider) ?? "gemini",
-    model: process.env.LLM_PLANNER_MODEL ?? "gemini-2.5-flash",
-    // If Gemini rate-limits the one Planner call, fall back so journey creation
-    // still succeeds instead of showing "at capacity".
+    // TEMPORARY: Gemini's API project is currently denied access (403
+    // PERMISSION_DENIED on Google's side, not fixable here) — defaulting
+    // straight to Cerebras so journey creation keeps working. Once the
+    // Gemini project is restored, set LLM_PLANNER_PROVIDER=gemini and
+    // LLM_PLANNER_MODEL=gemini-2.5-flash (or flip the defaults back here) to
+    // switch back to it as the quality-preferred primary.
+    provider: (process.env.LLM_PLANNER_PROVIDER as Provider) ?? "cerebras",
+    model: process.env.LLM_PLANNER_MODEL ?? "gpt-oss-120b",
     fallback: {
-      provider: (process.env.LLM_PLANNER_FALLBACK_PROVIDER as Provider) ?? "cerebras",
-      model: process.env.LLM_PLANNER_FALLBACK_MODEL ?? "gpt-oss-120b",
+      provider: (process.env.LLM_PLANNER_FALLBACK_PROVIDER as Provider) ?? "groq",
+      model: process.env.LLM_PLANNER_FALLBACK_MODEL ?? "llama-3.3-70b-versatile",
     },
   },
   curator: {

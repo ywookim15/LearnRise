@@ -65,6 +65,25 @@ function parseRateLimit(err: unknown): { isRateLimit: boolean; retryAfterSec: nu
 }
 
 /**
+ * Detect an error that retrying will never fix — a denied/suspended API
+ * project (403 PERMISSION_DENIED, as thrown by @google/genai's ApiError), an
+ * invalid key, or a missing key env var. Retrying these just burns the
+ * request's time budget for nothing, so callStructured skips its remaining
+ * attempts and callStructuredWithFallback moves to the fallback immediately.
+ */
+function isPermanentAuthError(err: unknown): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const e = err as any;
+  const status: number | undefined = e?.status ?? e?.response?.status;
+  const msg = err instanceof Error ? err.message : String(err);
+  return (
+    status === 403 ||
+    status === 401 ||
+    /PERMISSION_DENIED|permission denied|invalid api key|unauthorized|missing.*api.?key/i.test(msg)
+  );
+}
+
+/**
  * Provider-agnostic structured call. Dispatches to the right provider, paces
  * per-provider, retries with 429-aware backoff, and throws LLMRateLimitError
  * when a call ultimately fails due to rate limits.
@@ -112,6 +131,19 @@ export async function callStructured<T>(opts: StructuredCallOptions): Promise<T>
         sawRateLimit = true;
         lastRetryAfterSec = retryAfterSec;
       }
+
+      // A denied/invalid key won't fix itself between attempts — stop wasting
+      // the request's time budget and let callStructuredWithFallback move to
+      // the fallback provider immediately.
+      if (isPermanentAuthError(err)) {
+        console.error(
+          `[llm:${provider}] ${tool.name} permanently denied (${
+            err instanceof Error ? err.message : String(err)
+          }) — skipping remaining retries`
+        );
+        break;
+      }
+
       if (attempt < maxAttempts) {
         const waitMs = isRateLimit
           ? Math.min(retryAfterSec * 1000, maxRetryWaitMs)
