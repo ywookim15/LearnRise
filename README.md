@@ -1,16 +1,15 @@
-# METIS — Your Learning GPS
+# LearnRise — Your Learning GPS
 
-METIS is an AI-powered adaptive learning-roadmap product for high school and college
+LearnRise is an AI-powered adaptive learning-roadmap product for high school and college
 students. A student describes a goal ("Ace the AP Biology genetics unit," "Get through
-system design for interviews"), and METIS researches a real reference syllabus,
+system design for interviews"), and LearnRise researches a real reference syllabus,
 generates a structured roadmap (units → chapters → learning objectives), curates and
 vets actual web resources (articles, videos, practice sets) for each chapter, and then
 adapts that roadmap over time through chat — re-pacing, re-sequencing, or refreshing
 resources — instead of leaving the student to piece together forty browser tabs on
 their own. It ships as a Next.js web app with a real Supabase-backed auth/database
 layer, a multi-provider LLM pipeline (Gemini, Cerebras, Groq) split by task to spread
-free-tier rate limits, Stripe subscription billing with a 7-day trial, and
-Resend-backed transactional email.
+free-tier rate limits, and Stripe subscription billing with a 7-day trial.
 
 The repository evolved from a static frontend prototype (see the early git history) into
 a working product with a real backend; nothing described below is mocked unless a
@@ -111,13 +110,12 @@ Key architectural decisions visible in the code:
 |---|---|---|
 | Framework | Next.js 14 (App Router) + React 18 + TypeScript | Route handlers double as the backend API; no separate server process. |
 | Styling | Tailwind CSS + `tailwindcss-animate` | Design tokens as CSS variables (`app/globals.css`, `tailwind.config.ts`) so light/dark and brand-color changes stay in one place. |
-| UI primitives | Radix UI (`@radix-ui/react-*`) restyled in `components/ui/` | shadcn/ui-style pattern — accessible unstyled primitives, METIS's own visual layer on top. |
+| UI primitives | Radix UI (`@radix-ui/react-*`) restyled in `components/ui/` | shadcn/ui-style pattern — accessible unstyled primitives, LearnRise's own visual layer on top. |
 | Auth + database | Supabase (`@supabase/supabase-js`, `@supabase/ssr`) | Postgres + Row Level Security does the access control; `@supabase/ssr` keeps auth cookies in sync across server and client. |
 | LLM providers | `@google/genai` (Gemini), `openai` SDK pointed at Cerebras/Groq's OpenAI-compatible endpoints | One SDK (`openai`) covers two providers since both expose OpenAI-compatible chat-completions APIs; only Gemini needs its native SDK. |
 | Web search | Tavily (`lib/server/tavily.ts`, raw `fetch`) | Curator's source of real, current candidate resources — the pipeline never has the LLM invent URLs. |
 | Video enrichment | YouTube Data API (`lib/server/youtube.ts`) | Optional: parses chapter-marker timestamps out of video descriptions; skipped gracefully if `YOUTUBE_API_KEY` is unset. |
 | Billing | Stripe (`stripe` SDK) | Subscription checkout with a 7-day trial, billing portal, and webhook-driven entitlement sync. |
-| Transactional email | Resend | Contact-form delivery only, currently. |
 | Charts | Recharts | Analytics page (progress-over-time, weekly bars, 30-day trend). |
 | Background execution | `@vercel/functions` (`waitUntil`) | Lets curation/chat-triggered work keep running after the HTTP response on Vercel's serverless runtime. |
 | Fonts | Geist Sans/Mono + EB Garamond (`next/font/google`) | Self-hosted via `next/font`, no external font requests at runtime. |
@@ -256,7 +254,7 @@ never free-form's an answer the pipeline then tries to parse.
 | 2 — Planner | `lib/server/planner.ts` | One Tavily search for a real reference syllabus, then one Gemini function call generates the full roadmap (units → chapters → learning objectives) sized to the goal's complexity and the student's hours/week. Also handles narrow single-chapter objective revisions (see below) and full re-plans of remaining material. |
 | 3 — Curator | `lib/server/curator.ts` | Per chapter: Tavily search → ~8 candidates → Cerebras shortlists and judges fit/difficulty/scope → best 1–3 resources selected with justifications → YouTube timestamps attached if applicable. Trusted domains (Khan Academy, Coursera, MIT OCW, `.edu`) skip a lateral-reputation-check step. Falls back to a broadened search once; if still nothing usable, the chapter is flagged `no_resources_found` rather than silently left empty. Runs on a time budget (`CURATOR_BUDGET_MS`, default 45s) and is resumable. |
 | 5 — Memory | `lib/server/memory.ts` | Compresses each chat exchange into a durable per-journey summary (`journey_chat_memory.compressed_notes`) — misconceptions, preferences, pacing signals — capped at ~1200 chars. Raw conversation is **not** stored. |
-| 6 — Chief | `lib/server/chief.ts` | The "Ask METIS" chat agent. One function call classifies intent (`conversational` / `replan` / `resource_refresh`) and drafts the reply; roadmap-changing intents run in the background so the reply returns immediately. Chat-triggered adaptation only — nothing runs on a schedule. |
+| 6 — Chief | `lib/server/chief.ts` | The "Ask LearnRise" chat agent. One function call classifies intent (`conversational` / `replan` / `resource_refresh`) and drafts the reply; roadmap-changing intents run in the background so the reply returns immediately. Chat-triggered adaptation only — nothing runs on a schedule. |
 
 **Narrow-scope adjustment** (`app/api/journeys/[id]/chapters/[chapterId]/skill-level/route.ts`):
 marking a knowledge-map node "Know it" or "Familiar" persists the mark
@@ -291,7 +289,7 @@ checks and atomic counters.
 
 ```
 app/
-  page.tsx, about/, pricing/, contact/          Public marketing pages
+  page.tsx                                       Public marketing/landing page
   login/, signup/, forgot-password/,
   reset-password/, auth/callback/               Real Supabase auth flow
   notifications/, settings/                     Standalone pages (StandaloneShell — back
@@ -300,7 +298,7 @@ app/
   (app)/                                        Logged-in route group (sidebar shell, auth-gated)
     layout.tsx                                    Client-side auth guard (server-side guard is middleware.ts)
     dashboard/                                     Journey list + folders (drag-and-drop)
-    journey/[id]/                                  Roadmap, resource list, Ask METIS panel
+    journey/[id]/                                  Roadmap, resource list, Ask LearnRise panel
     journey/[id]/unit/[unitId]/                    Knowledge-map flowchart + chapter drill-down
     analytics/                                     Real usage/progress analytics (Pro-gated)
     archive/                                        Completed + soft-deleted journeys
@@ -309,7 +307,6 @@ app/
   api/
     journeys/                                     Create, curate, chat, skill-level adjustment
     billing/                                       Stripe checkout, portal, webhook
-    contact/                                       Contact-form → Resend
     usage/                                          AI provider usage snapshot
     account/delete/                                Account deletion
     auth/callback/                                 Supabase auth callback
@@ -319,9 +316,9 @@ components/
   layout/        Sidebar, top bar, marketing nav/shell, page frames
   shared/        Logo, icon resolver, notifications/profile dropdowns, ProGate (Pro-tier paywall UI)
   dashboard/     Journey cards, folders, usage meter
-  journey/       Journey creation, Ask METIS panel, roadmap, unit knowledge-map flowchart
+  journey/       Journey creation, Ask LearnRise panel, roadmap, unit knowledge-map flowchart
   analytics/     Overview / per-journey / trends tabs (Recharts)
-  pricing/       Shared plan cards + comparison table (used on both /pricing and /upgrade)
+  pricing/       Shared plan cards used on the in-app /upgrade page
   auth/          Auth page shell
 
 lib/

@@ -23,7 +23,7 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 /**
- * POST /api/journeys/[id]/chat — Ask METIS (Stage 5 & 6).
+ * POST /api/journeys/[id]/chat — Ask LearnRise (Stage 5 & 6).
  * Classifies intent + replies (sync), then fires roadmap changes + memory
  * compression asynchronously so the reply returns fast.
  */
@@ -108,7 +108,7 @@ export async function POST(
   } catch (err) {
     console.error("[chat] classify failed:", err);
     return NextResponse.json(
-      { error: "METIS is having trouble responding right now. Please try again." },
+      { error: "LearnRise is having trouble responding right now. Please try again." },
       { status: 502 }
     );
   }

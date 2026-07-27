@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronsRight, Send, RefreshCw } from "lucide-react";
-import { LogoMark } from "@/components/shared/logo";
+import { ChevronsRight, Send, RefreshCw, Sparkles } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ProGate } from "@/components/shared/pro-gate";
 import { chatTabs, type ChatTab } from "@/lib/mock-data/chat";
@@ -108,8 +107,8 @@ export function AskMetisPanel({
       <div className="relative flex items-center justify-between gap-2 overflow-hidden border-b border-border bg-brand-gradient px-4 py-3.5 text-white">
         <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-20" />
         <div className="relative flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-white">
-            <LogoMark className="h-5 w-auto" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-white text-primary">
+            <Sparkles className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
             <p className="text-sm font-semibold leading-none">{t("title")}</p>

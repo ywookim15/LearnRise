@@ -93,14 +93,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "METIS is at capacity right now (high demand on the AI). Please wait about a minute and try again.",
+            "LearnRise is at capacity right now (high demand on the AI). Please wait about a minute and try again.",
           code: "rate_limited",
         },
         { status: 503 }
       );
     }
     return NextResponse.json(
-      { error: "METIS couldn't generate your roadmap right now. Please try again in a moment." },
+      { error: "LearnRise couldn't generate your roadmap right now. Please try again in a moment." },
       { status: 502 }
     );
   }

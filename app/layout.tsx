@@ -22,9 +22,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "METIS · Your Learning GPS",
+  title: "LearnRise · Your Learning GPS",
   description:
-    "METIS is an AI-powered learning GPS. Tell it what you want to learn and it builds an adaptive roadmap that re-plans around you.",
+    "LearnRise is an AI-powered learning GPS. Tell it what you want to learn and it builds an adaptive roadmap that re-plans around you.",
 };
 
 export default async function RootLayout({

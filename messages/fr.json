@@ -1,78 +1,18 @@
 {
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "pricing": "Tarifs",
-    "contact": "Contact",
     "signIn": "Se connecter",
-    "getStarted": "Commencer",
-    "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu"
+    "getStarted": "Commencer"
   },
   "footer": {
-    "tagline": "METIS est votre GPS d'apprentissage. Des parcours précis et adaptatifs qui transforment n'importe quel objectif en chemin balisé de ressources.",
-    "product": "Produit",
+    "tagline": "LearnRise est votre GPS d'apprentissage. Des parcours précis et adaptatifs qui transforment n'importe quel objectif en chemin balisé de ressources.",
     "account": "Compte",
-    "rights": "© {year} METIS. Tous droits réservés.",
-    "privacy": "Politique de confidentialité",
-    "terms": "Conditions d'utilisation"
+    "rights": "© {year} LearnRise. Tous droits réservés."
   },
   "landing": {
     "hero": {
       "title": "Votre <gps>GPS</gps> d'apprentissage.",
-      "subtitle": "METIS transforme n'importe quel objectif d'apprentissage en un parcours personnalisé et adaptatif qui se recalcule à mesure que vous progressez. Comme Google Maps, mais pour apprendre.",
-      "startJourney": "Commencer votre parcours",
-      "seeHow": "Voir comment ça marche",
-      "freeTier": "Offre gratuite disponible. Aucune carte bancaire requise."
-    },
-    "works": {
-      "title": "Comment fonctionne METIS",
-      "subtitle": "Un guidage intelligent qui s'adapte à votre rythme et à votre façon d'apprendre.",
-      "step1Title": "Fixez votre objectif",
-      "step1Body": "Définissez ce que vous voulez maîtriser. METIS cartographie le terrain et calcule l'itinéraire optimal.",
-      "step2Title": "Suivez le parcours",
-      "step2Body": "Des ressources triées et pertinentes, présentées dans une séquence logique, étape par étape.",
-      "step3Title": "Recalcul adaptatif",
-      "step3Body": "Un concept vous bloque ? METIS vous réoriente vers des explications plus claires avant que vous ne preniez du retard."
-    },
-    "values": {
-      "mappingTitle": "Cartographie cognitive",
-      "mappingBody": "Des graphes de connaissances dynamiques qui suivent précisément ce que vous savez et où sont vos lacunes.",
-      "vettedTitle": "Contenu vérifié",
-      "vettedBody": "Seules des ressources ouvertes de qualité entrent dans votre parcours, ordonnées plutôt qu'entassées en liens.",
-      "masteryTitle": "Maîtrise confirmée",
-      "masteryBody": "Des points de contrôle confirment votre compréhension des bases avant de passer au concept suivant.",
-      "tutorTitle": "Tuteur adaptatif",
-      "tutorBody": "Posez à METIS n'importe quelle question sur votre parcours : il décortique les concepts avec vous, en contexte."
-    },
-    "pricing": {
-      "title": "Investissez dans votre maîtrise",
-      "subtitle": "Commencez gratuitement. Passez à l'offre supérieure quand vous voulez des parcours illimités et le tuteur adaptatif complet.",
-      "free": "Gratuit",
-      "forever": "/à vie",
-      "freeFeat1": "1 parcours d'apprentissage actif",
-      "freeFeat2": "Parcours et ressources générés par IA",
-      "freeFeat3": "10 messages/jour avec le tuteur",
-      "startFree": "Commencer gratuitement",
-      "premium": "Premium",
-      "perMonth": "/mois",
-      "recommended": "Recommandé",
-      "proFeat1": "Parcours actifs illimités",
-      "proFeat2": "Chat illimité et recalcul adaptatif",
-      "proFeat3": "Analyses et suivi de progression",
-      "proFeat4": "Support prioritaire",
-      "startTrial": "Démarrer l'essai gratuit de 7 jours"
-    },
-    "faq": {
-      "title": "Questions fréquentes",
-      "q1": "Comment fonctionne exactement l'adaptabilité « GPS » ?",
-      "a1": "Tout comme un GPS recalcule votre itinéraire quand vous manquez un virage, METIS recalcule votre parcours quand vous butez sur un concept. Il repère la lacune, puis ajuste le rythme, l'ordre et les ressources pour que vous ne restiez jamais bloqué.",
-      "q2": "D'où viennent les ressources ?",
-      "a2": "METIS sélectionne des ressources sur tout le web ouvert et auprès de fournisseurs de confiance, puis les structure en un parcours plutôt qu'un tas de liens. Toutes les ressources sont gratuites et en accès libre.",
-      "q3": "Dois-je savoir structurer mon apprentissage ?",
-      "a3": "Non. Vous apportez l'objectif, et METIS apporte la structure, le rythme et l'ordre. Il vous épargne le temps de chercher des ressources et de décider quoi étudier ensuite.",
-      "q4": "Combien ça coûte ?",
-      "a4": "Il existe une offre gratuite avec un parcours d'apprentissage, et une offre Premium qui débloque des parcours illimités, des analyses et le tuteur adaptatif. Consultez la page des tarifs pour plus de détails."
+      "subtitle": "LearnRise transforme n'importe quel objectif d'apprentissage en un parcours personnalisé et adaptatif qui se recalcule à mesure que vous progressez. Comme Google Maps, mais pour apprendre.",
+      "startJourney": "Commencer votre parcours"
     }
   },
   "auth": {
@@ -80,7 +20,7 @@
     "emailPlaceholder": "vous@exemple.com",
     "passwordLabel": "Mot de passe",
     "panelTitle": "Votre apprentissage, cartographié avec précision.",
-    "panelSubtitle": "Fixez une destination et METIS trace l'itinéraire : documenté, ordonné et adaptatif.",
+    "panelSubtitle": "Fixez une destination et LearnRise trace l'itinéraire : documenté, ordonné et adaptatif.",
     "panelFeat1": "Ne vous demandez plus quoi étudier ensuite",
     "panelFeat2": "Des parcours ordonnés rien que pour vous",
     "panelFeat3": "Un tuteur IA qui connaît votre parcours",
@@ -90,7 +30,7 @@
     "forgotPassword": "Mot de passe oublié ?",
     "signIn": "Se connecter",
     "signingIn": "Connexion…",
-    "newToMetis": "Nouveau sur METIS ?",
+    "newToMetis": "Nouveau sur LearnRise ?",
     "createAccount": "Créer un compte",
     "linkInvalid": "Ce lien de connexion était invalide ou a expiré. Veuillez réessayer.",
     "incorrectCredentials": "E-mail ou mot de passe incorrect.",
@@ -98,7 +38,7 @@
     "signupSubtitle": "Il suffit d'un e-mail et d'un mot de passe. Votre premier parcours est gratuit.",
     "createPasswordPlaceholder": "Créez un mot de passe (min. 6 caractères)",
     "languageLabel": "Langue dans laquelle vous voulez apprendre",
-    "languageHelp": "METIS crée vos parcours, trouve des ressources et vous accompagne en {language}. Vous pourrez changer plus tard dans les Réglages.",
+    "languageHelp": "LearnRise crée vos parcours, trouve des ressources et vous accompagne en {language}. Vous pourrez changer plus tard dans les Réglages.",
     "createAccountButton": "Créer un compte",
     "creatingAccount": "Création du compte…",
     "haveAccount": "Vous avez déjà un compte ?",
@@ -136,26 +76,10 @@
     "passwordUpdatedBody": "C'est fait. Votre mot de passe a été modifié.",
     "goToDashboard": "Aller au tableau de bord"
   },
-  "contact": {
-    "eyebrow": "Nous serions ravis de vous lire",
-    "title": "Contactez-nous",
-    "subtitle": "Des questions sur votre parcours, un retour sur METIS ou juste envie de dire bonjour ? Écrivez-nous.",
-    "sentTitle": "Message envoyé !",
-    "sentBody": "Merci de nous avoir écrit, nous vous répondrons à l'adresse que vous avez indiquée.",
-    "sendAnother": "Envoyer un autre",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "yourEmail": "Votre e-mail",
-    "messageLabel": "Message",
-    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
-    "sendMessage": "Envoyer le message",
-    "sending": "Envoi…",
-    "error": "Impossible d'envoyer votre message. Veuillez réessayer."
-  },
   "pricingPage": {
     "eyebrow": "Un GPS pour votre potentiel",
     "title": "Investissez dans votre <grad>parcours d'apprentissage</grad>.",
-    "subtitle": "Choisissez la voie qui correspond à vos objectifs. De l'exploration décontractée à la maîtrise professionnelle intensive, METIS guide chaque étape.",
+    "subtitle": "Choisissez la voie qui correspond à vos objectifs. De l'exploration décontractée à la maîtrise professionnelle intensive, LearnRise guide chaque étape.",
     "monthly": "Mensuel",
     "yearly": "Annuel",
     "save": "Économisez plus de 20 %",
@@ -165,10 +89,9 @@
     "perForever": "/à vie",
     "freeFeat1": "1 parcours d'apprentissage actif",
     "freeFeat2": "Parcours et ressources générés par IA",
-    "freeFeat3": "10 messages/jour avec le chat METIS",
+    "freeFeat3": "10 messages/jour avec le chat LearnRise",
     "freeFeat4": "3 recalculs adaptatifs/mois",
     "freeFeat5": "Analyses et suivi de progression",
-    "startForFree": "Commencer gratuitement",
     "includedWithPremium": "Inclus avec Premium",
     "currentPlan": "Offre actuelle",
     "premiumTier": "Offre Premium",
@@ -185,60 +108,7 @@
     "manageBilling": "Offre actuelle · Gérer la facturation",
     "noCommitment": "Sans engagement. Annulez à tout moment.",
     "checkoutError": "Impossible de démarrer le paiement.",
-    "portalError": "Impossible d'ouvrir le portail de facturation.",
-    "readyTitle": "Prêt à maîtriser votre parcours ?",
-    "readyBody": "Commencez avec un parcours gratuit. Passez à l'offre supérieure à tout moment pour des parcours illimités et le tuteur adaptatif complet.",
-    "createFreeAccount": "Créer un compte gratuit",
-    "explorePlatform": "Explorer la plateforme",
-    "compare": {
-      "title": "Comparer les offres",
-      "subtitle": "Tout ce qui est inclus, en un coup d'œil.",
-      "free": "Gratuit",
-      "pro": "Pro",
-      "recommended": "Recommandé",
-      "included": "Inclus",
-      "notIncluded": "Non inclus",
-      "row1Feature": "Parcours d'apprentissage actifs",
-      "row1Free": "1",
-      "row1Pro": "Illimités",
-      "row2Feature": "Parcours et ressources générés par IA",
-      "row3Feature": "Chat avec METIS",
-      "row3Free": "10 messages/jour",
-      "row3Pro": "Illimité",
-      "row4Feature": "Recalcul adaptatif quand vous bloquez",
-      "row4Free": "Limité (3/mois)",
-      "row4Pro": "Illimité",
-      "row5Feature": "Qualité de raisonnement et profondeur du parcours",
-      "row5Free": "Standard",
-      "row5Pro": "Améliorée, parcours plus riches et détaillés",
-      "row6Feature": "Analyses et suivi de progression",
-      "row7Feature": "Support prioritaire",
-      "row8Feature": "Essai gratuit",
-      "row8Free": "Aucun",
-      "row8Pro": "7 jours gratuits"
-    }
-  },
-  "about": {
-    "eyebrow": "À propos de METIS",
-    "title": "Apprendre ne devrait pas commencer par se perdre.",
-    "intro": "METIS est un GPS d'apprentissage propulsé par l'IA : dites-lui ce que vous voulez apprendre, et il construit un parcours pour vous y mener. Puis il ajuste ce parcours chaque fois que vous prenez du retard ou de l'avance.",
-    "statText": "des apprenants qui se lancent dans l'apprentissage en ligne ne terminent jamais.",
-    "para1": "Vous décidez de vous mettre à un sujet, vous ouvrez un moteur de recherche, et vous vous noyez. Aussitôt, vous voilà submergé par quarante onglets, trois listes contradictoires des « meilleures ressources » et aucune idée de l'ordre dans lequel aborder tout ça. Vous commencez à vous demander si le problème, c'est vous, puisque tout le monde semble comprendre du premier coup, sauf vous.",
-    "para2": "Mais le plus dur n'a jamais été la matière. C'était le parcours.",
-    "para3": "METIS est cette carte. Fixez une destination, et il trace un itinéraire précis de là où vous êtes jusqu'à là où vous voulez aller.",
-    "whatItIsTitle": "Ce que c'est",
-    "whatItIsBody": "METIS est un créateur de parcours propulsé par l'IA pour apprendre n'importe quoi. Vous décrivez votre objectif, votre niveau actuel, votre échéance et votre façon d'apprendre. METIS assemble un parcours d'apprentissage : des unités, des chapitres et des ressources sélectionnées. À mesure que vous cochez des éléments, discutez avec votre tuteur et ajustez votre rythme, l'itinéraire se recalcule autour de vous.",
-    "howItWorksTitle": "Comment ça marche",
-    "step1": "Vous donnez les informations : ce que vous voulez apprendre, votre point de départ et vos contraintes.",
-    "step2": "METIS crée un parcours d'unités et de chapitres, chacun étayé par des ressources filtrées et de qualité.",
-    "step3": "Vous apprenez : cochez les ressources, entretenez vos séries et interrogez le tuteur quand vous bloquez.",
-    "step4": "METIS s'adapte : le rythme, l'ordre et les recommandations évoluent selon ce que votre progression révèle.",
-    "whyItWorksTitle": "Pourquoi ça marche",
-    "why1": "La structure supprime le coût de la planification : votre énergie va à l'apprentissage, pas à décider quoi regarder ensuite.",
-    "why2": "Le plan n'est pas figé. La plupart des plans d'étude s'effondrent dès que vous prenez du retard ou avancez plus vite que prévu, et vous voilà à nouveau à tâtonner. METIS avance avec vous : si un concept vous bloque, il s'ajuste avant que vous ne décrochiez davantage ; si vous allez vite, il saute en avant au lieu de vous faire perdre du temps.",
-    "ctaTitle": "Fixez votre destination.",
-    "ctaBody": "METIS s'occupe de l'itinéraire. Votre premier parcours est gratuit.",
-    "getStarted": "Commencer"
+    "portalError": "Impossible d'ouvrir le portail de facturation."
   },
   "app": {
     "sidebar": {
@@ -301,12 +171,12 @@
     },
     "help": {
       "help": "Aide",
-      "title": "Comment utiliser METIS",
+      "title": "Comment utiliser LearnRise",
       "subtitle": "Un guide rapide et approfondi pour tirer le meilleur parti de votre GPS d'apprentissage.",
       "guide": {
         "startJourney": {
           "title": "Démarrer un parcours",
-          "body": "Appuyez sur la carte en pointillés “Ajouter un parcours”, décrivez votre objectif, votre niveau, votre calendrier et vos préférences. METIS génère une feuille de route cartographiée."
+          "body": "Appuyez sur la carte en pointillés “Ajouter un parcours”, décrivez votre objectif, votre niveau, votre calendrier et vos préférences. LearnRise génère une feuille de route cartographiée."
         },
         "followRoadmap": {
           "title": "Suivre la feuille de route",
@@ -317,8 +187,8 @@
           "body": "Cochez les ressources au fur et à mesure. Les barres de progression se mettent à jour par unité et pour l'ensemble du parcours."
         },
         "askMetis": {
-          "title": "Ask METIS",
-          "body": "Ouvrez le panneau Ask METIS sur n'importe quel parcours pour poser des questions, replanifier votre emploi du temps avec le Planificateur ou approfondir un concept avec le Tuteur."
+          "title": "Ask LearnRise",
+          "body": "Ouvrez le panneau Ask LearnRise sur n'importe quel parcours pour poser des questions, replanifier votre emploi du temps avec le Planificateur ou approfondir un concept avec le Tuteur."
         },
         "keepStreak": {
           "title": "Maintenir votre série",
@@ -379,7 +249,7 @@
       "notFoundDesc": "Ce parcours n'existe pas ou vous n'y avez pas accès.",
       "backToDashboard": "Retour au tableau de bord",
       "journeys": "Parcours",
-      "askMetis": "Ask METIS",
+      "askMetis": "Ask LearnRise",
       "overallProgress": "Progression globale"
     },
     "curation": {
@@ -388,10 +258,10 @@
       "webSearch": "la recherche web",
       "curator": "le curateur",
       "autoRetry": ", nouvelle tentative dans ~{time}",
-      "fillInfo": "METIS les complète quelques-uns à la fois. Gardez cette page ouverte et elles se termineront automatiquement."
+      "fillInfo": "LearnRise les complète quelques-uns à la fois. Gardez cette page ouverte et elles se termineront automatiquement."
     },
     "chapterStatus": {
-      "curating": "METIS sélectionne des ressources pour ce chapitre…",
+      "curating": "LearnRise sélectionne des ressources pour ce chapitre…",
       "gap": "Aucune ressource trouvée pour l'instant, ce chapitre est signalé comme une lacune."
     },
     "roadmap": {
@@ -414,7 +284,7 @@
       "trustedSource": "Source fiable"
     },
     "ask": {
-      "title": "Tuteur IA METIS",
+      "title": "Tuteur IA LearnRise",
       "tabs": {
         "main": {
           "label": "Principal",
@@ -430,7 +300,7 @@
         }
       },
       "intro": {
-        "main": "Bonjour, je suis METIS. Posez-moi vos questions sur ce parcours. Je peux aussi replanifier les prochaines unités ou actualiser les ressources d'un chapitre si vous le demandez.",
+        "main": "Bonjour, je suis LearnRise. Posez-moi vos questions sur ce parcours. Je peux aussi replanifier les prochaines unités ou actualiser les ressources d'un chapitre si vous le demandez.",
         "planner": "Je suis votre Planificateur. Indiquez-moi votre échéance, vos heures hebdomadaires ou comment vous voulez réajuster le rythme, et je replanifierai vos prochains chapitres (les terminés restent en place).",
         "tutor": "Je suis votre Tuteur. Indiquez-moi un concept ou une ressource et je vous guiderai pas à pas, les questions d'abord, les réponses ensuite."
       },
@@ -453,18 +323,18 @@
       },
       "collapseChat": "Réduire le chat",
       "limitTitle": "Utilisation épuisée",
-      "limitSubtitle": "Vous avez utilisé tous les messages gratuits d'aujourd'hui. Passez à Pro pour discuter sans limite avec METIS.",
-      "errorRespond": "METIS n'a pas pu répondre. Veuillez réessayer.",
+      "limitSubtitle": "Vous avez utilisé tous les messages gratuits d'aujourd'hui. Passez à Pro pour discuter sans limite avec LearnRise.",
+      "errorRespond": "LearnRise n'a pas pu répondre. Veuillez réessayer.",
       "errorGeneric": "Une erreur s'est produite.",
       "roadmapUpdating": "Mise à jour de votre feuille de route, de nouvelles unités et ressources apparaîtront bientôt.",
-      "placeholder": "Message à METIS ({tab})…",
+      "placeholder": "Message à LearnRise ({tab})…",
       "send": "Envoyer"
     },
     "createJourney": {
       "generatingTitle": "Génération de votre feuille de route…",
-      "generatingBody": "METIS recherche un programme et cartographie vos unités et chapitres. Cela prend généralement 15 à 30 secondes, patientez et gardez cette fenêtre ouverte. Les ressources se remplissent ensuite.",
+      "generatingBody": "LearnRise recherche un programme et cartographie vos unités et chapitres. Cela prend généralement 15 à 30 secondes, patientez et gardez cette fenêtre ouverte. Les ressources se remplissent ensuite.",
       "title": "Créer un nouveau parcours d'apprentissage",
-      "subtitle": "Dites à METIS ce que vous voulez apprendre. Il générera une feuille de route cartographiée ; plus vous êtes précis, meilleur sera l'itinéraire.",
+      "subtitle": "Dites à LearnRise ce que vous voulez apprendre. Il générera une feuille de route cartographiée ; plus vous êtes précis, meilleur sera l'itinéraire.",
       "goal": "Objectif",
       "goalPlaceholder": "p. ex. Réussir l'unité de génétique de SVT, soyez le plus précis possible.",
       "currentLevel": "Niveau actuel",
@@ -590,7 +460,7 @@
   },
   "settings": {
     "title": "Profil et paramètres",
-    "subtitle": "Gérez votre compte. Les modifications du nom et de l'e-mail sont enregistrées sur votre compte METIS (les changements d'e-mail nécessitent une confirmation via un lien reçu par e-mail).",
+    "subtitle": "Gérez votre compte. Les modifications du nom et de l'e-mail sont enregistrées sur votre compte LearnRise (les changements d'e-mail nécessitent une confirmation via un lien reçu par e-mail).",
     "profilePicture": "Photo de profil",
     "uploadNew": "Téléverser une nouvelle",
     "remove": "Supprimer",

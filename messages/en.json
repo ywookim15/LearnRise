@@ -1,78 +1,18 @@
 {
   "nav": {
-    "home": "Home",
-    "about": "About",
-    "pricing": "Pricing",
-    "contact": "Contact",
     "signIn": "Sign In",
-    "getStarted": "Get Started",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "getStarted": "Get Started"
   },
   "footer": {
-    "tagline": "METIS is your learning GPS. Precise, adaptive roadmaps that turn any goal into a resourced path.",
-    "product": "Product",
+    "tagline": "LearnRise is your learning GPS. Precise, adaptive roadmaps that turn any goal into a resourced path.",
     "account": "Account",
-    "rights": "© {year} METIS. All rights reserved.",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "rights": "© {year} LearnRise. All rights reserved."
   },
   "landing": {
     "hero": {
       "title": "Your Learning <gps>GPS</gps>.",
-      "subtitle": "METIS turns any learning goal into a personalized, adaptive roadmap that recalculates as you progress. Like Google Maps, but for learning.",
-      "startJourney": "Start your journey",
-      "seeHow": "See how it works",
-      "freeTier": "Free tier available. No credit card required."
-    },
-    "works": {
-      "title": "How METIS works",
-      "subtitle": "Intelligent pathfinding that adapts to your pace and the way you learn.",
-      "step1Title": "Set your goal",
-      "step1Body": "Define what you want to master. METIS maps the terrain and calculates the optimal route.",
-      "step2Title": "Follow the path",
-      "step2Body": "Curated, high-signal resources delivered in a logical, step-by-step sequence.",
-      "step3Title": "Adaptive rerouting",
-      "step3Body": "Struggling with a concept? METIS reroutes to clearer explanations before you fall behind."
-    },
-    "values": {
-      "mappingTitle": "Cognitive mapping",
-      "mappingBody": "Dynamic knowledge graphs that track exactly what you know and where the gaps are.",
-      "vettedTitle": "Vetted content",
-      "vettedBody": "Only high-quality open resources enter your path, sequenced instead of dumped as links.",
-      "masteryTitle": "Verified mastery",
-      "masteryBody": "Checkpoints confirm foundational understanding before you move on to the next concept.",
-      "tutorTitle": "Adaptive tutor",
-      "tutorBody": "Ask METIS anything about your path, and it works through concepts with you, in context."
-    },
-    "pricing": {
-      "title": "Invest in your mastery",
-      "subtitle": "Start free. Upgrade when you want unlimited journeys and the full adaptive tutor.",
-      "free": "Free",
-      "forever": "/forever",
-      "freeFeat1": "1 active learning journey",
-      "freeFeat2": "AI-generated roadmap and resources",
-      "freeFeat3": "10 messages/day with the tutor",
-      "startFree": "Start for free",
-      "premium": "Premium",
-      "perMonth": "/month",
-      "recommended": "Recommended",
-      "proFeat1": "Unlimited active journeys",
-      "proFeat2": "Unlimited chat and adaptive rerouting",
-      "proFeat3": "Analytics and progress insights",
-      "proFeat4": "Priority support",
-      "startTrial": "Start 7-day free trial"
-    },
-    "faq": {
-      "title": "Frequently asked questions",
-      "q1": "How exactly does the “GPS” adaptivity work?",
-      "a1": "Just like a GPS reroutes you when you miss a turn, METIS reroutes your roadmap when you struggle with a concept. It finds the gap, then adjusts pacing, ordering, and resources so you never stay stuck.",
-      "q2": "Where do the resources come from?",
-      "a2": "METIS curates from across the open web and trusted providers, then structures them into a path instead of a pile of links. All resources are free and open for you to access.",
-      "q3": "Do I need to know how to structure my learning?",
-      "a3": "No. You bring the goal, and METIS brings the structure, pacing, and ordering. It saves you the time of hunting for resources and deciding what to study next.",
-      "q4": "How much does it cost?",
-      "a4": "There is a free tier with one learning journey, and a Premium tier that unlocks unlimited journeys, analytics, and the adaptive tutor. See the pricing page for details."
+      "subtitle": "LearnRise turns any learning goal into a personalized, adaptive roadmap that recalculates as you progress. Like Google Maps, but for learning.",
+      "startJourney": "Start your journey"
     }
   },
   "auth": {
@@ -80,7 +20,7 @@
     "emailPlaceholder": "you@example.com",
     "passwordLabel": "Password",
     "panelTitle": "Your learning, precisely mapped.",
-    "panelSubtitle": "Set a destination and METIS plots the route: resourced, ordered, and adaptive.",
+    "panelSubtitle": "Set a destination and LearnRise plots the route: resourced, ordered, and adaptive.",
     "panelFeat1": "Never wonder what to study next",
     "panelFeat2": "Roadmaps sequenced just for you",
     "panelFeat3": "An AI tutor that knows your path",
@@ -90,7 +30,7 @@
     "forgotPassword": "Forgot password?",
     "signIn": "Sign in",
     "signingIn": "Signing in…",
-    "newToMetis": "New to METIS?",
+    "newToMetis": "New to LearnRise?",
     "createAccount": "Create an account",
     "linkInvalid": "That sign-in link was invalid or expired. Please try again.",
     "incorrectCredentials": "Incorrect email or password.",
@@ -98,7 +38,7 @@
     "signupSubtitle": "It only takes an email and a password. Your first journey is free.",
     "createPasswordPlaceholder": "Create a password (min 6 characters)",
     "languageLabel": "Language you want to learn in",
-    "languageHelp": "METIS builds your roadmaps, finds resources, and tutors you in {language}. You can change this later in Settings.",
+    "languageHelp": "LearnRise builds your roadmaps, finds resources, and tutors you in {language}. You can change this later in Settings.",
     "createAccountButton": "Create account",
     "creatingAccount": "Creating account…",
     "haveAccount": "Already have an account?",
@@ -136,26 +76,10 @@
     "passwordUpdatedBody": "All set. Your password has been changed.",
     "goToDashboard": "Go to Dashboard"
   },
-  "contact": {
-    "eyebrow": "We'd love to hear from you",
-    "title": "Get in touch",
-    "subtitle": "Questions about your roadmap, feedback on METIS, or just want to say hello? Drop us a line.",
-    "sentTitle": "Message sent!",
-    "sentBody": "Thanks for reaching out, we'll get back to you at the email you provided.",
-    "sendAnother": "Send another",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "yourEmail": "Your email",
-    "messageLabel": "Message",
-    "messagePlaceholder": "How can we help?",
-    "sendMessage": "Send message",
-    "sending": "Sending…",
-    "error": "Couldn't send your message. Please try again."
-  },
   "pricingPage": {
     "eyebrow": "GPS for your potential",
     "title": "Invest in your <grad>learning journey</grad>.",
-    "subtitle": "Choose the path that fits your goals. From casual exploration to intensive professional mastery, METIS guides every step.",
+    "subtitle": "Choose the path that fits your goals. From casual exploration to intensive professional mastery, LearnRise guides every step.",
     "monthly": "Monthly",
     "yearly": "Yearly",
     "save": "Save over 20%",
@@ -165,10 +89,9 @@
     "perForever": "/forever",
     "freeFeat1": "1 active learning journey",
     "freeFeat2": "AI-generated roadmap & resources",
-    "freeFeat3": "10 messages/day with METIS chat",
+    "freeFeat3": "10 messages/day with LearnRise chat",
     "freeFeat4": "3 adaptive re-routes/month",
     "freeFeat5": "Analytics & progress insights",
-    "startForFree": "Start for free",
     "includedWithPremium": "Included with Premium",
     "currentPlan": "Current Plan",
     "premiumTier": "Premium Tier",
@@ -185,60 +108,7 @@
     "manageBilling": "Current plan · Manage billing",
     "noCommitment": "No commitment. Cancel anytime.",
     "checkoutError": "Couldn't start checkout.",
-    "portalError": "Couldn't open billing portal.",
-    "readyTitle": "Ready to master your path?",
-    "readyBody": "Start with one free journey. Upgrade any time for unlimited journeys and the full adaptive tutor.",
-    "createFreeAccount": "Create free account",
-    "explorePlatform": "Explore the platform",
-    "compare": {
-      "title": "Compare plans",
-      "subtitle": "Everything included at a glance.",
-      "free": "Free",
-      "pro": "Pro",
-      "recommended": "Recommended",
-      "included": "Included",
-      "notIncluded": "Not included",
-      "row1Feature": "Active learning journeys",
-      "row1Free": "1",
-      "row1Pro": "Unlimited",
-      "row2Feature": "AI-generated roadmap & resources",
-      "row3Feature": "Chat with METIS",
-      "row3Free": "10 messages/day",
-      "row3Pro": "Unlimited",
-      "row4Feature": "Adaptive re-routing when you struggle",
-      "row4Free": "Limited (3/month)",
-      "row4Pro": "Unlimited",
-      "row5Feature": "Reasoning quality & roadmap depth",
-      "row5Free": "Standard",
-      "row5Pro": "Enhanced, richer, more detailed roadmaps",
-      "row6Feature": "Analytics & progress insights",
-      "row7Feature": "Priority support",
-      "row8Feature": "Free trial",
-      "row8Free": "None",
-      "row8Pro": "7 days free"
-    }
-  },
-  "about": {
-    "eyebrow": "About METIS",
-    "title": "Learning shouldn't start with getting lost.",
-    "intro": "METIS is an AI-powered learning GPS: tell it what you want to learn, and it builds a roadmap to get you there. Then it adjusts that roadmap every time you fall behind or move ahead.",
-    "statText": "of all learners who pick up online learning never finish.",
-    "para1": "You decide to pick up a subject, open a search engine, and drown. Immediately, you're swarmed with forty tabs, three contradictory “best resources” lists, and no idea what order any of it should go in. You start wondering if you're the problem, since everyone else seems to just get it and you don't.",
-    "para2": "But the hardest part was never the material. It was the roadmap.",
-    "para3": "METIS is that map. Set a destination, and it plots a precise route from where you are to where you want to be.",
-    "whatItIsTitle": "What it is",
-    "whatItIsBody": "METIS is an AI-powered roadmap builder for learning anything. You describe your goal, your current level, your timeline, and how you like to learn. METIS assembles a learning journey: units, chapters, and curated resources. As you check things off, chat with your tutor, and adjust your pace, the route re-plans around you.",
-    "howItWorksTitle": "How it works",
-    "step1": "You give inputs: what you want to learn, where you're starting, and your constraints.",
-    "step2": "METIS creates a roadmap of units and chapters, each backed by high-quality, filtered resources.",
-    "step3": "You learn: check off resources, track streaks, and ask the tutor when you're stuck.",
-    "step4": "METIS adapts: pacing, ordering, and recommendations shift as your progress reveals what you need.",
-    "whyItWorksTitle": "Why it works",
-    "why1": "Structure removes the tax of planning, so your energy goes into learning, not deciding what to look at next.",
-    "why2": "The plan isn't fixed. Most study plans break the moment you fall behind or move faster than expected, and then you're back to guessing. METIS moves with you: struggle on a concept and it adjusts before you fall further behind; move fast and it skips ahead instead of wasting your time.",
-    "ctaTitle": "Set your destination.",
-    "ctaBody": "METIS will handle the route. Your first journey is free.",
-    "getStarted": "Get started"
+    "portalError": "Couldn't open billing portal."
   },
   "app": {
     "sidebar": {
@@ -301,12 +171,12 @@
     },
     "help": {
       "help": "Help",
-      "title": "How to use METIS",
+      "title": "How to use LearnRise",
       "subtitle": "A quick in-depth guide to getting the most out of your learning GPS.",
       "guide": {
         "startJourney": {
           "title": "Start a journey",
-          "body": "Tap the dashed “Add Journey” card, describe your goal, level, timeline, and preferences. METIS generates a mapped roadmap."
+          "body": "Tap the dashed “Add Journey” card, describe your goal, level, timeline, and preferences. LearnRise generates a mapped roadmap."
         },
         "followRoadmap": {
           "title": "Follow the roadmap",
@@ -317,8 +187,8 @@
           "body": "Check off resources as you complete them. Progress bars update per unit and for the whole journey."
         },
         "askMetis": {
-          "title": "Ask METIS",
-          "body": "Open the Ask METIS panel on any journey to ask questions, re-plan your schedule with the Planner, or work through a concept with the Tutor."
+          "title": "Ask LearnRise",
+          "body": "Open the Ask LearnRise panel on any journey to ask questions, re-plan your schedule with the Planner, or work through a concept with the Tutor."
         },
         "keepStreak": {
           "title": "Keep your streak",
@@ -379,7 +249,7 @@
       "notFoundDesc": "This journey doesn't exist or you don't have access to it.",
       "backToDashboard": "Back to Dashboard",
       "journeys": "Journeys",
-      "askMetis": "Ask METIS",
+      "askMetis": "Ask LearnRise",
       "overallProgress": "Overall progress"
     },
     "curation": {
@@ -388,10 +258,10 @@
       "webSearch": "web search",
       "curator": "curator",
       "autoRetry": ", auto-retry in ~{time}",
-      "fillInfo": "METIS fills these in a few at a time. Keep this page open and they'll finish automatically."
+      "fillInfo": "LearnRise fills these in a few at a time. Keep this page open and they'll finish automatically."
     },
     "chapterStatus": {
-      "curating": "METIS is curating resources for this chapter…",
+      "curating": "LearnRise is curating resources for this chapter…",
       "gap": "No resources found yet, this chapter is flagged as a gap."
     },
     "roadmap": {
@@ -414,7 +284,7 @@
       "trustedSource": "Trusted source"
     },
     "ask": {
-      "title": "METIS AI Tutor",
+      "title": "LearnRise AI Tutor",
       "tabs": {
         "main": {
           "label": "Main",
@@ -430,7 +300,7 @@
         }
       },
       "intro": {
-        "main": "Hi, I'm METIS. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
+        "main": "Hi, I'm LearnRise. Ask me anything about this journey. I can also re-plan upcoming units or refresh a chapter's resources if you ask.",
         "planner": "I'm your Planner. Tell me your deadline, weekly hours, or how you want to re-pace things and I'll re-plan your upcoming chapters (finished ones stay put).",
         "tutor": "I'm your Tutor. Point me at a concept or resource and I'll walk you through it, questions first, answers second."
       },
@@ -453,18 +323,18 @@
       },
       "collapseChat": "Collapse chat",
       "limitTitle": "Usage ran out",
-      "limitSubtitle": "You've used all of today's free messages. Upgrade to Pro for unlimited chat with METIS.",
-      "errorRespond": "METIS couldn't respond. Please try again.",
+      "limitSubtitle": "You've used all of today's free messages. Upgrade to Pro for unlimited chat with LearnRise.",
+      "errorRespond": "LearnRise couldn't respond. Please try again.",
       "errorGeneric": "Something went wrong.",
       "roadmapUpdating": "Updating your roadmap, new units and resources will appear shortly.",
-      "placeholder": "Message METIS ({tab})…",
+      "placeholder": "Message LearnRise ({tab})…",
       "send": "Send"
     },
     "createJourney": {
       "generatingTitle": "Generating your roadmap…",
-      "generatingBody": "METIS is researching a syllabus and mapping your units and chapters. This usually takes 15 to 30 seconds, hang tight and keep this open. Resources fill in afterward.",
+      "generatingBody": "LearnRise is researching a syllabus and mapping your units and chapters. This usually takes 15 to 30 seconds, hang tight and keep this open. Resources fill in afterward.",
       "title": "Create a new learning journey",
-      "subtitle": "Tell METIS what you want to learn. It'll generate a mapped roadmap, the more specific you are, the better the route.",
+      "subtitle": "Tell LearnRise what you want to learn. It'll generate a mapped roadmap, the more specific you are, the better the route.",
       "goal": "Goal",
       "goalPlaceholder": "e.g. Ace the AP Biology genetics unit, be as specific as possible.",
       "currentLevel": "Current level",
@@ -590,7 +460,7 @@
   },
   "settings": {
     "title": "Profile & Settings",
-    "subtitle": "Manage your account. Name and email changes are saved to your METIS account (email changes require confirmation via inbox link).",
+    "subtitle": "Manage your account. Name and email changes are saved to your LearnRise account (email changes require confirmation via inbox link).",
     "profilePicture": "Profile picture",
     "uploadNew": "Upload new",
     "remove": "Remove",

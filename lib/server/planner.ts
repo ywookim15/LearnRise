@@ -129,7 +129,7 @@ function buildPlannerPrompt(inputs: PlannerInputs, syllabusRef: string | null): 
       ? `from ${inputs.startDate} to ${inputs.endDate}`
       : "no fixed dates given";
 
-  return `You are the METIS Planner, an expert curriculum designer for a learning-GPS product used by high school and college students.
+  return `You are the LearnRise Planner, an expert curriculum designer for a learning-GPS product used by high school and college students.
 
 Design a complete learning roadmap for this student, structured as units containing chapters. Generate the ENTIRE roadmap upfront.
 
@@ -217,7 +217,7 @@ export async function replanRemaining(opts: {
 }): Promise<RoadmapOutput> {
   const { inputs, completedTitles, incompleteTitles, guidance } = opts;
 
-  const prompt = `You are the METIS Planner revising an EXISTING learning journey based on a student's request. Regenerate ONLY the remaining (not-yet-completed) portion of the roadmap.
+  const prompt = `You are the LearnRise Planner revising an EXISTING learning journey based on a student's request. Regenerate ONLY the remaining (not-yet-completed) portion of the roadmap.
 
 STUDENT
 - Goal: ${inputs.goal}
@@ -301,7 +301,7 @@ export async function adjustChapterForSkillLevel(opts: {
       ? "The student says they ALREADY KNOW this topic well. Skip basics — reframe the objective toward advanced application, edge cases, or a quick-check/challenge framing so resources aren't redundant with what they already know."
       : "The student says they are FAMILIAR with this topic but not fully confident. Keep the core objective but reframe it toward reinforcement and filling gaps rather than a first introduction.";
 
-  const prompt = `You are the METIS Planner adjusting ONE chapter of an existing learning journey based on the student's self-reported mastery — you are NOT regenerating the unit or journey, only this chapter's objective.
+  const prompt = `You are the LearnRise Planner adjusting ONE chapter of an existing learning journey based on the student's self-reported mastery — you are NOT regenerating the unit or journey, only this chapter's objective.
 
 Journey goal: ${goal}
 Student's overall level: ${currentLevel || "not specified"}

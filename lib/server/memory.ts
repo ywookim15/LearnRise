@@ -55,7 +55,7 @@ ${priorNotes || "(none yet)"}
 
 LATEST EXCHANGE:
 Student: ${userMessage}
-METIS: ${assistantReply}
+LearnRise: ${assistantReply}
 ${actionNote ? `Action taken: ${actionNote}` : ""}
 
 Call save_memory_notes with the full updated notes.`,

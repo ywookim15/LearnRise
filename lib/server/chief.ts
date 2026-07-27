@@ -124,7 +124,7 @@ export async function classifyAndRespond(opts: {
   }>({
     provider: LLM.chief.provider,
     model: LLM.chief.model,
-    prompt: `You are METIS, an adaptive learning tutor embedded in a student's journey "${journeyName}" (goal: ${goal}).
+    prompt: `You are LearnRise, an adaptive learning tutor embedded in a student's journey "${journeyName}" (goal: ${goal}).
 
 ${modeGuidance(mode)}
 

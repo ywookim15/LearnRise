@@ -79,7 +79,7 @@
 }
 
 @layer utilities {
-  /* Thin, unobtrusive scrollbar used inside the Ask METIS chat + scroll areas */
+  /* Thin, unobtrusive scrollbar used inside the Ask LearnRise chat + scroll areas */
   .scrollbar-slim {
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--border)) transparent;

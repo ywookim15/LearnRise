@@ -1,6 +1,6 @@
-# METIS — Working Agreement & Project Notes
+# LearnRise — Working Agreement & Project Notes
 
-METIS is an AI-powered adaptive learning-roadmap product ("your learning GPS")
+LearnRise is an AI-powered adaptive learning-roadmap product ("your learning GPS")
 for high school and college students. Next.js (App Router) + React + Tailwind +
 shadcn/ui on the frontend; Supabase (auth + Postgres) and Gemini/Tavily on the
 backend.
@@ -37,7 +37,7 @@ Practical guardrails that follow from the above:
   with `gemini`/`tavily`/`youtube` clients. Every Gemini call uses **function
   calling** (structured output) with pacing + 429-aware retries.
 - **API routes**: `POST /api/journeys` (create), `POST /api/journeys/[id]/curate`
-  (re-curate), `POST /api/journeys/[id]/chat` (Ask METIS).
+  (re-curate), `POST /api/journeys/[id]/chat` (Ask LearnRise).
 - **Background work** must use `runInBackground()` (`lib/server/background.ts`),
   which uses Vercel `waitUntil` so async work survives past the HTTP response on
   serverless. Never use bare `void promise` for post-response work in a route.

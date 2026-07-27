@@ -510,7 +510,7 @@ export async function createJourney(input: CreateJourneyInput): Promise<string> 
   if (!res.ok) {
     const fallback =
       res.status === 504 || res.status === 408 || res.status === 502
-        ? "This is taking longer than expected — METIS may be busy. Please wait a minute and try again."
+        ? "This is taking longer than expected — LearnRise may be busy. Please wait a minute and try again."
         : "Couldn't create your journey. Please try again.";
     throw new Error(json.error || fallback);
   }

@@ -25,7 +25,7 @@ function MarketingFooter() {
   const nav = useTranslations("nav");
   return (
     <footer className="border-t border-border bg-card">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-14 sm:grid-cols-[1.4fr_1fr]">
         <div className="space-y-3">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -48,14 +48,6 @@ function MarketingFooter() {
         </div>
 
         <FooterCol
-          title={t("product")}
-          links={[
-            { href: "/about", label: nav("about") },
-            { href: "/pricing", label: nav("pricing") },
-            { href: "/contact", label: nav("contact") },
-          ]}
-        />
-        <FooterCol
           title={t("account")}
           links={[
             { href: "/login", label: nav("signIn") },
@@ -64,12 +56,8 @@ function MarketingFooter() {
         />
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-muted-foreground sm:flex-row">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-6 py-5 text-xs text-muted-foreground">
           <p>{t("rights", { year: new Date().getFullYear() })}</p>
-          <div className="flex items-center gap-6">
-            <Link href="/about" className="hover:text-foreground">{t("privacy")}</Link>
-            <Link href="/about" className="hover:text-foreground">{t("terms")}</Link>
-          </div>
         </div>
       </div>
     </footer>

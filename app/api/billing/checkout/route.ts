@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       customer: customerId,
       line_items: [{ price: priceId, quantity: 1 }],
       // Belt-and-suspenders: both the session and the subscription carry the
-      // user id so the webhook can always resolve the METIS user.
+      // user id so the webhook can always resolve the LearnRise user.
       client_reference_id: user.id,
       subscription_data: {
         metadata: { user_id: user.id },

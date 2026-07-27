@@ -112,7 +112,7 @@ function searchTermsForType(t: CurationResourceType): string {
 async function fetchPageText(url: string): Promise<string | null> {
   try {
     const res = await fetch(url, {
-      headers: { "user-agent": "Mozilla/5.0 (compatible; METIS-Curator/1.0)" },
+      headers: { "user-agent": "Mozilla/5.0 (compatible; LearnRise-Curator/1.0)" },
       signal: AbortSignal.timeout(15_000),
       redirect: "follow",
     });
@@ -233,7 +233,7 @@ async function selectResources(
   }>({
     provider: LLM.curator.provider,
     model: LLM.curator.model,
-    prompt: `You are the METIS Resource Curator selecting study resources for one chapter.
+    prompt: `You are the LearnRise Resource Curator selecting study resources for one chapter.
 
 Journey goal: ${ctx.goal}
 Student's self-reported level: ${ctx.currentLevel || "not specified"}

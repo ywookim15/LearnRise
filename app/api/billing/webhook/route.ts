@@ -82,7 +82,7 @@ function periodEnd(sub: Stripe.Subscription): string | null {
   return typeof raw === "number" ? new Date(raw * 1000).toISOString() : null;
 }
 
-/** Resolve the METIS user for a subscription (metadata first, then our table). */
+/** Resolve the LearnRise user for a subscription (metadata first, then our table). */
 async function resolveUserId(
   sub: Stripe.Subscription,
   fallbackUserId?: string

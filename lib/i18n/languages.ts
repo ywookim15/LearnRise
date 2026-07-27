@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // SUPPORTED LANGUAGES (shared client + server, no secrets).
 //
-// The 10 languages METIS supports for BOTH the interface locale and the
+// The 10 languages LearnRise supports for BOTH the interface locale and the
 // language a learner studies in (roadmaps, resources, and the tutor are
 // generated in this language). English and Korean are required; the other
 // eight are chosen for large speaker bases AND deep availability of online

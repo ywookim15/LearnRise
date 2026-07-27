@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * METIS design tokens — extracted from the Google Stitch design system screenshot.
+ * LearnRise design tokens — extracted from the Google Stitch design system screenshot.
  *
  * Brand palette:
  *   Primary   #6366F1  (indigo)  — CTAs, active nav, progress fills

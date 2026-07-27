@@ -16,7 +16,7 @@ export function getStripe(): Stripe {
     stripe = new Stripe(key, {
       // Pin to the SDK's expected API version so behavior doesn't shift.
       apiVersion: "2026-06-24.dahlia",
-      appInfo: { name: "METIS" },
+      appInfo: { name: "LearnRise" },
     });
   }
   return stripe;
@@ -64,7 +64,7 @@ export async function getVerifiedPriceId(interval: BillingInterval): Promise<str
   return priceId;
 }
 
-/** Map a Stripe price id back to a METIS plan. Premium prices -> 'premium'. */
+/** Map a Stripe price id back to a LearnRise plan. Premium prices -> 'premium'. */
 export function planForPriceId(priceId: string | undefined): "premium" | "family" | "free" {
   if (!priceId) return "free";
   if (

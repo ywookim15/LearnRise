@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Check, X, BadgeCheck, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { PricingComparisonTable } from "@/components/pricing/pricing-comparison-table";
 import { useApp } from "@/lib/context/app-context";
 import { startCheckout, openBillingPortal } from "@/lib/data/subscription";
 import { cn } from "@/lib/utils";
@@ -17,7 +15,7 @@ type Billing = "monthly" | "yearly";
 // Amounts match the live Stripe prices (kept verbatim across locales).
 const AMOUNT: Record<Billing, string> = { monthly: "$5.99", yearly: "$56.99" };
 
-export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
+export function PricingPlans() {
   const t = useTranslations("pricingPage");
   const [billing, setBilling] = useState<Billing>("yearly");
   const { isPremium } = useApp();
@@ -125,15 +123,9 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
             ))}
           </ul>
           <div className="mt-8">
-            {mode === "public" ? (
-              <Button asChild variant="outline" className="w-full">
-                <Link href="/signup">{t("startForFree")}</Link>
-              </Button>
-            ) : (
-              <Button variant="outline" className="w-full" disabled>
-                {isPremium ? t("includedWithPremium") : t("currentPlan")}
-              </Button>
-            )}
+            <Button variant="outline" className="w-full" disabled>
+              {isPremium ? t("includedWithPremium") : t("currentPlan")}
+            </Button>
           </div>
         </div>
 
@@ -157,11 +149,7 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
             ))}
           </ul>
           <div className="mt-8 space-y-3">
-            {mode === "public" ? (
-              <Button asChild className="w-full bg-white text-secondary hover:bg-white/90">
-                <Link href="/signup">{t("upgradeNow")}</Link>
-              </Button>
-            ) : isPremium ? (
+            {isPremium ? (
               <Button
                 className="w-full border border-white/40 bg-white/10 text-white hover:bg-white/20"
                 onClick={handleManage}
@@ -200,25 +188,6 @@ export function PricingPlans({ mode = "public" }: { mode?: "public" | "app" }) {
           </div>
         </div>
       </div>
-
-      {mode === "public" && <PricingComparisonTable />}
-
-      {mode === "public" && (
-        <div className="mx-auto mt-20 max-w-5xl overflow-hidden rounded-3xl bg-secondary px-8 py-16 text-center text-white">
-          <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            {t("readyTitle")}
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-white/70">{t("readyBody")}</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg" className="bg-white text-secondary hover:bg-white/90">
-              <Link href="/signup">{t("createFreeAccount")}</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
-              <Link href="/about">{t("explorePlatform")}</Link>
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
