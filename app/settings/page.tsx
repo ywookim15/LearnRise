@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Upload, Trash2, Sparkles, Check, CreditCard, Loader2, AlertCircle } from "lucide-react";
+import { Upload, Trash2, Check, Loader2, AlertCircle } from "lucide-react";
 import { StandaloneShell } from "@/components/layout/standalone-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dialog";
 import { LanguageSelect } from "@/components/shared/language-select";
 import { useApp } from "@/lib/context/app-context";
-import { openBillingPortal } from "@/lib/data/subscription";
 import { uploadAvatar, removeAvatar, deleteAccount } from "@/lib/data/profile";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { DEFAULT_LANGUAGE, getLanguage, normalizeLanguage } from "@/lib/i18n/languages";
@@ -27,7 +26,7 @@ import { setLocaleCookie } from "@/lib/i18n/set-locale";
 
 export default function SettingsPage() {
   const t = useTranslations("settings");
-  const { user, updateUser, isPremium, subscription, logout } = useApp();
+  const { user, updateUser, logout } = useApp();
   const router = useRouter();
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -36,8 +35,6 @@ export default function SettingsPage() {
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [langSaved, setLangSaved] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [billingPending, setBillingPending] = useState(false);
-  const [billingError, setBillingError] = useState<string | null>(null);
 
   // Avatar upload/remove
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,17 +89,6 @@ export default function SettingsPage() {
   }
 
   const hasCustomAvatar = !user.avatarUrl.startsWith("data:");
-
-  async function handleManageBilling() {
-    setBillingError(null);
-    setBillingPending(true);
-    try {
-      await openBillingPortal(); // redirects to Stripe on success
-    } catch (e) {
-      setBillingPending(false);
-      setBillingError(e instanceof Error ? e.message : t("billingError"));
-    }
-  }
 
   // The Supabase session loads asynchronously, re-seed the form when the
   // real profile arrives (or after a save round-trips through the context).
@@ -268,35 +254,6 @@ export default function SettingsPage() {
             b: (chunks) => <span className="font-medium text-foreground">{chunks}</span>,
           })}
         </p>
-      </section>
-
-      {/* Plan */}
-      <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-border bg-brand-gradient-soft p-6 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-semibold">{t("yourPlan")}</h2>
-          <p className="text-sm text-muted-foreground">
-            {isPremium ? t("planStatusPremium") : t("planStatusFree")}
-          </p>
-          {billingError && (
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-destructive">
-              <AlertCircle className="h-3.5 w-3.5" />
-              {billingError}
-            </p>
-          )}
-        </div>
-        {isPremium || subscription?.hasCustomer ? (
-          <Button variant="outline" onClick={handleManageBilling} disabled={billingPending}>
-            {billingPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
-            {t("manageBilling")}
-          </Button>
-        ) : (
-          <Button asChild variant="gradient">
-            <Link href="/upgrade">
-              <Sparkles className="h-4 w-4" />
-              {t("upgradeMyPlan")}
-            </Link>
-          </Button>
-        )}
       </section>
 
       {/* Danger zone */}

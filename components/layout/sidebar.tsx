@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown, Zap } from "lucide-react";
+import { LayoutGrid, LineChart, Archive, FolderClosed, Settings, Crown } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { useApp } from "@/lib/context/app-context";
 import { cn } from "@/lib/utils";
@@ -75,7 +75,7 @@ export function Sidebar({
           {t("settings")}
         </Link>
 
-        {isPremium ? (
+        {isPremium && (
           <div className="flex items-center gap-3 rounded-lg border border-border bg-accent p-4">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
               <Crown className="h-4 w-4" aria-hidden="true" />
@@ -85,23 +85,6 @@ export function Sidebar({
               <p className="text-xs text-muted-foreground">{t("proMember")}</p>
             </div>
           </div>
-        ) : (
-          <Link
-            href="/upgrade"
-            onClick={onNavigate}
-            className="block rounded-xl bg-brand-gradient p-4 shadow-brand transition-all hover:shadow-brand-lg"
-          >
-            <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
-              <Zap className="h-4 w-4" aria-hidden="true" />
-              {t("upgradePlan")}
-            </p>
-            <p className="mt-1 text-xs leading-snug text-white/80">
-              {t("upgradeDesc")}
-            </p>
-            <span className="mt-3 flex min-h-9 items-center justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-secondary">
-              {t("upgrade")}
-            </span>
-          </Link>
         )}
       </div>
     </aside>
